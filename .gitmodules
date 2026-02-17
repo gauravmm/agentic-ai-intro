@@ -1,0 +1,3 @@
+[submodule "02-label-design/task"]
+	path = 02-label-design/task
+	url = git@github.com:gauravmm/ai-tutorial-labelgen.git
