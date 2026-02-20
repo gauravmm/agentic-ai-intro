@@ -19,3 +19,6 @@ These are the notes and slides for the hands-on AI workshop taught to NUS BME (?
   a. Test-driven development
   a. Skill development
   b. MCP?
+
+4. DIY MicroClaw?
+  a. Some sort of independent agent.

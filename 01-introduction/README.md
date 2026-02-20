@@ -16,6 +16,8 @@ Prereqs:
 
 ## AI Basics
 
+### What is AI?
+
 ### What is a LLM?
 
 - Fancy autocomplete.
@@ -28,10 +30,20 @@ Prereqs:
 Explain the fundamental limits:
 
 - what is a token
-- context window, how is usage billed
-- Context window limit anxiety
+  - <https://platform.openai.com/tokenizer>
+- how is usage billed
+  - token in
+  - token out
+  - storage
+- context window
+  - limit anxiety
+  - compaction
 
-### What is Agentic AI
+### What is Agentic AI?
+
+Examples:
+
+- Show a real-world agentic AI example (e.g., GitHub Copilot, AutoGPT)
 
 Explain the basic loop: input, tool, interaction, output
 
@@ -42,14 +54,15 @@ What is a:
 - Tool use
 - MCP
 
-## Agent Patterns
+## Agent Patterns and Practice
+
+### Patterns
 
 Common patterns:
 
 - Vibe coding
 - AI Driven AI Development
-- Actor-Critic-Executor
-  - Actor vs Critic
+- Actor-Critic
 - Complexity Ladder
   - Consistency checking
 - Test Driven Development
@@ -61,7 +74,7 @@ Skills are **transferrable descriptions of an ability**, typically how to break 
   - <https://github.com/jezweb/claude-skills>
   - <https://github.com/forrestchang/andrej-karpathy-skills>
 
-## Using LLMs in practice
+### Using LLMs in Practice
 
 - Human-in-the-loop model
   - Autocomplete
