@@ -32,6 +32,13 @@
   ),
 )
 
+#let tok-colors = (rgb("#FFD966"), rgb("#B6D7A8"), rgb("#9FC5E8"), rgb("#EA9999"))
+#let tok(n, content) = box(
+  fill: tok-colors.at(calc.rem(n, tok-colors.len())),
+  inset: (x: 0.2em, y: 0.15em),
+  radius: 0.1em,
+)[#content]
+
 #title-slide()
 
 == About Me <touying:hidden>
@@ -173,6 +180,8 @@
 == Fancy Autocomplete
 
 #align(center)[
+  #text(weight: "bold", size: 1.5em)[An LLM is Fancy Autocomplete]
+
   #block(
     fill: luma(1000),
     stroke: luma(220),
@@ -202,7 +211,7 @@
 
     - Learns statistical patterns in language,\
       not explicit rules
-    - Emergent behaviour at scale was *surprising*
+    - Behaviour *surprisingly* emerges at scale
     - This is *ridiculously inefficient* to train \
       --- but it works
   ],
@@ -212,85 +221,102 @@
   "Fancy autocomplete" is deliberately provocative. It undersells what LLMs can do, but it's a useful grounding metaphor. When students are surprised by what a model can or can't do, returning to this framing helps: it's predicting the next plausible token based on patterns, not reasoning from first principles. The emergent capabilities at scale (math, coding, multi-step reasoning) were not explicitly programmed.
 ]
 
+== The Attention Mechanism
+
+
+#grid(
+  columns: (3fr, 1.2fr),
+  gutter: 1em,
+  [
+    *Transformers* (2017) changed everything:
+
+    - The model learns *which tokens matter* for each prediction
+    - Relationship between every token in a context window
+    - Stacked layers of attention + feed-forward networks
+
+    #v(0.5em)
+
+    *The catch:* Computing attention scales poorly with text length.
+
+    $
+      & 100,000 "tokens" times 100,000 "tokens" \
+      & = 10,000,000,000 "multiplications"
+    $
+
+    #v(0.5em)
+
+    Despite the cost, it works remarkably well.
+  ],
+  grid(
+    columns: 1fr,
+    align: center,
+    image("media/attention_mask.png", height: 120mm),
+    v(0.5em),
+    link("https://github.com/jessevig/bertviz")[BertViz Project],
+  ),
+)
+
+#speaker-note[
+  Keep this brief unless students ask to go deeper. The key intuition: attention lets the model relate distant tokens — so "it" in "The cat sat because it was tired" can attend back to "cat" across many tokens of distance. This is the core mechanism that makes context work. The O(n^2) cost is why 1M token context windows require significant engineering effort.
+]
+
+
 == What is a Token?
 
 #grid(
   columns: (1fr, 1fr),
   gutter: 1em,
   [
-    Tokens are *chunks* of text --- not characters, not words
+    Tokens are *chunks* of text
 
     - Roughly 1 token ≈ ¾ of an English word
     - Varies for code, other languages, numbers
     - Punctuation and spaces count
 
-    #v(0.5em)
-
-    *Try it:* #link("https://platform.openai.com/tokenizer")[platform.openai.com/tokenizer]
+    Basic unit of computation for an LLM. Everything in and out is in tokens.
 
     #v(0.5em)
 
-    *Why it matters:*
-    - Billing is per token
+    *Matters because:*
+    - Pay per token ingested
+    - Pay per token produced
     - Context windows are measured in tokens
   ],
-  align(center + horizon)[
-    #block(fill: luma(235), inset: 0.9em, radius: 0.4em)[
-      #set text(size: 0.85em)
-      `"Hello, world!"` → *4 tokens* \
-      #v(0.3em)
-      `"antidisestablishmentarianism"` → *6 tokens* \
-      #v(0.3em)
-      `"def foo(x): return x+1"` → *10 tokens* \
-      #v(0.3em)
-      `"สวัสดี"` → *9 tokens*
+  aside([GPT-5.x Tokenizer], [
+    #[
+      #set text(font: "DejaVu Sans Mono", size: 0.78em)
+      #tok(0)[Many]#tok(1)[ words]#tok(2)[ map]#tok(3)[ to]#tok(4)[ one]#tok(5)[ token]#tok(6)[,]#tok(7)[ but]#tok(
+        8,
+      )[ some]#tok(9)[ don]#tok(10)['t]#tok(11)[:]#tok(12)[ indiv]#tok(13)[isible]#tok(14)[.]
+
+      #v(0.4em)
+      #tok(0)[Uni]#tok(1)[code]#tok(1)[ characters]#tok(2)[ like]#tok(3)[ emojis]#tok(4)[ may]#tok(5)[ be]#tok(
+        6,
+      )[ split]#tok(
+        7,
+      )[ into]#tok(8)[ many]#tok(9)[ tokens]#tok(10)[ containing]#tok(11)[ the]#tok(12)[ underlying]#tok(
+        13,
+      )[ bytes]#tok(14)[:]#tok(15)[ ◆]#tok(16)[◆]#tok(17)[◆]#tok(18)[◆]
+
+      #v(0.4em)
+      #tok(0)[Sequences]#tok(1)[ of]#tok(2)[ characters]#tok(3)[ commonly]#tok(4)[ found]#tok(5)[ next]#tok(6)[ to]#tok(
+        7,
+      )[ each]#tok(8)[ other]#tok(9)[ may]#tok(10)[ be]#tok(11)[ grouped]#tok(12)[ together]#tok(13)[:]#tok(
+        14,
+      )[123]#tok(
+        15,
+      )[456]#tok(16)[789]#tok(17)[0]
     ]
-  ],
+
+    #v(1em)
+    #h(1fr)from the #link("https://platform.openai.com/tokenizer")[OpenAI Tokenizer Demo]
+  ]),
 )
 
 #speaker-note[
   The tokenizer demo is worth showing live if you have time. Thai, Chinese, and other non-Latin scripts are much more expensive per word — important for multilingual applications. Code is also surprisingly token-heavy. Have students paste some of their own code into the tokenizer to build intuition.
 ]
 
-== The Attention Mechanism
-
-#grid(
-  columns: (3fr, 2fr),
-  gutter: 1em,
-  [
-    *Transformers* (2017) changed everything:
-
-    - Every token can *attend* to every other token in context
-    - The model learns *which tokens matter* for each prediction
-    - Stacked layers of attention + feed-forward networks
-
-    #v(0.5em)
-
-    *The catch:* Attention is $O(n^2)$ in sequence length \
-    --- context windows are *expensive*
-
-    #v(0.5em)
-
-    Despite the cost, it works remarkably well.
-  ],
-  align(center + horizon)[
-    #set text(size: 0.8em)
-    #block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
-      ```
-      The cat sat on the mat
-       │   │   │   │  └─ where?
-       │   │   │   └──── on?
-       │   │   └──────── action?
-       │   └──────────── subject?
-       └──────────────── article?
-      ```
-    ]
-  ],
-)
-
-#speaker-note[
-  Keep this brief unless students ask to go deeper. The key intuition: attention lets the model relate distant tokens — so "it" in "The cat sat because it was tired" can attend back to "cat" across many tokens of distance. This is the core mechanism that makes context work. The O(n^2) cost is why 1M token context windows require significant engineering effort.
-]
 
 == Model Structure
 
