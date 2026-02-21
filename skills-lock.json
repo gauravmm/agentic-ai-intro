@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "touying-author": {
+      "source": "apcamargo/typst-skills",
+      "sourceType": "github",
+      "computedHash": "ef85b9da220641f3e5cf068903356640e7ae33024b95191b71600850abab1479"
+    },
+    "typst-author": {
+      "source": "apcamargo/typst-skills",
+      "sourceType": "github",
+      "computedHash": "bf3d332184acea91bda25e0d24707f28132a134b70c178e5acd228350d8c1e4d"
+    }
+  }
+}

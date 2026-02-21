@@ -12,8 +12,6 @@ What AI means.
 
 Paradox: AI won't make working easier, it will increase competition and make working harder.
 
-Slopmerchant meme
-
 Security issues.
 
 ### What is a Large Language Model?
@@ -44,9 +42,9 @@ Security issues.
 2. Wittgensteins lion
 3. Paperclip maximizer
 
-Set of things that are obvious to you, or the standpoint you communicate from is not always obvious.
+Set of things that are obvious to you, or the standpoint you communicate from is not always obvious. You need to evaluate your AI for **alignment**, especially for resistance to wandering off and doing absurd things.
 
-You need to evaluate your AI for **alignment**, especially for resistance to wandering off and doing absurd things.
+The importance of good taste: good judgement meme.
 
 ### How to write a prompt
 
