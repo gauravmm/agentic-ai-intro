@@ -1,6 +1,8 @@
 # AI Workshop
 
-These are the notes and slides for the hands-on AI workshop taught to NUS BME (???) makerspace.
+These are the notes and slides for the hands-on AI workshop taught to NUS BMES Makerspace.
+
+These slides were produced with the assistance of Claude Opus 4.6, Claude Haiku 4.5, OpenAI GPT-4.1, and OpenAI GPT-4o.
 
 ## Flow
 
