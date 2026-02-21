@@ -39,6 +39,16 @@ Explain the fundamental limits:
   - limit anxiety
   - compaction
 
+#### What does it mean for an LLM to know?
+
+1. Chinese room experiment (?)
+2. Wittgensteins lion
+3. Paperclip maximizer
+
+Set of things that are obvious to you, or the standpoint you communicate from is not always obvious.
+
+You need to evaluate your AI for **alignment**, especially for resistance to wandering off and doing absurd things.
+
 ### What is Agentic AI?
 
 Examples:
