@@ -7,11 +7,11 @@
   aspect-ratio: "16-9",
   footer: self => self.info.institution,
   config-info(
-    title: [Agentic AI],
+    title: [Hands-on with Agentic AI],
     subtitle: [Introduction],
     author: [Dr. Gaurav Manek, A*STAR],
     date: datetime.today(),
-    institution: [BMES Makerspace Hackathon Workshop],
+    institution: [NTU BMES Makerspace Hackathon Workshop],
     logo: [🤖💥🧠🧑‍💻],
   ),
 )
@@ -74,9 +74,6 @@
   ],
 )
 
-#speaker-note[
-  Brief intro. Emphasise the practitioner angle: you've built and shipped real AI systems, not just published papers. This gives you a concrete perspective on where AI is genuinely useful and where it isn't.
-]
 
 = Outline <touying:hidden>
 
@@ -290,7 +287,7 @@
       )[ some]#tok(9)[ don]#tok(10)['t]#tok(11)[:]#tok(12)[ indiv]#tok(13)[isible]#tok(14)[.]
 
       #v(0.4em)
-      #tok(0)[Uni]#tok(1)[code]#tok(1)[ characters]#tok(2)[ like]#tok(3)[ emojis]#tok(4)[ may]#tok(5)[ be]#tok(
+      #tok(0)[Unicode]#tok(1)[ characters]#tok(2)[ like]#tok(3)[ emojis]#tok(4)[ may]#tok(5)[ be]#tok(
         6,
       )[ split]#tok(
         7,
@@ -314,48 +311,9 @@
 )
 
 #speaker-note[
-  The tokenizer demo is worth showing live if you have time. Thai, Chinese, and other non-Latin scripts are much more expensive per word — important for multilingual applications. Code is also surprisingly token-heavy. Have students paste some of their own code into the tokenizer to build intuition.
+  The tokenizer output is from the actual GPT-5.x tokenizer output.
 ]
 
-
-== Model Structure
-
-Modern LLMs are more than just stacked attention:
-
-#grid(
-  columns: (1fr, 1fr, 1fr),
-  gutter: 1em,
-  block(fill: luma(235), inset: 0.8em, radius: 0.4em, height: 100%)[
-    *Mixture of Experts*
-
-    Not all parameters activate for every token. Routes computation to specialist sub-networks. More efficient scaling.
-  ],
-  block(fill: luma(235), inset: 0.8em, radius: 0.4em, height: 100%)[
-    *Multimodal*
-
-    Images, audio, PDFs as input (sometimes as output too). The model sees more of the world than text alone.
-  ],
-  block(fill: luma(235), inset: 0.8em, radius: 0.4em, height: 100%)[
-    *Tool Use*
-
-    Models can call external APIs, run code, search the web. This is what makes *agentic* AI possible.
-  ],
-)
-
-#speaker-note[
-  MoE is why models like Mixtral can be huge but still fast — only ~⅛ of parameters fire per token. Multimodal is increasingly the default for frontier models. Tool use is the key to everything we'll build in this workshop: the model can take actions in the world, not just produce text.
-]
-
-
-== How Usage Is Billed
-
-#align(center)[
-  #image("media/cost.jpg", height: 78%)
-]
-
-#speaker-note[
-  This tweet is from February 2026. The joke: rent \$2,400, food \$1,000, Claude token usage \$12,200 — you saved \$150 on a \$20k salary. Exaggerated, but not by as much as you'd think. The billing model is: tokens in (your prompt) + tokens out (the response) + sometimes storage for long-running sessions. Agentic systems compound this fast — each tool call round-trip adds tokens.
-]
 
 == Context Window
 
@@ -365,23 +323,26 @@ The context window is the model's *working memory*:
 
 #grid(
   columns: (1fr, 1fr),
+  align: top,
   gutter: 1em,
   [
-    *What's in the context:*
+    *The context is everything:*
     - System prompt
-    - Conversation history
-    - Your current message
+    - The entire conversation
+    - The current message
     - The model's response (in progress)
-    - Tool call results
-
-    Current frontier: *128K -- 1M tokens*
+    - Results from tool calls
+    - Skills and tools it can access
+    - Related information
   ],
   [
-    *When you hit the limit:*
+    Current frontier: *128K -- 1M tokens*
 
-    - Older: sliding window (early history forgotten)
-    - Modern: *compaction* --- old context is summarised automatically
-    - Some providers charge for context storage separately
+    - When you run out: *compaction* \
+      _The model summarises its own context and gives it to a fresh model._
+    - When you get close, performance worsens:
+      - context rot
+      - context anxiety
 
     #v(0.3em)
     _Long context = slow + expensive_
@@ -389,7 +350,91 @@ The context window is the model's *working memory*:
 )
 
 #speaker-note[
-  Claude Code does automatic compaction — students will see this in action during the workshop. Frame context limits as a forcing function for writing good, concise prompts. The practical lesson: don't paste in entire codebases; be selective about what context you give the model.
+  - Context rot: models struggle to recall information in the middle of the context.
+  - Context anxiety: models exhibit anxious behaviour, underestimate how much context window they have left, and try to finish everything too quickly.
+]
+
+
+== How Usage Is Billed
+
+#grid(
+  columns: (1fr, 120mm),
+  align: top,
+  gutter: 1em,
+  [
+    #set text(size: 0.8em)
+    #table(
+      columns: (auto, 1fr, auto, auto),
+      align: (left, left, right, right),
+      stroke: none,
+      fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) { luma(245) } else { white },
+      inset: (x: 0.6em, y: 0.45em),
+      table.header([*Company*], [*Model*], [*In*\ #text(size: 0.8em)[\$/M tok]], [*Out*\ #text(size: 0.8em)[\$/M tok]]),
+      table.cell(colspan: 4, fill: luma(210), inset: (x: 0.6em))[
+        #text(size: 1em, weight: "bold")[Frontier / reasoning]
+      ],
+      [Google], [Gemini 3.1 Pro Preview], [\$2.00], [\$12.00],
+      [Anthropic], [Claude Opus 4.6], [\$3.00], [\$25.00],
+      [Alibaba], [Qwen3 Max Thinking], [\$1.20], [\$6.00],
+      [Z.ai], [GLM-5], [\$0.30], [\$2.55],
+      table.cell(colspan: 4, fill: luma(210), inset: (x: 0.6em))[
+        #text(size: 1em, weight: "bold")[Cost-efficient]
+      ],
+      [Google], [Gemini 2.5 Flash], [\$0.15], [\$0.60],
+      [Anthropic], [Claude Haiku 4.5], [\$0.80], [\$4.00],
+      [Alibaba], [Qwen3.5 Plus], [\$0.40], [\$2.40],
+      [Z.ai], [GLM-4.7 Flash], [\$0.06], [\$0.40],
+    )
+    #v(0.3em)
+    #text(size: 0.75em, fill: luma(120))[
+      via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-02-21
+    ]
+
+
+  ],
+  align(center)[
+    #image("media/cost.jpg", width: 120mm)
+  ],
+)
+
+#speaker-note[
+  Added. GLM-5 is notably the cheapest in the table — worth pointing out to students as a discussion point about the cost/quality tradeoff.
+]
+
+== Model Structure
+
+Modern LLMs are more than just stacked attention:
+
+#grid(
+  columns: (1fr, 1fr, 1fr),
+  align: top,
+  gutter: 1em,
+  block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
+    *Mixture of Experts*
+
+    Not all parameters activate for every token. Routes computation to specialist sub-networks. More efficient scaling.
+  ],
+  block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
+    *Multimodal*
+
+    Images, audio, PDFs as input and output. The model sees more of the world than text alone.
+  ],
+  grid(
+    rows: auto,
+    gutter: 0.5em,
+    block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
+      *Tool Use*
+
+      Models can call external APIs, run code, search the web, even invoke *other AI models*.
+      #pause
+    ],
+    align(center)[#sym.arrow.t],
+    align(center)[_Makes AI *agentic*_],
+  ),
+)
+
+#speaker-note[
+  MoE is why models like Mixtral can be huge but still fast — only ~⅛ of parameters fire per token. Multimodal is increasingly the default for frontier models. Tool use is the key to everything we'll build in this workshop: the model can take actions in the world, not just produce text.
 ]
 
 = What Does It Mean for an LLM to "Know"?
@@ -400,70 +445,104 @@ The context window is the model's *working memory*:
   *pattern matching*?
 ]
 
-== The Chinese Room
+== What does it mean to know?
 
-John Searle's thought experiment (1980):
+#grid(
+  columns: (1fr, 1fr),
+  align: top,
+  gutter: 1em,
+  [
+    *The Chinese Room* --- Searle (1980)
 
-#block(fill: luma(235), inset: 0.8em, radius: 0.4em, width: 90%)[
-  A person sits in a room with a rulebook. They receive Chinese characters, follow the rules to produce a response, and pass it back. The responses are indistinguishable from a native speaker's.
+    #block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
+      A person sits in a room with a rulebook. They receive Chinese characters, follow the rules to produce a response, and pass it back. The responses are just like a native speaker.
 
-  *Does the person understand Chinese?*
-]
+      *Does the person understand Chinese?* #pause
+    ]
+  ],
+  [
+    *Wittgenstein's Lion*
 
-#v(0.5em)
+    #block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
+      _"If a lion could speak, we could not understand him."_
+      #h(1fr) --- Wittgenstein
+    ]
+    - Language is grounded in *shared experience* and *games* we play
+    - An LLM has our words, not our experience
+    - What is obvious to you is not obvious to the model
+  ],
+)
 
-LLMs produce fluent, contextually appropriate output. \
-But does that mean they *understand*?
-
-#speaker-note[
-  Don't resolve this for students — the philosophical debate is genuinely ongoing. The practical implication: don't anthropomorphize the model. It can produce wrong answers with complete confidence and perfect fluency. "Understanding" is not the same as "pattern matching over a very large corpus."
-]
-
-== Wittgenstein's Lion
-
-#block(fill: luma(230), inset: 1em, radius: 0.5em, width: 90%)[
-  _"If a lion could speak, we could not understand him."_ \
-  #h(1fr) --- Ludwig Wittgenstein, _Philosophical Investigations_
-]
-
-#v(0.5em)
-
-- Language is grounded in *shared forms of life* --- embodied experience, culture, context
-- An LLM has absorbed our words, but not our experience
-- Things that are *obvious to you* are not always obvious to the model
-
-#v(0.5em)
-
-*Implication for prompting:* \
-State your assumptions. Provide context. Don't assume shared standpoint.
+#v(1em)
+#align(center, [
+  LLMs produce fluent output. But do they *understand*?
+])
 
 #speaker-note[
-  Wittgenstein's point: even perfect grammar from a lion would be uninterpretable because lions don't share our form of life. LLMs have the grammar and the words but not the embodied grounding. This is why domain context in prompts matters enormously — the model genuinely doesn't know what industry, what codebase, what constraints you're working under unless you tell it.
+  Don't resolve either question — the philosophical debate is ongoing. The practical implication of both: don't anthropomorphize the model. It can be wrong with complete confidence. Wittgenstein: even perfect grammar from a lion is uninterpretable without shared experience. LLMs have the words but not the grounding — which is why domain context in prompts matters so much.
 ]
 
-== The Paperclip Maximizer
 
-Nick Bostrom's alignment thought experiment:
+== AI Alignment
 
-#block(fill: luma(230), inset: 0.8em, radius: 0.4em, width: 90%)[
-  An AI is tasked with maximising paperclip production. \
-  It converts *all available matter* into paperclips. \
-  It was not malicious --- it was perfectly aligned with its stated goal.
+Nick Bostrom's *paperclip maximizer* thought experiment:
+
+#block(fill: luma(230), inset: 0.8em, radius: 0.4em)[
+  A superintelligent AI is assigned a simple and specific goal: \
+  #align(center, [_maximize the production of paperclips_])
+  The AI eventually realizes that humans are getting in the way of making more paperclips, so it systematically takes over the planet and converts all available material on Earth—including humans and their infrastructure—into paperclips.
 ]
-
 #v(0.5em)
 
-*Alignment*: does the model do what you *actually* want, \
-not just what you *literally said*?
-
-Evaluate your AI for:
-- Resistance to *specification gaming*
-- Resistance to wandering off and doing *absurd things*
-- Sensible behaviour on *edge cases*
+#align(center, [
+  *Alignment*: does the model do what you *actually* want, \
+  not just what you *literally said*?
+])
 
 #speaker-note[
   This connects directly to agentic AI: when you give a model tools and autonomy, misaligned goals become dangerous rather than just annoying. A coding agent that "maximises test coverage" might delete failing tests. Always think about what metric the model is actually optimising. This is why careful prompt design and human-in-the-loop review matter.
 ]
+
+
+== Prompting Untrusted LLMs
+
+#grid(
+  columns: (1fr, 1fr),
+  align: top,
+  gutter: 1em,
+  [
+    #text(weight: "bold", size: 1.5em)[Writing prompts:]
+    - Provide *assumptions* and *context*
+    - Don't anthropomorphize the model
+    - LLMs are often wrong with *complete confidence*
+
+    Know your best practices:
+    - Give the AI the ability to refuse requests
+    - Tell the model how to handle ambiguity
+    - Structure prompts and output
+
+    Evaluate your AI for:
+    - *Specification gaming*
+    - Wandering off and doing *absurd things*
+    #pause
+  ],
+  [
+    #text(weight: "bold", size: 1.5em)[Deploying:]
+    - Version-control your prompts and model
+    - Test your LLM thoroughly
+      - maintain an evaluation set
+      - fuzzers
+
+    Have safeguards in place:
+    - Continuously gather more test data
+      - Especially *edge cases*
+    - Have a human in the loop
+    - Guardrails (especially *other LLMs*)
+    - Spot checks
+
+    Design your applications to be low-risk
+  ],
+)
 
 == The Importance of Good Judgement
 
