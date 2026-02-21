@@ -4,21 +4,22 @@ These are the notes and slides for the hands-on AI workshop taught to NUS BME (?
 
 ## Flow
 
-1. Introduction (`01-introduction/`)
+1. Introduction
   a. What is a LLM?
-  b. What is Agentic AI?
-  c. Patterns
-  d. Practice
-
+  
 2. Task: Label Design
   a. Basic one-shot problem solving
   b. Iterative development
   c. Tool use
+  d. Discussion
 
-3. Task: ???
+3. Agentic AI introduction
+  b. What is Agentic AI?
+  c. Patterns
+  d. Practice
+
+4. Task: Multiagent Triage bot
   a. Test-driven development
-  a. Skill development
-  b. MCP?
-
-4. DIY MicroClaw?
-  a. Some sort of independent agent.
+  b. Skill development
+  c. MCP?
+  d. Discussion
