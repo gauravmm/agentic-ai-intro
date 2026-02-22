@@ -72,6 +72,27 @@ Add `<touying:hidden>` to suppress a section from the outline/progress bar.
 #focus-slide[Big statement here.]
 ```
 
+### Animation in grids
+
+`#pause` and `#meanwhile` are processed in **source order**, not grid-position order. In a 2×2 grid, the default source order is row-major: (0,0) → (0,1) → (1,0) → (1,1). This means you cannot use `#pause` in column 0 row 1 to delay column 1 row 0 — it comes too late in source order.
+
+**Trick**: use `grid.cell(x:, y:)` to explicitly position cells, then write them in the source order that matches the desired animation sequence.
+
+Example — reveal left column fully, then right column together:
+
+```typst
+#grid(
+  columns: (1fr, 1fr), rows: (auto, auto), gutter: 1em,
+  // Source order: top-left → bottom-left → top-right → bottom-right
+  grid.cell(x: 0, y: 0)[left-top #pause #pause],
+  grid.cell(x: 0, y: 1)[#meanwhile left-bottom #pause],
+  grid.cell(x: 1, y: 0)[right-top],   // appears on subslide 3
+  grid.cell(x: 1, y: 1)[right-bottom], // appears on subslide 3
+)
+```
+
+`#meanwhile` rewinds to before the most recent `#pause`. The double `#pause` in the first cell creates an anchor two steps ahead; `#meanwhile` in the second cell steps back one, landing on subslide 2. Subsequent cells without any marker continue from wherever the counter sits.
+
 ### Fonts available on this system
 
 Prefer: `DejaVu Sans Mono` (monospace), `DejaVu Sans` (sans-serif).

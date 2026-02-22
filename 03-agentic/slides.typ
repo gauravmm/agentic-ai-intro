@@ -37,7 +37,6 @@
 
 = What is Agentic AI?
 
-
 == What is Agentic AI?
 
 #grid(
@@ -46,6 +45,7 @@
   [
     *Simple LLM*
     #include "figures/simple-llm.typ"
+    #pause
   ],
   [
     *Agentic AI*
@@ -54,82 +54,27 @@
 )
 
 #speaker-note[
-  Bridge from module 01: they've already seen how LLMs work at the token level. Now the question is what happens when you give one a loop and some tools. The distinction "chatbot vs agent" is a useful shorthand — don't get bogged down in definitions; the loop slide next will make it concrete.
+  Bridge from module 01: they've already seen how LLMs work at the token level. Now the question is what happens when you give one a loop and some tools. The distinction "chatbot vs agent" is a useful shorthand — don't get bogged down in definitions.
 ]
 
 
 == What is Agentic AI?
 
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 1em,
-  [
-    A *chatbot* answers a question.
-
-    An *agent* takes actions to reach a goal.
-
-    #v(0.5em)
-
-    - The model can *use tools*: read files, run code, call APIs
-    - It runs in a *loop*: act → observe → act again
-    - It keeps going until the goal is met — or it gives up
-
-    #v(0.5em)
-
-    #pause
-
-    Same underlying LLM. \
-    Very different *behaviour*.
-  ],
-  box(
-    fill: luma(1000),
-    stroke: luma(220),
-    radius: 0.5em,
-    inset: (left: 1.1em, right: 1.1em, top: 1.5em, bottom: 1.5em),
-    width: 100%,
-    [
-      #text(weight: "bold", size: 1.5em)[The key shift]
-
-      #v(0.5em)
-
-      From: _"what is the answer?"_
-
-      To: _"what should I *do* next?"_
-    ],
-  ),
-)
-
-#speaker-note[
-  Bridge from module 01: they've already seen how LLMs work at the token level. Now the question is what happens when you give one a loop and some tools. The distinction "chatbot vs agent" is a useful shorthand — don't get bogged down in definitions; the loop slide next will make it concrete.
-]
-
-
-== Real-World Examples
 
 #grid(
   columns: (1fr, 1fr),
   gutter: 1em,
-  align: top,
   [
-    #text(weight: "bold", size: 1.5em)[GitHub Copilot]
+    An *agent* is an LLM with a harness. The harness:
 
-    - Started as inline *autocomplete*
-    - Now: *Copilot Workspace* — takes an issue, writes code, opens a PR
-    - Loop: reads repo → plans changes → edits files → runs tests → iterates
+    - Provides access to *tools*: \
+      - read files, run code, call APIs
+      - spin up *sub-agents*
+      - specialized prompts (`SKILLS.md`)
 
-    #v(0.5em)
-
-    #text(weight: "bold", size: 1.5em)[AutoGPT / open-source agents]
-
-    - Early (2023) demos: autonomous web browsing, task execution
-    - Showed the potential — and the failure modes
-  ],
-  [
-    #text(weight: "bold", size: 1.5em)[Claude Code]
-
-    - What we're using *right now*
-    - Reads your codebase, writes and edits files, runs commands
-    - You are already inside an agent loop
+    - runs in a *loop*: \
+      - act → observe → act again
+      - It can decide to keep running or stop
 
     #v(0.5em)
 
@@ -137,47 +82,127 @@
       fill: luma(1000),
       stroke: luma(220),
       radius: 0.5em,
-      inset: 0.8em,
+      inset: (left: 1.1em, right: 1.1em, top: 1.0em, bottom: 1.0em),
       width: 100%,
-    )[
-      *The pattern is the same everywhere.* \
-      The details differ.
-    ]
+      [
+        *Same LLM*, new prompt: \
+        _"Given this goal, what do I do next?"_
+      ],
+    )
+  ],
+  [
+    *Agentic AI*
+    #include "figures/agentic-loop.typ"
   ],
 )
 
-#speaker-note[
-  Point out that students are literally inside Claude Code right now — this is a nice moment to make the abstract concrete. AutoGPT is worth mentioning as a cautionary tale: impressive demos, but unreliable in practice because it had no backpressure or consistency checking. We'll cover those patterns shortly.
-]
+#speaker-note[Emphasize that the LLM is the same, the tooling is a lot more rich.]
+
 
 == Key Vocabulary
 
 #grid(
-  columns: (1fr, 1fr),
-  rows: (1fr, 1fr),
-  gutter: 0.8em,
-  aside[Agent][
-    An LLM + a loop + tools. \
-    Acts autonomously toward a goal — reads, decides, acts, observes, repeats.
-  ],
-  aside[Skill][
-    A *transferable description of an ability*: how to break a problem into parts, or how to interact with a tool. \
-    Reusable across projects and models.
-  ],
+  columns: (1fr, 1fr, 1fr, 1fr),
+  rows: (auto, auto),
+  align: top,
+  row-gutter: 1em,
+  column-gutter: 1em,
+  text(weight: "bold", size: 1.5em)[Agent],
+  text(weight: "bold", size: 1.5em)[Skill],
+  text(weight: "bold", size: 1.5em)[Tool Use],
+  text(weight: "bold", size: 1.5em)[Sub-agents],
 
-  aside[Tool Use][
-    The model calls *external functions*: search the web, run code, read files, call APIs. \
-    The model decides *when* and *how* to call them.
+  box(fill: luma(230), outset: 0.5em, inset: (top: 0.2em, bottom: 0.2em), radius: 0.5em)[
+    *LLM + harness*
+
+    Harness _orchestrates_ the LLM, running it in a loop and giving it access to tools.
+
+    Acts autonomously toward a goal — reads, decides, acts, observes, repeats.
+
+    #pause
   ],
-  aside[MCP][
-    *Model Context Protocol* — a standard interface for connecting tools to models. \
-    Define once, plug into any MCP-compatible model.
+  [
+    #box(fill: luma(230), outset: 0.5em, inset: (top: 0.2em, bottom: 0.2em), radius: 0.5em)[
+      *portable ability*
+
+      Instructions and tools to perform a task, reusable across projects and models.
+    ]
+
+    #pause
+
+    #align(center, [
+      #sym.arrow.t \
+      Our next task!
+    ])
+
+    #pause
+  ],
+  box(fill: luma(230), outset: 0.5em, inset: (top: 0.2em, bottom: 0.2em), radius: 0.5em)[
+    *external functions*
+
+    Search the web, run code, read files, call APIs, use MCPs.
+
+    The model decides *when* and *how* to call them.
+
+    #pause
+  ],
+  box(fill: luma(230), outset: 0.5em, inset: (top: 0.2em, bottom: 0.2em), radius: 0.5em)[
+    *agents as tools*
+
+    Spawn independent agents,\give them goals and tools, and merge results.
+
+    Enables parallelism, specialisation, and delegation.
+
   ],
 )
 
 #speaker-note[
-  MCP analogy: it's the USB-C of AI tooling. Before MCP, every model had its own tool format; MCP standardises the contract. Skills are prompt engineering made portable — think of them like npm packages for agent behaviour. Emphasise that "agent" is not a special product, it's a *pattern*.
+  Emphasise that "agent" is not a special product, it's a *pattern*.
+  Skills are portable and lazy-loaded.
+  Tools are the way agents interact with the world.
+  Sub-agents are very powerful, but chew through tokens very quickly. Common to use cheaper LLMs for sub-agents.
 ]
+
+
+== Real-World Examples
+
+#grid(
+  columns: (1fr, 1fr),
+  rows: (auto, auto),
+  align: top,
+  gutter: 1em,
+  // Source order controls animation; x/y controls layout position.
+  // Sequence: copilot logo → copilot bullets → openclaw logo + bullets.
+  grid.cell(x: 0, y: 0, align: bottom, image("media/copilot.png", width: 90%)),
+  grid.cell(x: 0, y: 1)[
+    #meanwhile
+    - Started as inline autocomplete
+    - Now: *Copilot Workspace*
+      - fully hands-off agentic AI
+      - interact with it like a remote developer
+      - reads issues, fix the code, opens PRs
+      - reviews PRs for humans or AI
+
+    #v(0.5em)
+
+    *Claude Code* is currently the market leader
+
+    *AutoGPT* is an open-source alternative
+
+    #pause
+  ],
+  grid.cell(x: 1, y: 0, align: bottom, image("media/openclaw-logo-text-dark.png", width: 90%)),
+  grid.cell(x: 1, y: 1)[
+    - Personal AI agent
+    - Runs on your machine; triggered via *messaging apps* \
+      (WhatsApp, Telegram, Slack…)
+    - Can run shell commands, browse the web, read/write files, send email
+    - *Self-improving*: LLM writes and saves new skills for itself
+    - Open marketplace for new skills and tools
+    - MIT license, bring your own API key
+  ],
+)
+
 
 = Agent Patterns and Practice
 
@@ -188,28 +213,45 @@
   gutter: 1em,
   align: top,
   [
-    + *Vibe Coding* \
+    1. #text(weight: "bold", size: 1.2em, [Vibe Coding]) \
       #text(fill: luma(80), size: 0.9em)[Iterate fast; prompt first; fix later]
 
-    #v(0.3em)
-
-    + *AI-Driven AI Development* \
+    2. #text(weight: "bold", size: 1.2em, [AI-Driven AI Development]) \
       #text(fill: luma(80), size: 0.9em)[Use AI to write the prompts, evals, and scaffolding for other AI]
 
-    #v(0.3em)
-
-    + *Actor-Critic* \
+    3. #text(weight: "bold", size: 1.2em, [Actor-Critic]) \
       #text(fill: luma(80), size: 0.9em)[One model generates; another evaluates]
-  ],
-  [
-    #v(0.15em)
-    + *Complexity Ladder* \
+
+    4. #text(weight: "bold", size: 1.2em, [Complexity Ladder]) \
       #text(fill: luma(80), size: 0.9em)[Escalate task complexity step-by-step; check consistency at each rung]
 
-    #v(0.3em)
+    5. #text(weight: "bold", size: 1.2em, [Test-Driven Development]) \
+      #text(fill: luma(80), size: 0.9em)[Write tests first; work to pass them]
+  ],
+  [
+    #pause
+    #v(1fr)
+    #box(
+      fill: luma(1000),
+      stroke: luma(220),
+      radius: 0.5em,
+      inset: (left: 1.1em, right: 1.1em, top: 1.0em, bottom: 1.0em),
+      width: 100%,
+      [
+        _"It's no use trying to eat a steak with a teaspoon and a straw."_
 
-    + *Test-Driven Development* \
-      #text(fill: luma(80), size: 0.9em)[Write evals first; prompt-engineer to pass them]
+        #align(right)[— Anthony T. Hincks]
+      ],
+    )
+    #align(center, [
+      Choose the *right* tool for each job.
+    ])
+    #v(1em)
+    #align(center, [
+      Industry best-practices evolve quickly. \
+      *Follow them closely!*
+    ])
+    #v(1fr)
   ],
 )
 
