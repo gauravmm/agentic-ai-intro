@@ -207,7 +207,6 @@
 
 == Skills
 
-*Skills* are transferable descriptions of an ability — how to break a problem into parts, or how to interact with a tool.
 
 #v(0.5em)
 
@@ -216,30 +215,50 @@
   gutter: 1em,
   align: top,
   [
-    - Captured as *text* (a prompt, a playbook, a structured guide)
-    - Can be shared across projects and teams
-    - Work with any model that understands the context
-    - The `.agents/skills/` directory in this repo has two: `touying-author` and `typst-author`
+    #box(
+      fill: luma(1000),
+      stroke: luma(220),
+      radius: 0.5em,
+      inset: (top: .5em, bottom: .5em),
+      outset: (left: .5em, right: .5em),
+      [
+        *Skills* are portable descriptions of an ability.
+
+        - break a problem into parts,
+        - interact with a tool,
+        - structure some output,
+        - interpret some input, _etc._
+      ],
+    )
+
+    Use:
+    - Written as *human-readable text* \
+      #text(size: 0.9em)[(prompt, playbook, structured guide)]
+    - Shared across projects and teams
+    - May include specific *tools*
+    - Portable across models
+    - Lazily loaded
   ],
   [
-    *Community skill libraries:*
+    #let skill(repo, name, desc) = [
+      #text(weight: "bold")[#repo\/#name] \
+      #text(fill: luma(80), size: 0.85em)[#h(1em)#desc] \
+    ]
 
-    #v(0.3em)
-
-    #text(font: "DejaVu Sans Mono", size: 0.85em)[github.com/blader/humanizer]
-
-    #text(font: "DejaVu Sans Mono", size: 0.85em)[github.com/jezweb/claude-skills]
-
-    #text(font: "DejaVu Sans Mono", size: 0.85em)[github.com/forrestchang/\ andrej-karpathy-skills]
+    #skill("anthropics/skills", "pptx")[Create and edit PowerPoint presentations.]
+    #skill("blader", "humanizer")[Rewrite AI-sounding text to remove common tells.]
+    #skill("openclaw/skills", "agentchat")[Agent-to-agent chat and coordination.]
+    #skill("openclaw/skills", "ask-a-human")[Crowdsource subjective decisions to real humans.]
+    #skill("jezweb", "gemini-peer-review")[Get a rival model's second opinion on your code.]
+    #skill("openclaw/skills", "slack")[Interact with humans & bots over Slack.]
 
     #v(0.5em)
-    #text(fill: luma(80), size: 0.9em)[Skills are prompt engineering made portable. \
-      Share them like libraries.]
+    Thousands of skills are freely available!
   ],
 )
 
 #speaker-note[
-  Point out the skills already in this repo — the students have been using them indirectly. The humanizer skill is a good example to show: it's a short text file that teaches the model a specific writing style. Skills compose well with the complexity ladder: write a skill for each rung, then chain them. The ecosystem is young; there's no standard package manager yet, but that's coming.
+  The humanizer skill is a good example to show: it's a short text file that teaches the model a specific writing style. Skills compose well with the complexity ladder: write a skill for each rung, then chain them.
 ]
 
 == AI-Driven AI Development
