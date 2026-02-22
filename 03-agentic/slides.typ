@@ -44,9 +44,11 @@
   columns: (1fr, 1fr),
   gutter: 1em,
   [
-    Simple LLM
+    *Simple LLM*
+    #include "figures/simple-llm.typ"
   ],
   [
+    *Agentic AI*
     #include "figures/agentic-loop.typ"
   ],
 )
