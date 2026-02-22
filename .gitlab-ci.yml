@@ -1,0 +1,60 @@
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v/
+
+stages:
+  - build
+  - release
+
+.compile-slides:
+  stage: build
+  image: ghcr.io/typst/typst:latest
+  script:
+    - typst compile slides.typ slides.pdf
+  artifacts:
+    paths:
+      - "*/slides.pdf"
+    expire_in: 1 hour
+
+compile:01-introduction:
+  extends: .compile-slides
+  script:
+    - cd 01-introduction && typst compile slides.typ slides.pdf
+  artifacts:
+    paths:
+      - 01-introduction/slides.pdf
+    expire_in: 1 hour
+
+compile:03-agentic:
+  extends: .compile-slides
+  script:
+    - cd 03-agentic && typst compile slides.typ slides.pdf
+  artifacts:
+    paths:
+      - 03-agentic/slides.pdf
+    expire_in: 1 hour
+
+release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  needs:
+    - job: compile:01-introduction
+      artifacts: true
+    - job: compile:03-agentic
+      artifacts: true
+  script:
+    - echo "Creating release for $CI_COMMIT_TAG"
+  release:
+    tag_name: $CI_COMMIT_TAG
+    name: "Release $CI_COMMIT_TAG"
+    description: "Compiled slide decks for $CI_COMMIT_TAG"
+    assets:
+      links:
+        - name: "01-introduction slides"
+          url: "$CI_PROJECT_URL/-/jobs/artifacts/$CI_COMMIT_TAG/raw/01-introduction/slides.pdf?job=compile:01-introduction"
+          filepath: "/01-introduction-slides.pdf"
+          link_type: other
+        - name: "03-agentic slides"
+          url: "$CI_PROJECT_URL/-/jobs/artifacts/$CI_COMMIT_TAG/raw/03-agentic/slides.pdf?job=compile:03-agentic"
+          filepath: "/03-agentic-slides.pdf"
+          link_type: other

@@ -237,8 +237,8 @@
     *The catch:* Computing attention scales poorly with text length.
 
     $
-      & 100,000 "tokens" times 100,000 "tokens" \
-      & = 10,000,000,000 "multiplications"
+        & 100,000 "tokens" times 100,000 "tokens" times 2880 "dimensions" \
+      = & 28,800,000,000,000 "operations"
     $
 
     #v(0.5em)
@@ -496,8 +496,9 @@ Nick Bostrom's *paperclip maximizer* thought experiment:
 #v(0.5em)
 
 #align(center, [
-  *Alignment*: does the model do what you *actually* want, \
-  not just what you *literally said*?
+  *Alignment*: \
+  Does the model do what you *actually* want, not just what you literally said? \
+  When pursuing your goals, will the AI stay within *your methods*?
 ])
 
 #speaker-note[
