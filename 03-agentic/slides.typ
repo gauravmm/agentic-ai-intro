@@ -19,6 +19,17 @@
 
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
+// Labelled row item: bold title + inline description, fills grid cell height.
+#let label-item(title, body) = box(
+  fill: luma(240),
+  width: 100%,
+  height: 100%,
+  radius: 0.5em,
+  outset: (left: 0.5em, right: 0.5em),
+  inset: (top: 0.5em, bottom: 0.5em),
+  [#text(size: 1.2em, weight: "bold")[#title] \ #body],
+)
+
 // Grey box with bold title + centered body; height: 100% (fills grid cell)
 #let aside(title, body) = box(
   fill: luma(240),
@@ -263,8 +274,51 @@
 
 == AI-Driven AI Development
 
-#[
-  Use AI to write the prompts, evals, and scaffolding for other AI
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 3em,
+  align: top,
+  [
+    #v(1fr)
+    #box(
+      fill: luma(1000),
+      stroke: luma(220),
+      radius: 0.5em,
+      inset: (top: 1.0em, bottom: 1.0em),
+      outset: (left: .3em, right: .3em),
+      width: 100%,
+      align(center, [
+        If AI can *follow* a skill…
+
+        …AI can *write* a skill.
+      ]),
+    )
+    #v(0.5em)
+
+    #align(center)[*Close the loop* on self-improvement.]
+    #v(0.5em)
+    You prompt an AI \
+    #sym.arrow.r.curve to improve the prompts \
+    #sym.arrow.r.curve that make the next AI work better \
+    #sym.arrow.r.curve ...and repeat!
+    #v(1fr)
+    #pause
+  ],
+  [
+    #grid(
+      columns: 1,
+      rows: 1fr,
+      gutter: 0.4em,
+      label-item[Prompts][Write system prompts, few-shot examples, chain-of-thought templates],
+      label-item[Evals][Generate test cases, edge cases, and expected outputs from a spec],
+      label-item[Skills][Author reusable skill files for new tools or workflows],
+      label-item[Agents][Scaffold entire sub-agent pipelines with tools and handoffs],
+    )
+  ],
+)
+
+#speaker-note[
+  This is the slide where things get recursive and students usually laugh nervously. The key point: prompt engineering used to be a human skill. Now it's increasingly an AI task. Claude Code writing its own skills (like the ones we've been using this session) is a live example. Ask: "Who here has asked an AI to write a prompt for another AI?" — most hands go up.
 ]
 
 
@@ -551,54 +605,10 @@
     columns: 1,
     rows: 1fr,
     gutter: 0.4em,
-    box(
-      fill: luma(240),
-      width: 100%,
-      height: 100%,
-      radius: 0.5em,
-      outset: (left: 0.5em, right: 0.5em),
-      inset: (top: 0.5em, bottom: 0.5em),
-      [
-        #text(size: 1.2em, weight: "bold")[Autocomplete] \
-        Model *suggests*, human accepts or rejects on every keystroke.
-      ],
-    ),
-    box(
-      fill: luma(240),
-      width: 100%,
-      height: 100%,
-      radius: 0.5em,
-      outset: (left: 0.5em, right: 0.5em),
-      inset: (top: 0.5em, bottom: 0.5em),
-      [
-        #text(size: 1.2em, weight: "bold")[Interactive] \
-        Back-and-forth; human *steers* each step.
-      ],
-    ),
-    box(
-      fill: luma(240),
-      width: 100%,
-      height: 100%,
-      radius: 0.5em,
-      outset: (left: 0.5em, right: 0.5em),
-      inset: (top: 0.5em, bottom: 0.5em),
-      [
-        #text(size: 1.2em, weight: "bold")[Hands-off] \
-        Model handles long-running tasks; human *approves* the result.
-      ],
-    ),
-    box(
-      fill: luma(240),
-      width: 100%,
-      height: 100%,
-      radius: 0.5em,
-      outset: (left: 0.5em, right: 0.5em),
-      inset: (top: 0.5em, bottom: 0.5em),
-      [
-        #text(size: 1.2em, weight: "bold")[Autonomous] \
-        Model runs *without oversight*; humans intervene only when something breaks.
-      ],
-    ),
+    label-item[Autocomplete][Model *suggests*, human accepts or rejects on every keystroke.],
+    label-item[Interactive][Back-and-forth; human *steers* each step.],
+    label-item[Hands-off][Model handles long-running tasks; human *approves* the result.],
+    label-item[Autonomous][Model runs *without oversight*; humans intervene only when something breaks.],
   ),
 
   [
