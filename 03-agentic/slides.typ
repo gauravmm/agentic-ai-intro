@@ -1,6 +1,7 @@
 #import "@preview/touying:0.6.1": *
 #import themes.metropolis: *
 
+#import "@preview/tiaoma:0.3.0": qrcode
 #import "@preview/numbly:0.1.0": numbly
 
 #show: metropolis-theme.with(
@@ -323,17 +324,19 @@
     #pattern-list(highlight: 1)
   ],
   [
-    *What it is:*
+    #v(1fr)
+    #text(weight: "bold")[What it is:]
     - Prompt first, plan never
     - Iterate until it feels right
     - Let the AI fill in the details
 
-    *Works well when:*
+    #text(weight: "bold")[Works well when:]
     - Prototyping or exploring an idea
     - The task is small and throwaway
     - Speed $>>$ correctness
 
     Accumulates *technical debt* very fast because neither you nor the AI understands everything.
+    #v(1fr)
     #box(
       fill: luma(1000),
       stroke: luma(220),
@@ -343,6 +346,7 @@
       width: 100%,
       align(center, [*Know when to stop vibing.* ]),
     )
+    #v(1fr)
   ],
 )
 
@@ -403,10 +407,9 @@
     #pattern-list(highlight: 3)
   ],
   [
+    #v(1fr)
     Start simple, *add complexity in stages*.
-
     #v(0.5em)
-
     #grid(
       columns: (auto, 1fr),
       align: horizon,
@@ -459,6 +462,7 @@
         *Match tool and problem complexity.*
       ],
     )
+    #v(1fr)
   ],
 )
 
@@ -476,6 +480,7 @@
     #pattern-list(highlight: 4)
   ],
   [
+    #v(1fr)
     *Classic TDD:*
     + Write a failing test
     + Implement until it passes
@@ -501,6 +506,7 @@
         *Without them, you're flying blind.*
       ],
     )
+    #v(1fr)
   ],
 )
 
@@ -520,108 +526,116 @@
 
 #grid(
   columns: (1fr, 1fr),
-  gutter: 1em,
+  gutter: 2em,
   align: top,
-  [
-    The more autonomous the agent, the *higher the risk* — and the *higher the reward*.
+  grid(
+    columns: 1,
+    rows: 1fr,
+    gutter: 0.4em,
+    box(
+      fill: luma(240),
+      width: 100%,
+      height: 100%,
+      radius: 0.5em,
+      outset: (left: 0.5em, right: 0.5em),
+      inset: (top: 0.5em, bottom: 0.5em),
+      [
+        #text(size: 1.2em, weight: "bold")[Autocomplete] \
+        Model *suggests*, human accepts or rejects on every keystroke.
+      ],
+    ),
+    box(
+      fill: luma(240),
+      width: 100%,
+      height: 100%,
+      radius: 0.5em,
+      outset: (left: 0.5em, right: 0.5em),
+      inset: (top: 0.5em, bottom: 0.5em),
+      [
+        #text(size: 1.2em, weight: "bold")[Interactive] \
+        Back-and-forth; human *steers* each step.
+      ],
+    ),
+    box(
+      fill: luma(240),
+      width: 100%,
+      height: 100%,
+      radius: 0.5em,
+      outset: (left: 0.5em, right: 0.5em),
+      inset: (top: 0.5em, bottom: 0.5em),
+      [
+        #text(size: 1.2em, weight: "bold")[Hands-off] \
+        Model handles long-running tasks; human *approves* the result.
+      ],
+    ),
+    box(
+      fill: luma(240),
+      width: 100%,
+      height: 100%,
+      radius: 0.5em,
+      outset: (left: 0.5em, right: 0.5em),
+      inset: (top: 0.5em, bottom: 0.5em),
+      [
+        #text(size: 1.2em, weight: "bold")[Autonomous] \
+        Model runs *without oversight*; humans intervene only when something breaks.
+      ],
+    ),
+  ),
 
-    #v(0.5em)
+  [
+    #v(1fr)
 
     The key design question for any agentic system:
-
-    #v(0.3em)
-
     #box(
       fill: luma(1000),
       stroke: luma(220),
       radius: 0.5em,
       inset: 0.8em,
       width: 100%,
-    )[
-      *How much of the loop \
-      do you hand over?*
-    ]
-  ],
-  [
-    Things to consider:
+      align(center, [
 
+        *How much of the loop \
+        do you hand over?*
+      ]),
+    )
+
+    #v(1fr)
     - What is the *blast radius* of a mistake?
     - How *reversible* are the agent's actions?
     - How well can you *evaluate* the output?
     - Do you have *guardrails* in place?
 
-    #v(0.5em)
-
-    Low-stakes + reversible → hand over more. \
-    High-stakes + irreversible → keep human in the loop.
+    #v(1fr)
   ],
 )
 
 #speaker-note[
   This is the key architectural decision. "Blast radius" is a useful frame: deleting a file is low blast radius; sending an email to 10,000 customers is high. Reversibility is the other axis: you can undo a file edit, you cannot unsend an email. Most production systems today sit at "interactive" — the AI drafts, the human approves. Full autonomy is still rare outside of well-bounded tasks.
-]
 
-== Levels of Automation
-
-#grid(
-  columns: (1fr, 1fr, 1fr),
-  rows: (auto, 1fr),
-  gutter: 0.8em,
-  align(center)[*Autocomplete*], align(center)[*Interactive*], align(center)[*Hands-off*],
-  aside[Autocomplete][
-    #align(left)[
-      Model *suggests*, human accepts or rejects.
-
-      #v(0.3em)
-
-      - Copilot inline completion
-      - AI-assisted writing
-      - Code review suggestions
-
-      #v(0.3em)
-
-      Human stays in control at every keystroke.
-    ]
-  ],
-  aside[Interactive][
-    #align(left)[
-      Back-and-forth; human *steers* each step.
-
-      #v(0.3em)
-
-      - This workshop
-      - Pair-programming with AI
-      - Guided code generation
-
-      #v(0.3em)
-
-      Human reviews each action before it runs.
-    ]
-  ],
-  aside[Hands-off][
-    #align(left)[
-      Model runs autonomously; human *reviews* the result.
-
-      #v(0.3em)
-
-      - PR generation
-      - Issue triage
-      - Site reliability alerts
-
-      #v(0.3em)
-
-      Requires strong evals and guardrails.
-    ]
-  ],
-)
-
-#speaker-note[
   Most production systems sit in the middle column today. Hands-off is compelling but requires a lot of investment in evals and guardrails — the cost of a mistake is higher when no human saw it coming. The session students are about to do (multi-agent triage bot) is firmly in the "interactive" column, with a hands-off component at the end. Point out that the same task can live at different levels depending on how much you've validated it.
 ]
 
-#focus-slide[
-  The question isn't whether to use agents.
+= Let's Get Started
 
-  It's how much of the loop \
-  to hand over.
+#focus-slide[
+  #grid(
+    columns: (1fr, auto),
+    align: horizon,
+    gutter: 2em,
+    [
+      Form your groups. \
+      Open GitHub Codespaces \
+      Let's build something.
+
+      #text(font: "DejaVu Sans Mono", size: 0.6em)[
+        https://github.com/\
+        gauravmm/ai-tutorial-triage
+      ]
+    ],
+    [
+      #box(fill: white, inset: 1em)[
+        #qrcode("https://github.com/gauravmm/ai-tutorial-triage", width: 5cm)
+      ]
+    ],
+  )
 ]
