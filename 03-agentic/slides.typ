@@ -360,17 +360,18 @@
     #pattern-list(highlight: 2)
   ],
   [
-    *What it is:*
-    - Prompt first, plan never
-    - Iterate until it feels right
-    - Let the AI fill in the details
+    #v(1fr)
+    #text(weight: "bold")[Actor]
+    - Generates output: code, a plan, a draft
+    - Optimises for *plausibility*
+    - Fast, creative, sometimes wrong
 
-    *Works well when:*
-    - Prototyping or exploring an idea
-    - The task is small and throwaway
-    - Speed $>>$ correctness
+    #text(weight: "bold")[Critic]
+    - Evaluates the actor's output
+    - A *different prompt* with a different objective
+    - Optimises for *correctness* / *safety* / *style*
 
-    Accumulates *technical debt* very fast because neither you nor the AI understands everything.
+    #v(1fr)
     #box(
       fill: luma(1000),
       stroke: luma(220),
@@ -378,48 +379,15 @@
       inset: (top: 1.0em, bottom: 1.0em),
       outset: (left: .3em, right: .3em),
       width: 100%,
-      align(center, [*Know when to stop vibing.* ]),
+      align(center, [
+        The critic prompt is often *more important*\
+        than the actor prompt.
+      ]),
     )
+    #v(1fr)
   ],
 )
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 1em,
-  align: top,
-  [
-    #text(weight: "bold", size: 1.5em)[Actor]
 
-    - Generates output: code, a plan, a draft
-    - Optimises for *plausibility*
-    - Fast, creative, sometimes wrong
-
-    #v(1em)
-
-    The loop: \
-    #align(center)[
-      *Actor* #sym.arrow.r *Critic* #sym.arrow.r feedback #sym.arrow.r *Actor*
-    ]
-  ],
-  [
-    #text(weight: "bold", size: 1.5em)[Critic]
-
-    - Evaluates the actor's output
-    - A *different prompt* (or model) with a different objective
-    - Optimises for *correctness* / *safety* / *style*
-
-    #v(0.5em)
-
-    #box(
-      fill: luma(1000),
-      stroke: luma(220),
-      radius: 0.5em,
-      inset: 0.8em,
-      width: 100%,
-    )[
-      The critic prompt is often *more important* than the actor prompt.
-    ]
-  ],
-)
 
 #speaker-note[
   This mirrors how senior engineers review junior code. The actor doesn't need to be perfect — it needs to be good enough for the critic to improve. In practice, you can use the same model with two different system prompts: one tasked with "write code" and one tasked with "find every flaw in this code." The critic's job is adversarial by design.
@@ -428,44 +396,69 @@
 == The Complexity Ladder
 
 #grid(
-  columns: (2fr, 1fr),
+  columns: (12cm, 1fr),
   gutter: 1em,
   align: top,
   [
-    Start simple. Add complexity only when the simpler approach fails.
+    #pattern-list(highlight: 3)
+  ],
+  [
+    Start simple, *add complexity in stages*.
 
     #v(0.5em)
 
     #grid(
       columns: (auto, 1fr),
+      align: horizon,
       gutter: (0.4em, 0.5em),
-      [#box(fill: luma(190), inset: (x: 0.6em, y: 0.4em), radius: 0.3em)[*4*]],
+      [#box(
+        fill: luma(210),
+        stroke: (thickness: 0.4pt, paint: luma(100)),
+        inset: (x: 0.6em, y: 0.4em),
+        radius: 0.3em,
+      )[*4*]],
       [Full multi-agent pipeline with tool use],
 
-      [#box(fill: luma(210), inset: (x: 0.6em, y: 0.4em), radius: 0.3em)[*3*]], [Single agent with memory + tools],
-      [#box(fill: luma(225), inset: (x: 0.6em, y: 0.4em), radius: 0.3em)[*2*]],
+      [#box(
+        fill: luma(220),
+        stroke: (thickness: 0.4pt, paint: luma(100)),
+        inset: (x: 0.6em, y: 0.4em),
+        radius: 0.3em,
+      )[*3*]],
+      [Single agent with memory + tools],
+
+      [#box(
+        fill: luma(230),
+        stroke: (thickness: 0.4pt, paint: luma(100)),
+        inset: (x: 0.6em, y: 0.4em),
+        radius: 0.3em,
+      )[*2*]],
       [Chain of prompts with intermediate checks],
 
-      [#box(fill: luma(240), inset: (x: 0.6em, y: 0.4em), radius: 0.3em)[*1*]], [Single well-crafted prompt],
+      [#box(
+        fill: luma(240),
+        stroke: (thickness: 0.4pt, paint: luma(100)),
+        inset: (x: 0.6em, y: 0.4em),
+        radius: 0.3em,
+      )[*1*]],
+      [Single well-crafted prompt],
     )
 
-    #v(0.5em)
+    #v(1em)
+    - Errors at lower rungs are cheaper to fix.
+    - Aggressively check consistency in layers.
 
-    At *each rung*: verify output before climbing higher.
-  ],
-  aside[Consistency checking][
-    #align(left)[
-      After each step, ask: \
-      _"Does this still make sense?"_
-
-      #v(0.5em)
-
-      Use a critic, a test suite, or a human spot-check.
-
-      #v(0.5em)
-
-      Errors caught at rung 2 cost much less than errors caught at rung 4.
-    ]
+    #box(
+      fill: luma(1000),
+      stroke: luma(220),
+      radius: 0.5em,
+      inset: (top: 1.0em, bottom: 1.0em),
+      outset: (left: .3em, right: .3em),
+      width: 100%,
+      align(center)[
+        *Match tool and problem complexity.*
+      ],
+    )
   ],
 )
 
@@ -476,29 +469,23 @@
 == Test-Driven Development
 
 #grid(
-  columns: (1fr, 1fr),
+  columns: (12cm, 1fr),
   gutter: 1em,
   align: top,
   [
-    *Classic TDD:*
-
-    + Write a failing test
-    + Implement until it passes
-    + Refactor
-    + Repeat
-
-    #v(0.5em)
-
-    The test is the *specification*. \
-    Code is just the mechanism to satisfy it.
+    #pattern-list(highlight: 4)
   ],
   [
-    *AI TDD:*
+    *Classic TDD:*
+    + Write a failing test
+    + Implement until it passes
+    + Refactor → Repeat
 
-    + Write *evals* (test cases, expected outputs)
+    *AI TDD:*
+    + Prompt-engineer *evals* \
+      (test cases, expected outputs)
     + Prompt-engineer until they pass
-    + Refactor the prompt
-    + Repeat
+    + Refactor → Repeat
 
     #v(0.5em)
 
@@ -506,12 +493,14 @@
       fill: luma(1000),
       stroke: luma(220),
       radius: 0.5em,
-      inset: 0.8em,
+      inset: (top: 1.0em, bottom: 1.0em),
+      outset: (left: .3em, right: .3em),
       width: 100%,
-    )[
-      Evals are to AI what unit tests are to software. \
-      *Without them, you're flying blind.*
-    ]
+      align(center)[
+        Evals are to AI what unit tests are to software. \
+        *Without them, you're flying blind.*
+      ],
+    )
   ],
 )
 
