@@ -13,7 +13,8 @@
 
     let bw = 2.5 // box half-width
     let bh = 0.5 // box half-height
-    let rx = bw + 0.65 // x of loop-back rail
+    let lx = 3.35 // left rail x (between "You" box right edge and loop container left edge)
+    let lu = 8.5 // upper rail y (between loop container top and "Your prompt" bottom)
 
     // vertical centres (y-up in CeTZ)
     let yp = 9.8 // Your prompt
@@ -24,14 +25,14 @@
 
     // ── agentic loop container ──────────────────────────────────
     rect(
-      (-bw - 0.45, yv - bh - 0.45),
-      (bw + 0.45, yg + bh + 0.45),
+      (-bw - 0.45, yv - bh - 0.9),
+      (bw + 0.45, yg + bh + 0.9),
       stroke: (paint: loop-c, dash: "dashed", thickness: 0.7pt),
       fill: luma(246),
       radius: 0.4,
     )
     content(
-      (-bw / 2 - 0.2, yg + bh + .6),
+      (-bw / 2 - 0.2, yg + bh + 1.1),
       text(size: 0.72em, fill: luma(110))[agentic loop],
     )
 
@@ -60,12 +61,14 @@
     arr(yv, yd)
     node(yd, [Done])
 
-    // ── loop-back arrow (right rail: Verify → Gather) ───────────
+    // ── loop-back arrow (left rail: bottom of Verify → top of Gather) ──
     line(
-      (bw, yv),
-      (rx, yv),
-      (rx, yg),
-      (bw, yg),
+      (0, yv - bh), // bottom of Verify Results
+      (0, yv - bh - 0.3), // bottom of Verify Results
+      (-lx + 0.6, yv - bh - 0.3), // exit left
+      (-lx + 0.6, lu - 0.4), // up past loop container top
+      (0, lu - 0.4), // right to above Gather Context
+      (0, yg + bh), // down to top of Gather Context
       stroke: (paint: g-strk, thickness: 0.9pt),
       mark: (end: ">", fill: g-strk),
     )
@@ -96,7 +99,7 @@
     // ── dashed orange arrow: You → Take action ───────────────────
     line(
       (yx + hyw, ya),
-      (-bw, ya),
+      (-bw - 0.4, ya),
       stroke: (paint: you-c, dash: "dashed", thickness: 0.9pt),
       mark: (end: ">", fill: you-c),
     )
