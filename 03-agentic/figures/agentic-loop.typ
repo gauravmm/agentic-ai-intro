@@ -61,6 +61,56 @@
     arr(yv, yd)
     node(yd, [Done])
 
+    // ── tools node (right of Take action) ───────────────────────
+    let tx = 5.6 // tools box x centre
+    let tbw = 1.75 // tools box half-width
+    let tbh = 2.3 // tools box half-height
+
+    let r = bw + 0.7 // shared vertical rail x, between loop container and Tools
+    let dy = 0.2 // y offset to split entry/exit on Take action right side
+
+    // call:   upper-right of Take action → rail → top of Tools
+    line(
+      (bw, ya + dy),
+      (r, ya + dy),
+      (r, ya + tbh + 0.4),
+      (tx, ya + tbh + 0.4),
+      (tx, ya + tbh),
+      mark: (end: ">", fill: luma(50)),
+      stroke: (paint: luma(50), thickness: 0.8pt),
+    )
+    // result: bottom of Tools → rail → lower-right of Take action
+    line(
+      (tx, ya - tbh),
+      (tx, ya - tbh - 0.4),
+      (r, ya - tbh - 0.4),
+      (r, ya - dy),
+      (bw, ya - dy),
+      mark: (end: ">", fill: luma(50)),
+      stroke: (paint: luma(50), thickness: 0.8pt),
+    )
+    rect(
+      (tx - tbw, ya - tbh),
+      (tx + tbw, ya + tbh),
+      fill: luma(232),
+      radius: 0.26,
+      stroke: (paint: luma(150), thickness: 0.7pt),
+    )
+    content(
+      (tx, ya),
+      block(width: 3.2cm)[
+        #align(center)[#text(weight: "bold", size: 0.78em)[Tools]]
+        #v(0.2em)
+        #set text(size: 0.62em)
+        #sym.bullet Web search \
+        #sym.bullet Code execution \
+        #sym.bullet File read/write \
+        #sym.bullet MCP Tools \
+        #sym.bullet APIs / databases \
+        #sym.bullet *Other agents*
+      ],
+    )
+
     // ── loop-back arrow (left rail: bottom of Verify → top of Gather) ──
     line(
       (0, yv - bh), // bottom of Verify Results
