@@ -2,6 +2,7 @@
 
 #align(center)[
   #canvas({
+    let typst-rotate = rotate // save before draw shadows it
     import draw: *
 
     let g-fill = rgb("#c7d9c4") // sage green — loop nodes
@@ -69,21 +70,32 @@
       mark: (end: ">", fill: g-strk),
     )
 
-    // ── "You" box (left, aligned with Take action) ───────────────
-    let yx = -4.0
+    // ── "You" box (left side, rotated 90°) ───────────────────────
+    let yx = -4.15
+    let hyw = 0.5 // half-width  (narrow dimension)
+    let hyh = 3.45 // half-height (tall dimension)
+
     rect(
-      (yx - 1.45, ya - 0.48),
-      (yx + 1.45, ya + 0.48),
-      fill: luma(255),
-      radius: 0.22,
+      (yx - hyw, ya - hyh),
+      (yx + hyw, ya + hyh),
+      fill: rgb("#fff8f2"),
+      radius: 0.25,
       stroke: (paint: you-c, dash: "dashed", thickness: 0.9pt),
     )
-    content((yx, ya + 0.14), text(size: 0.70em)[You: interrupt, steer,])
-    content((yx, ya - 0.17), text(size: 0.70em)[or add context])
+    content(
+      (yx, ya),
+      typst-rotate(-90deg, reflow: true)[
+        #box(width: 8cm)[
+          #align(center)[
+            #text(size: 0.70em)[interrupt, steer, or add context]
+          ]
+        ]
+      ],
+    )
 
     // ── dashed orange arrow: You → Take action ───────────────────
     line(
-      (yx + 1.45, ya),
+      (yx + hyw, ya),
       (-bw, ya),
       stroke: (paint: you-c, dash: "dashed", thickness: 0.9pt),
       mark: (end: ">", fill: you-c),
