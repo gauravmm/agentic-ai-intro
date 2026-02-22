@@ -164,7 +164,7 @@
 ]
 
 
-== Real-World Examples
+== Real-World Agents
 
 #grid(
   columns: (1fr, 1fr),
@@ -204,29 +204,83 @@
 )
 
 
-= Agent Patterns and Practice
+== Skills
 
-== Common Patterns
+*Skills* are transferable descriptions of an ability — how to break a problem into parts, or how to interact with a tool.
+
+#v(0.5em)
 
 #grid(
   columns: (1fr, 1fr),
   gutter: 1em,
   align: top,
   [
-    1. #text(weight: "bold", size: 1.2em, [Vibe Coding]) \
-      #text(fill: luma(80), size: 0.9em)[Iterate fast; prompt first; fix later]
+    - Captured as *text* (a prompt, a playbook, a structured guide)
+    - Can be shared across projects and teams
+    - Work with any model that understands the context
+    - The `.agents/skills/` directory in this repo has two: `touying-author` and `typst-author`
+  ],
+  [
+    *Community skill libraries:*
 
-    2. #text(weight: "bold", size: 1.2em, [AI-Driven AI Development]) \
-      #text(fill: luma(80), size: 0.9em)[Use AI to write the prompts, evals, and scaffolding for other AI]
+    #v(0.3em)
 
-    3. #text(weight: "bold", size: 1.2em, [Actor-Critic]) \
-      #text(fill: luma(80), size: 0.9em)[One model generates; another evaluates]
+    #text(font: "DejaVu Sans Mono", size: 0.85em)[github.com/blader/humanizer]
 
-    4. #text(weight: "bold", size: 1.2em, [Complexity Ladder]) \
-      #text(fill: luma(80), size: 0.9em)[Escalate task complexity step-by-step; check consistency at each rung]
+    #text(font: "DejaVu Sans Mono", size: 0.85em)[github.com/jezweb/claude-skills]
 
-    5. #text(weight: "bold", size: 1.2em, [Test-Driven Development]) \
-      #text(fill: luma(80), size: 0.9em)[Write tests first; work to pass them]
+    #text(font: "DejaVu Sans Mono", size: 0.85em)[github.com/forrestchang/\ andrej-karpathy-skills]
+
+    #v(0.5em)
+    #text(fill: luma(80), size: 0.9em)[Skills are prompt engineering made portable. \
+      Share them like libraries.]
+  ],
+)
+
+#speaker-note[
+  Point out the skills already in this repo — the students have been using them indirectly. The humanizer skill is a good example to show: it's a short text file that teaches the model a specific writing style. Skills compose well with the complexity ladder: write a skill for each rung, then chain them. The ecosystem is young; there's no standard package manager yet, but that's coming.
+]
+
+== AI-Driven AI Development
+
+#[
+  Use AI to write the prompts, evals, and scaffolding for other AI
+]
+
+
+= Agent Patterns and Practice
+
+== Common Patterns
+
+// Numbered pattern list; pass highlight: int (1-5) to emphasise one item, none for all equal.
+#let pattern-list(highlight: none) = {
+  let items = (
+    ([Vibe Coding], [Iterate fast; prompt first; fix later]),
+    ([Actor-Critic], [One model generates; another evaluates]),
+    ([Complexity Ladder], [Escalate task complexity step-by-step; check consistency at each rung]),
+    ([Test-Driven Development], [Write tests first; work to pass them]),
+  )
+  v(.5fr)
+  for (i, item) in items.enumerate() {
+    let n = i + 1
+    let dimmed = highlight != none and highlight != n
+    let body-color = if dimmed { luma(180) } else { luma(80) }
+    let title-color = if dimmed { luma(160) } else { black }
+    [#n. #text(weight: "bold", size: 1.2em, fill: title-color, item.at(0)) \
+      #text(fill: body-color, size: 0.9em, item.at(1))
+
+    ]
+  }
+  v(1fr)
+}
+
+
+#grid(
+  columns: (12cm, 1fr),
+  gutter: 1em,
+  align: top,
+  [
+    #pattern-list()
   ],
   [
     #pause
@@ -262,38 +316,33 @@
 == Vibe Coding
 
 #grid(
-  columns: (1fr, 1fr),
+  columns: (12cm, 1fr),
   gutter: 1em,
   align: top,
   [
+    #pattern-list(highlight: 1)
+  ],
+  [
     *What it is:*
-
     - Prompt first, plan never
     - Iterate until it feels right
     - Let the AI fill in the details
 
-    #v(0.5em)
-
-    Works well when:
+    *Works well when:*
     - Prototyping or exploring an idea
     - The task is small and throwaway
-    - Speed matters more than correctness
+    - Speed $>>$ correctness
 
-    #pause
-  ],
-  aside[The trap][
-    #align(left)[
-      Fast to start. \
-      Hard to finish.
-
-      #v(0.5em)
-
-      Vibe-coded systems accumulate *technical debt* faster than hand-written ones — because neither you nor the AI fully understands the whole.
-
-      #v(0.5em)
-
-      *Know when to stop vibing.*
-    ]
+    Accumulates *technical debt* very fast because neither you nor the AI understands everything.
+    #box(
+      fill: luma(1000),
+      stroke: luma(220),
+      radius: 0.5em,
+      inset: (top: 1.0em, bottom: 1.0em),
+      outset: (left: .3em, right: .3em),
+      width: 100%,
+      align(center, [*Know when to stop vibing.* ]),
+    )
   ],
 )
 
@@ -303,6 +352,36 @@
 
 == Actor-Critic
 
+#grid(
+  columns: (12cm, 1fr),
+  gutter: 1em,
+  align: top,
+  [
+    #pattern-list(highlight: 2)
+  ],
+  [
+    *What it is:*
+    - Prompt first, plan never
+    - Iterate until it feels right
+    - Let the AI fill in the details
+
+    *Works well when:*
+    - Prototyping or exploring an idea
+    - The task is small and throwaway
+    - Speed $>>$ correctness
+
+    Accumulates *technical debt* very fast because neither you nor the AI understands everything.
+    #box(
+      fill: luma(1000),
+      stroke: luma(220),
+      radius: 0.5em,
+      inset: (top: 1.0em, bottom: 1.0em),
+      outset: (left: .3em, right: .3em),
+      width: 100%,
+      align(center, [*Know when to stop vibing.* ]),
+    )
+  ],
+)
 #grid(
   columns: (1fr, 1fr),
   gutter: 1em,
@@ -437,47 +516,16 @@
 )
 
 #speaker-note[
-  Most people skip evals entirely because writing them feels like overhead. But without evals, prompt changes are invisible regressions — you fix one thing and break three others with no way to know. Even a small eval set (10–20 examples) transforms prompt engineering from guesswork into iteration. "Prompt from examples" is a related technique: give the model 5 example input-output pairs and ask it to write the system prompt.
+  Most people skip evals entirely because writing them feels like overhead. But without evals, prompt changes are invisible regressions — you fix one thing and break three others with no way to know. Even a small eval set (10-20 examples) transforms prompt engineering from guesswork into iteration. "Prompt from examples" is a related technique: give the model 5 example input-output pairs and ask it to write the system prompt.
 ]
 
-== Skills
+#focus-slide[
+  How much *control* \
+  do you hand over?
 
-*Skills* are transferable descriptions of an ability — how to break a problem into parts, or how to interact with a tool.
-
-#v(0.5em)
-
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 1em,
-  align: top,
-  [
-    - Captured as *text* (a prompt, a playbook, a structured guide)
-    - Can be shared across projects and teams
-    - Work with any model that understands the context
-    - The `.agents/skills/` directory in this repo has two: `touying-author` and `typst-author`
-  ],
-  [
-    *Community skill libraries:*
-
-    #v(0.3em)
-
-    #text(font: "DejaVu Sans Mono", size: 0.85em)[github.com/blader/humanizer]
-
-    #text(font: "DejaVu Sans Mono", size: 0.85em)[github.com/jezweb/claude-skills]
-
-    #text(font: "DejaVu Sans Mono", size: 0.85em)[github.com/forrestchang/\ andrej-karpathy-skills]
-
-    #v(0.5em)
-    #text(fill: luma(80), size: 0.9em)[Skills are prompt engineering made portable. \
-      Share them like libraries.]
-  ],
-)
-
-#speaker-note[
-  Point out the skills already in this repo — the students have been using them indirectly. The humanizer skill is a good example to show: it's a short text file that teaches the model a specific writing style. Skills compose well with the complexity ladder: write a skill for each rung, then chain them. The ecosystem is young; there's no standard package manager yet, but that's coming.
+  How much do you \
+  *trust* the machine?
 ]
-
-= Using LLMs in Practice
 
 == Human-in-the-Loop
 
