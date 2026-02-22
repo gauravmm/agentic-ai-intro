@@ -1,0 +1,68 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  compile-01-introduction:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: typst-community/setup-typst@v3
+      - run: typst compile slides.typ slides.pdf
+        working-directory: 01-introduction
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 01-introduction-slides
+          path: 01-introduction/slides.pdf
+          retention-days: 1
+
+  compile-03-agentic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: typst-community/setup-typst@v3
+      - run: typst compile slides.typ slides.pdf
+        working-directory: 03-agentic
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 03-agentic-slides
+          path: 03-agentic/slides.pdf
+          retention-days: 1
+
+  release:
+    needs: [compile-01-introduction, compile-03-agentic]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Determine release tag
+        id: tag
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            echo "name=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Stage release assets
+        run: |
+          cp artifacts/01-introduction-slides/slides.pdf 01-introduction-slides.pdf
+          cp artifacts/03-agentic-slides/slides.pdf 03-agentic-slides.pdf
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.name }}
+          name: Release ${{ steps.tag.outputs.name }}
+          body: Compiled slide decks for ${{ steps.tag.outputs.name }}
+          fail_on_unmatched_files: true
+          files: |
+            01-introduction-slides.pdf
+            03-agentic-slides.pdf
