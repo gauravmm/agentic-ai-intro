@@ -197,9 +197,9 @@
 
     #v(0.5em)
 
-    *Claude Code* is currently the market leader
-
-    *AutoGPT* is an open-source alternative
+    Other examples:
+    - *Claude Code* and *Codex* for code
+    - *Notion AI*: agentic assistant for your notes and docs
 
     #pause
   ],
