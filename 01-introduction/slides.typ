@@ -476,7 +476,7 @@ Modern LLMs are more than just stacked attention:
 
 #v(1em)
 #align(center, [
-  LLMs produce fluent output. But do they *understand*?
+  LLMs produce fluent output. But they don't *understand* in the way humans do.
 ])
 
 #speaker-note[
@@ -616,6 +616,102 @@ Nick Bostrom's *paperclip maximizer* thought experiment:
 #speaker-note[
   Prompt engineering sounds serious but is really just asking clearly. Don't overcomplicate it, but don't underthink it either. The resources are solid.
 ]
+
+== Prompts: From Vague to Specific
+
+#let add = text.with(fill: rgb("#1a6faf"), weight: "bold")
+#let pblock(body) = block(
+  fill: luma(240),
+  inset: (x: 0.0em, y: 0.6em),
+  outset: (x: 0.6em, y: 0.2em),
+  radius: 0.35em,
+  width: 100%,
+)[#text(font: "DejaVu Sans Mono", size: .88em)[#body]]
+#let badge(body) = box(
+  fill: rgb("#1a6faf"),
+  radius: 0.3em,
+  inset: (x: 0.6em, y: 0.3em),
+)[#text(fill: white, weight: "bold", size: 0.9em)[#body]]
+
+#let pblock-prev(body) = {
+  block(
+    radius: 0.35em,
+    width: 100%,
+  )[#text(font: "DejaVu Sans Mono", size: .78em, fill: luma(120))[#body]]
+}
+
+#let prompt-slide(prompt, badge-text: none, desc: none, before: none) = {
+  if before != none {
+    before
+  }
+  pblock(prompt)
+  if badge-text != none {
+    badge[#badge-text]
+    linebreak()
+  }
+  desc
+  v(1fr)
+}
+
+
+#prompt-slide(
+  ["Summarize this."],
+  desc: [No subject, format, or scope; the model must guess everything.],
+)
+
+#speaker-note[Start here. Ask the audience: what would _you_ do if someone handed you a document and said "summarize this"? You'd have to make a lot of calls.]
+
+---
+
+#prompt-slide(
+  ["Summarize the #add[key findings] of #add[this article]."],
+  before: {
+    pblock-prev["Summarize this."]
+  },
+  badge-text: [\+ Subject \+ Scope],
+  desc: [Specifies _what_ to read and _what_ to pull out of it.],
+)
+
+---
+
+#prompt-slide(
+  ["Summarize the key findings of this article #add[in 5 bullet points]."],
+  before: {
+    pblock-prev["Summarize this."]
+    pblock-prev["Summarize the key findings of this article."]
+  },
+  badge-text: [\+ Format \+ Quantity],
+  desc: [Constrains structure and length; rules out essays, one-liners, and arbitrarily long lists.],
+)
+
+---
+
+#prompt-slide(
+  ["Summarize the key findings of this article in 5 bullet points. #add[Provide a one-line takeaway for an executive audience.]"],
+  before: {
+    pblock-prev["Summarize this."]
+    pblock-prev["Summarize the key findings of this article."]
+    pblock-prev["Summarize the key findings of this article in 5 bullet points."]
+  },
+  badge-text: [\+ Audience \+ Length],
+  desc: [Shapes vocabulary, assumed knowledge, and how much detail to include.],
+)
+
+---
+
+#prompt-slide(
+  ["Summarize the key findings of this article in 5 bullet points. Provide a one-line takeaway for an executive audience, #add[focusing specifically on next quarter's finances]."],
+  before: {
+    pblock-prev["Summarize this."]
+    pblock-prev["Summarize the key findings of this article."]
+    pblock-prev["Summarize the key findings of this article in 5 bullet points."]
+    pblock-prev["Summarize the key findings of this article in 5 bullet points. Provide a one-line takeaway for an executive audience."]
+  },
+  badge-text: [\+ Angle],
+  desc: [Eliminates entire dimensions of the topic; the model now knows what to ignore.],
+)
+
+#speaker-note[Each addition constrains the output in a specific way. The final prompt is not "harder" for the model — it actually leaves less room to guess, which makes the model's job easier and the output more predictable.]
 
 == The Meta-Trick: Ask the AI
 
