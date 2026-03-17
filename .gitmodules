@@ -4,3 +4,6 @@
 [submodule "04-multiagent-triage/task"]
 	path = 04-multiagent-triage/task
 	url = git@github.com:gauravmm/ai-tutorial-triage.git
+[submodule "02-prescription-scraping/task"]
+	path = 02-prescription-scraping/task
+	url = git@github.com:gauravmm/ai-tutorial-scraping-prescriptions.git
