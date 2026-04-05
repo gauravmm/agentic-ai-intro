@@ -60,7 +60,7 @@
     #v(0.3em)
     - *PhD* in AI/ML --- Carnegie Mellon University
     #v(0.1em)
-    - Founder, *OcelliVision* @ A\*STAR
+    - Founder, *Ocellivision* @ A\*STAR
     #v(0.1em)
     - Founder, *Visigoth.ai* (SaaS)
     #v(0.1em)
