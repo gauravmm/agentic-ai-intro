@@ -8,11 +8,11 @@
   aspect-ratio: "16-9",
   footer: self => self.info.institution,
   config-info(
-    title: [Hands-on with Agentic AI],
-    subtitle: [Agentic AI],
-    author: [Dr. Gaurav Manek, A*STAR],
-    date: datetime.today(),
-    institution: [NTU BMES Makerspace Hackathon Workshop],
+    title: [Agentic AI for Beginners],
+    subtitle: [A Zero-Code Introduction],
+    author: [Dr. Gaurav Manek, Ocellivision, IMCB],
+    date: "2026-04-06",
+    institution: [TechWorks\@ROCK, A*STAR],
     logo: [🤖💥🧠🧑‍💻],
   ),
 )

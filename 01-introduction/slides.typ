@@ -8,11 +8,11 @@
   aspect-ratio: "16-9",
   footer: self => self.info.institution,
   config-info(
-    title: [Hands-on with Agentic AI],
-    subtitle: [Introduction],
-    author: [Dr. Gaurav Manek, A*STAR],
-    date: datetime.today(),
-    institution: [NTU BMES Makerspace Hackathon Workshop],
+    title: [Agentic AI for Beginners],
+    subtitle: [A Zero-Code Introduction],
+    author: [Dr. Gaurav Manek, Ocellivision, IMCB],
+    date: "2026-04-06",
+    institution: [TechWorks\@ROCK, A*STAR],
     logo: [🤖💥🧠🧑‍💻],
   ),
 )
@@ -111,8 +111,10 @@
   ],
   aside[Before we begin][
     + Create a *GitHub account* with your @\*.edu.sg email
-    + Sign up for *GitHub Education* (free Codespaces + Copilot)
-      #text(font: "DejaVu Sans Mono", link("https://github.com/education/students")[github.com/education/students])
+    + Either:
+      + Have an A*STAR GitHub Account (and VS Code installed), or
+      + Sign up for *GitHub Education* (if you have an @\*.edu.sg email), or
+      + Use a personal GitHub account with limited access
     + Form groups of *2--3 people*
   ],
 )
@@ -747,13 +749,13 @@ Nick Bostrom's *paperclip maximizer* thought experiment:
       Let's build something.
 
       #text(font: "DejaVu Sans Mono", size: 0.6em)[
-        https://github.com/\
-        gauravmm/ai-tutorial-labelgen
+        https://github.com/gauravmm/\
+        ai-tutorial-scraping-prescriptions
       ]
     ],
     [
       #box(fill: white, inset: 1em)[
-        #qrcode("https://github.com/gauravmm/ai-tutorial-labelgen", width: 5cm)
+        #qrcode("https://github.com/gauravmm/ai-tutorial-scraping-prescriptions", width: 5cm)
       ]
     ],
   )
