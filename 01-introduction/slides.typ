@@ -828,14 +828,13 @@ Nick Bostrom's *paperclip maximizer* thought experiment:
       Open GitHub Codespaces \
       Let's build something.
 
-      #text(font: "DejaVu Sans Mono", size: 0.6em)[
-        https://github.com/gauravmm/\
-        ai-tutorial-scraping-prescriptions
+      #text(font: "DejaVu Sans Mono", size: 1.6em)[
+        manek.sg/agentic-3
       ]
     ],
     [
       #box(fill: white, inset: 1em)[
-        #qrcode("https://github.com/gauravmm/ai-tutorial-scraping-prescriptions", width: 5cm)
+        #qrcode("https://manek.sg/agentic-3", width: 8cm)
       ]
     ],
   )
