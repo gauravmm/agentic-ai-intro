@@ -11,8 +11,8 @@
     title: [Agentic AI for Beginners],
     subtitle: [A Zero-Code Introduction],
     author: [Dr. Gaurav Manek, Ocellivision, IMCB],
-    date: "2026-04-06",
-    institution: [TechWorks\@ROCK, A*STAR],
+    date: "2026-05-13",
+    institution: [Special Session: MedTech Catapult & DxDHub, A*STAR],
     logo: [🤖💥🧠🧑‍💻],
   ),
 )
@@ -360,45 +360,76 @@ The context window is the model's *working memory*:
 
 == How Usage Is Billed
 
-#grid(
-  columns: (1fr, 120mm),
-  align: top,
-  gutter: 1em,
-  [
-    #set text(size: 0.8em)
-    #table(
-      columns: (auto, 1fr, auto, auto),
-      align: (left, left, right, right),
-      stroke: none,
-      fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) { luma(245) } else { white },
-      inset: (x: 0.6em, y: 0.45em),
-      table.header([*Company*], [*Model*], [*In*\ #text(size: 0.8em)[\$/M tok]], [*Out*\ #text(size: 0.8em)[\$/M tok]]),
-      table.cell(colspan: 4, fill: luma(210), inset: (x: 0.6em))[
-        #text(size: 1em, weight: "bold")[Frontier / reasoning]
-      ],
-      [Google], [Gemini 3.1 Pro Preview], [\$2.00], [\$12.00],
-      [Anthropic], [Claude Opus 4.7], [\$5.00], [\$25.00],
-      [Moonshot], [Kimi K2.6], [\$0.74], [\$3.50],
-      [Z.ai], [GLM-5.1], [\$0.98], [\$3.08],
-      table.cell(colspan: 4, fill: luma(210), inset: (x: 0.6em))[
-        #text(size: 1em, weight: "bold")[Cost-efficient]
-      ],
-      [Google], [Gemini 2.5 Flash], [\$0.30], [\$2.50],
-      [Anthropic], [Claude Haiku 4.5], [\$1.00], [\$5.00],
-      [DeepSeek], [DeepSeek V4 Flash], [\$0.14], [\$0.28],
-      [Z.ai], [GLM-4.7 Flash], [\$0.06], [\$0.40],
-    )
-    #v(0.3em)
-    #text(size: 0.75em, fill: luma(120))[
-      via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-05-12
-    ]
-
-
-  ],
-  align(center)[
-    #image("media/cost.jpg", width: 120mm)
-  ],
+#set text(size: 0.75em)
+#let red-color = rgb("#c0392b")
+#let fmt-price(v) = {
+  let total-3 = calc.round(v * 1000)
+  if calc.rem(total-3, 10) != 0 {
+    let whole = calc.floor(total-3 / 1000)
+    let frac = calc.rem(total-3, 1000)
+    let frac-str = if frac < 10 { "00" + str(frac) } else if frac < 100 { "0" + str(frac) } else { str(frac) }
+    "$" + str(whole) + "." + frac-str
+  } else {
+    let total-2 = calc.round(v * 100)
+    let whole = calc.floor(total-2 / 100)
+    let frac = calc.rem(total-2, 100)
+    let frac-str = if frac < 10 { "0" + str(frac) } else { str(frac) }
+    "$" + str(whole) + "." + frac-str
+  }
+}
+#let cell(model, inp, outp) = [
+  #text(size: 0.8em, fill: luma(80))[#model] \ #text(weight: "bold")[
+    #text(fill: if inp >= 1 { red-color } else { black })[#fmt-price(inp)] / #text(fill: if outp >= 5 { red-color } else { black })[#fmt-price(outp)]
+  ]
+]
+#let lab(name, family) = [
+  #name \ #text(size: 0.85em, fill: luma(100))[#family]
+]
+#table(
+  columns: (50mm, 1fr, 1fr, 1fr),
+  align: (left, left, left, left),
+  stroke: none,
+  fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) { luma(245) } else { white },
+  inset: (x: 0.6em, y: 0.5em),
+  table.header(
+    [*Lab*],
+    [*Frontier*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
+    [*Mid-tier*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
+    [*Cost-efficient*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
+  ),
+  lab([Google], [Gemini]),
+  cell([3.1 Pro Preview], 2.00, 12.00),
+  cell([3 Flash Preview], 0.50, 3.00),
+  cell([2.5 Flash Lite], 0.10, 0.40),
+  lab([Anthropic], [Claude]),
+  cell([Opus 4.7], 5.00, 25.00),
+  cell([Sonnet 4.6], 3.00, 15.00),
+  cell([Haiku 4.5], 1.00, 5.00),
+  lab([Moonshot], [Kimi]),
+  cell([K2.6], 0.74, 3.50),
+  cell([K2 Thinking], 0.60, 2.50),
+  [—],
+  lab([Z.ai], [GLM]),
+  cell([5.1], 0.98, 3.08),
+  cell([5 Turbo], 1.20, 4.00),
+  cell([4.7 Flash], 0.06, 0.40),
+  lab([Alibaba], [Qwen]),
+  cell([3 Max Thinking], 0.78, 3.90),
+  cell([3.6 Plus], 0.33, 1.95),
+  cell([3.5 Flash], 0.065, 0.26),
+  lab([DeepSeek], [DeepSeek]),
+  cell([V4 Pro], 0.44, 0.87),
+  cell([V3.2], 0.25, 0.38),
+  cell([V4 Flash], 0.14, 0.28),
+  lab([ByteDance], [Doubao Seed]),
+  cell([2.0 Pro], 0.47, 2.37),
+  cell([2.0 Lite], 0.25, 2.00),
+  cell([2.0 Mini], 0.10, 0.40),
 )
+#v(0.3em)
+#text(size: 0.7em, fill: luma(120))[
+  via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-05-12.
+]
 
 #speaker-note[
   Added. GLM-5 is notably the cheapest in the table — worth pointing out to students as a discussion point about the cost/quality tradeoff.
