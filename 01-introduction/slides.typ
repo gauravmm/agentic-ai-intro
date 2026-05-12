@@ -93,7 +93,7 @@
       inset: (left: 1.1em, right: 1.1em, top: 0.5em, bottom: 0.5em),
       width: 100%,
       [Hands-on: \
-        *Design a medical device label*],
+        *Optical prescription extraction*],
     )
 
     4. What is Agentic AI?
@@ -377,20 +377,20 @@ The context window is the model's *working memory*:
         #text(size: 1em, weight: "bold")[Frontier / reasoning]
       ],
       [Google], [Gemini 3.1 Pro Preview], [\$2.00], [\$12.00],
-      [Anthropic], [Claude Opus 4.6], [\$3.00], [\$25.00],
-      [Alibaba], [Qwen3 Max Thinking], [\$1.20], [\$6.00],
-      [Z.ai], [GLM-5], [\$0.30], [\$2.55],
+      [Anthropic], [Claude Opus 4.7], [\$5.00], [\$25.00],
+      [Moonshot], [Kimi K2.6], [\$0.74], [\$3.50],
+      [Z.ai], [GLM-5.1], [\$0.98], [\$3.08],
       table.cell(colspan: 4, fill: luma(210), inset: (x: 0.6em))[
         #text(size: 1em, weight: "bold")[Cost-efficient]
       ],
-      [Google], [Gemini 2.5 Flash], [\$0.15], [\$0.60],
-      [Anthropic], [Claude Haiku 4.5], [\$0.80], [\$4.00],
-      [Alibaba], [Qwen3.5 Plus], [\$0.40], [\$2.40],
+      [Google], [Gemini 2.5 Flash], [\$0.30], [\$2.50],
+      [Anthropic], [Claude Haiku 4.5], [\$1.00], [\$5.00],
+      [DeepSeek], [DeepSeek V4 Flash], [\$0.14], [\$0.28],
       [Z.ai], [GLM-4.7 Flash], [\$0.06], [\$0.40],
     )
     #v(0.3em)
     #text(size: 0.75em, fill: luma(120))[
-      via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-02-21
+      via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-05-12
     ]
 
 
