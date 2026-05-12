@@ -11,8 +11,8 @@
     title: [Agentic AI for Beginners],
     subtitle: [A Zero-Code Introduction],
     author: [Dr. Gaurav Manek, Ocellivision, IMCB],
-    date: "2026-04-06",
-    institution: [TechWorks\@ROCK, A*STAR],
+    date: "2026-05-13",
+    institution: [Special Session: MedTech Catapult & DxDHub, A*STAR],
     logo: [🤖💥🧠🧑‍💻],
   ),
 )
@@ -214,6 +214,23 @@
     - MIT license, bring your own API key
   ],
 )
+
+#slide(
+  composer: (1fr, auto),
+)[
+  #v(1fr)
+  *Meta's director of AI alignment lost her emails.*
+  #v(1fr)
+  _I had to run to my Mac mini like I was defusing a bomb._
+
+  #align(right)[
+    -- Summer Yue
+  ]
+  #v(1fr)
+][
+  #image("media/meta_email.png", height: 100%)
+]
+
 
 
 == Skills

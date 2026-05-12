@@ -360,8 +360,7 @@ The context window is the model's *working memory*:
 
 == How Usage Is Billed
 
-#set text(size: 0.75em)
-#let red-color = rgb("#c0392b")
+#let emph-color = rgb("#EB811B")
 #let fmt-price(v) = {
   let total-3 = calc.round(v * 1000)
   if calc.rem(total-3, 10) != 0 {
@@ -379,57 +378,65 @@ The context window is the model's *working memory*:
 }
 #let cell(model, inp, outp) = [
   #text(size: 0.8em, fill: luma(80))[#model] \ #text(weight: "bold")[
-    #text(fill: if inp >= 1 { red-color } else { black })[#fmt-price(inp)] / #text(fill: if outp >= 5 { red-color } else { black })[#fmt-price(outp)]
+    #text(fill: if inp >= 1 { emph-color } else { black })[#fmt-price(inp)] / #text(fill: if outp >= 5 { emph-color } else { black })[#fmt-price(outp)]
   ]
 ]
 #let lab(name, family) = [
   #name \ #text(size: 0.85em, fill: luma(100))[#family]
 ]
-#table(
-  columns: (50mm, 1fr, 1fr, 1fr),
-  align: (left, left, left, left),
-  stroke: none,
-  fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) { luma(245) } else { white },
-  inset: (x: 0.6em, y: 0.5em),
-  table.header(
-    [*Lab*],
-    [*Frontier*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
-    [*Mid-tier*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
-    [*Cost-efficient*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
-  ),
-  lab([Google], [Gemini]),
-  cell([3.1 Pro Preview], 2.00, 12.00),
-  cell([3 Flash Preview], 0.50, 3.00),
-  cell([2.5 Flash Lite], 0.10, 0.40),
-  lab([Anthropic], [Claude]),
-  cell([Opus 4.7], 5.00, 25.00),
-  cell([Sonnet 4.6], 3.00, 15.00),
-  cell([Haiku 4.5], 1.00, 5.00),
-  lab([Moonshot], [Kimi]),
-  cell([K2.6], 0.74, 3.50),
-  cell([K2 Thinking], 0.60, 2.50),
-  [—],
-  lab([Z.ai], [GLM]),
-  cell([5.1], 0.98, 3.08),
-  cell([5 Turbo], 1.20, 4.00),
-  cell([4.7 Flash], 0.06, 0.40),
-  lab([Alibaba], [Qwen]),
-  cell([3 Max Thinking], 0.78, 3.90),
-  cell([3.6 Plus], 0.33, 1.95),
-  cell([3.5 Flash], 0.065, 0.26),
-  lab([DeepSeek], [DeepSeek]),
-  cell([V4 Pro], 0.44, 0.87),
-  cell([V3.2], 0.25, 0.38),
-  cell([V4 Flash], 0.14, 0.28),
-  lab([ByteDance], [Doubao Seed]),
-  cell([2.0 Pro], 0.47, 2.37),
-  cell([2.0 Lite], 0.25, 2.00),
-  cell([2.0 Mini], 0.10, 0.40),
-)
-#v(0.3em)
-#text(size: 0.7em, fill: luma(120))[
-  via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-05-12.
+#block(height: 1fr, width: 100%)[
+  #table(
+    columns: (50mm, 1fr, 1fr, 1fr),
+    rows: (auto, 1fr, 1fr, 1fr, 1fr, 1fr, 1fr, 1fr),
+    align: (left + horizon, left + horizon, left + horizon, left + horizon),
+    stroke: none,
+    fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) { luma(245) } else { white },
+    inset: (x: 0.6em, y: 0.5em),
+    table.header(
+      [*Lab*],
+      [*Frontier*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
+      [*Mid-tier*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
+      [*Cost-efficient*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
+    ),
+    lab([Google], [Gemini]),
+    cell([3.1 Pro Preview], 2.00, 12.00),
+    cell([3 Flash Preview], 0.50, 3.00),
+    cell([2.5 Flash Lite], 0.10, 0.40),
+    lab([Anthropic], [Claude]),
+    cell([Opus 4.7], 5.00, 25.00),
+    cell([Sonnet 4.6], 3.00, 15.00),
+    cell([Haiku 4.5], 1.00, 5.00),
+    lab([Moonshot], [Kimi]),
+    cell([K2.6], 0.74, 3.50),
+    cell([K2 Thinking], 0.60, 2.50),
+    [—],
+    lab([Z.ai], [GLM]),
+    cell([5.1], 0.98, 3.08),
+    cell([5 Turbo], 1.20, 4.00),
+    cell([4.7 Flash], 0.06, 0.40),
+    lab([Alibaba], [Qwen]),
+    cell([3 Max Thinking], 0.78, 3.90),
+    cell([3.6 Plus], 0.33, 1.95),
+    cell([3.5 Flash], 0.065, 0.26),
+    lab([DeepSeek], [DeepSeek]),
+    cell([V4 Pro], 0.44, 0.87),
+    cell([V3.2], 0.25, 0.38),
+    cell([V4 Flash], 0.14, 0.28),
+    lab([ByteDance], [Doubao Seed]),
+    cell([2.0 Pro], 0.47, 2.37),
+    cell([2.0 Lite], 0.25, 2.00),
+    cell([2.0 Mini], 0.10, 0.40),
+  )
 ]
+#place(
+  bottom + right,
+  dy: 1em,
+  dx: -4em,
+  float: false,
+  text(size: 0.7em, fill: luma(120))[
+    via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-05-12.
+  ],
+)
 
 #speaker-note[
   Added. GLM-5 is notably the cheapest in the table — worth pointing out to students as a discussion point about the cost/quality tradeoff.
@@ -545,10 +552,13 @@ Nick Bostrom's *paperclip maximizer* thought experiment:
   columns: (1fr, auto, auto),
   gutter: 1em,
   [
-    - *Prompt injection*: crafted input tricks the model into ignoring its instructions
-    - *Data leakage*: what you send is processed externally --- don't send secrets
-    - *Hallucinations*: confident, fluent, *wrong*
-    - *Over-trust*: AI output is not ground truth
+    *Prompt injection*: crafted input tricks the model into ignoring its instructions
+
+    *Data leakage*: what you send is processed externally --- don't send secrets
+
+    *Hallucinations*: confident, fluent, *wrong*
+
+    *Over-trust*: AI output is not ground truth
     #v(1fr)
     #box(
       fill: luma(1000),
@@ -556,7 +566,7 @@ Nick Bostrom's *paperclip maximizer* thought experiment:
       radius: 0.5em,
       inset: (left: 1.1em, right: 1.1em, top: 0.5em, bottom: 0.5em),
       width: 100%,
-      [You are *accountable* for what your AI produces.],
+      align(center, [You are *accountable* for what your AI produces.]),
     )
     #v(1fr)
 
@@ -582,37 +592,76 @@ Nick Bostrom's *paperclip maximizer* thought experiment:
 ]
 
 
-== Prompting Untrusted LLMs
-
-#grid(
-  columns: (1fr, 1fr),
-  align: top,
-  gutter: 1em,
+== Designing for Imperfect Agents
+#let principle(num, title, body, example) = grid(
+  columns: (auto, 1fr),
+  column-gutter: 0.7em,
+  row-gutter: 0.1em,
+  align: (right + top, left + top),
+  text(weight: "bold", size: 3em, fill: luma(140))[#num.],
   [
-    #text(weight: "bold", size: 1.5em)[Writing prompts:]
-    - Provide *assumptions* and *context*
-    - Don't anthropomorphize; LLMs are often *confidently wrong*
-    - Give the AI the ability to refuse
-    - Structure prompts and output
-
-    Evaluate your AI for:
-    - *Specification gaming*
-    - Wandering off and doing *absurd things*
-    #pause
-  ],
-  [
-    #text(weight: "bold", size: 1.5em)[Deploying:]
-    - Version-control your prompts and model
-    - Test thoroughly: eval set and fuzzers
-
-    Have safeguards:
-    - Human in the loop
-    - Guardrails (especially *other LLMs*)
-    - Spot checks
-
-    Design your applications to be low-risk
+    *#title* --- #body \
+    #text(size: 0.85em, fill: luma(100))[_e.g._ #example]
   ],
 )
+
+#grid(
+  columns: (auto, 60mm),
+  gutter: 1em,
+  [
+    #v(1fr)
+    #principle(
+      [1],
+      [Blast radius],
+      [keep the consequences of a mistake small.],
+      [drafting a rude email vs. sending a rude email.],
+    )
+    #v(1fr)
+    #principle(
+      [2],
+      [Reversibility],
+      [keeping mistakes reversible.],
+      [move emails to trash, not delete them.],
+    )
+    #v(1fr)
+    #principle(
+      [3],
+      [Auditability],
+      [know what the agent did and why.],
+      [write logs where the agent can't touch them.],
+    )
+    #v(1fr)
+    #principle(
+      [4],
+      [Guardrails],
+      [monitor outputs before they leave the system.],
+      [a second LLM (or code) reviews every outbound email for PII.],
+    )
+    #v(1fr)
+    #principle(
+      [5],
+      [Isolation],
+      [separate concerns for minimal agent trust.],
+      [the agent reading meeting notes can't also send emails.],
+    )
+    #v(1fr)
+  ],
+  [
+    #pause
+    #block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
+      #text(size: 0.9em, fill: luma(100))[
+        "*LLM accident*" is not a diagnosis, like "*pilot error*" in an air-crash report.
+
+        Design systems that stay safe _*when*_ the agent is imperfect.
+      ]
+    ]
+  ],
+)
+#speaker-note[
+  Open with the "pilot error" framing: blaming the operator is a thought-terminating cliché. We don't fix air crashes by making pilots perfect — we design cockpits that stay safe when pilots are imperfect. Same here.
+
+  For curious students: this maps onto OWASP STRIDE for threat modelling — point them at it but don't go deep in a beginner session.
+]
 
 
 = How to Write a Prompt
