@@ -1,0 +1,38 @@
+{
+  "cSpell.words": [
+    // Typst / Touying API + macros used in slides
+    "touying",
+    "metropolis",
+    "numbly",
+    "tiaoma",
+    "qrcode",
+    "luma",
+    "hline",
+    "vline",
+    "emph",
+    "outp",
+    "pblock",
+    "tok",
+    // Models, vendors, and tools
+    "Kimi",
+    "Qwen",
+    "Mixtral",
+    "openrouter",
+    "Multimodal",
+    "agentic",
+    // Domain terms and coined words
+    "Searle",
+    "rulebook",
+    "Bostrom",
+    "superintelligent",
+    "sloperator",
+    "overcomplicate",
+    "underthink",
+    // British spellings
+    "maximises",
+    "optimising",
+    // Author / paths
+    "Manek",
+    "gauravmanek"
+  ]
+}

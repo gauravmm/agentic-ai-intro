@@ -12,7 +12,7 @@
     subtitle: [A Zero-Code Introduction],
     author: [Dr. Gaurav Manek, Ocellivision, IMCB],
     date: "2026-05-13",
-    institution: [Special Session: MedTech Catapult & DxDHub, A*STAR],
+    institution: [TechWorks\@ROCK],
     logo: [🤖💥🧠🧑‍💻],
   ),
 )
@@ -110,12 +110,16 @@
     )
   ],
   aside[Before we begin][
-    + Create a *GitHub account* with your @\*.edu.sg email
-    + Either:
-      + Have an A*STAR GitHub Account (and VS Code installed), or
-      + Sign up for *GitHub Education* (if you have an @\*.edu.sg email), or
-      + Use a personal GitHub account with limited access
-    + Form groups of *2--3 people*
+    #v(1fr)
+    Ensure your accounts are set up:
+
+    + *GitHub account* with personal email.
+      - Also *GitHub Copilot Free*
+    + *OpenCode Zen* account.
+    + *Google AI Studio* account.
+
+    #v(1fr)
+    All these are _completely free_.
   ],
 )
 
@@ -221,46 +225,6 @@
   "Fancy autocomplete" is deliberately provocative. It undersells what LLMs can do, but it's a useful grounding metaphor. When students are surprised by what a model can or can't do, returning to this framing helps: it's predicting the next plausible token based on patterns, not reasoning from first principles. The emergent capabilities at scale (math, coding, multi-step reasoning) were not explicitly programmed.
 ]
 
-== The Attention Mechanism
-
-
-#grid(
-  columns: (3fr, 1.2fr),
-  gutter: 1em,
-  [
-    *Transformers* (2017) changed everything:
-
-    - The model learns *which tokens matter* for each prediction
-    - Relationship between every token in a context window
-    - Stacked layers of attention + feed-forward networks
-
-    #v(0.5em)
-
-    *The catch:* Computing attention scales poorly with text length.
-
-    $
-        & 100,000 "tokens" times 100,000 "tokens" times 2880 "dimensions" \
-      = & 28,800,000,000,000 "operations"
-    $
-
-    #v(0.5em)
-
-    Despite the cost, it works remarkably well.
-  ],
-  grid(
-    columns: 1fr,
-    align: center,
-    image("media/attention_mask.png", height: 120mm),
-    v(0.5em),
-    link("https://github.com/jessevig/bertviz")[BertViz Project],
-  ),
-)
-
-#speaker-note[
-  Keep this brief unless students ask to go deeper. The key intuition: attention lets the model relate distant tokens — so "it" in "The cat sat because it was tired" can attend back to "cat" across many tokens of distance. This is the core mechanism that makes context work. The O(n^2) cost is why 1M token context windows require significant engineering effort.
-]
-
-
 == What is a Token?
 
 #grid(
@@ -358,6 +322,78 @@ The context window is the model's *working memory*:
 ]
 
 
+== The Attention Mechanism
+
+#grid(
+  columns: (3fr, 1.2fr),
+  gutter: 1em,
+  [
+    *Transformers* (2017) changed everything:
+
+    - The model learns *which tokens matter* for each prediction
+    - It relates *every token to every other token* in the context
+    - Stacked in dozens of layers with feed-forward networks
+
+    #v(0.5em)
+
+    *The catch:* it's like a meeting where *every word shakes hands with every other word* --- that's the grid on the right.
+
+    - 10 words: 45 handshakes. 1,000 words: about half a million.
+    - Double the text and the work *quadruples* --- it grows with the *square* of the length.
+
+    #v(0.3em)
+
+    _Long context is slow and expensive --- and the raw numbers get astronomical._
+  ],
+  grid(
+    columns: 1fr,
+    align: center,
+    image("media/attention_mask.png", height: 120mm),
+    v(0.5em),
+    link("https://github.com/jessevig/bertviz")[BertViz Project],
+  ),
+)
+
+#speaker-note[
+  Keep this brief. The intuition: attention relates every token to every other token --- so "it" in "The cat sat because it was tired" attends back to "cat" across long distances. The handshake analogy makes the quadratic cost concrete: n tokens means roughly n#super[2]\/2 pairings. The grid on the right (BertViz) is literally that token-by-token matrix. The next slide turns this cost into something you can feel.
+]
+
+
+== The Scale of Computation
+
+
+#[
+  // Per-column styling: bold number + unit, grey description.
+  #show grid.cell.where(x: 1): set text(weight: "bold", size: 1.05em)
+  #show grid.cell.where(x: 2): set text(weight: "bold", size: 1.05em)
+  #show grid.cell.where(x: 3): set text(fill: luma(110))
+
+  #grid(
+    columns: (1fr, auto, auto, 1fr),
+    row-gutter: 1.0em,
+    align: (right + horizon, right + horizon, left + horizon, left + horizon),
+    inset: (x, y) => (
+      y: 0.1em,
+      left: (0em, 0.8em, 0.125em, 0.6em).at(x),
+      right: (0.8em, 0.125em, 0.6em, 0em).at(x),
+    ),
+
+    [1 multiplication], [1], [second], [the blink of an eye],
+    [compare two tokens], [50], [minutes], [one TV episode],
+    [one token vs. the context], [9], [years], [a child's entire schooling #pause],
+    [], [10,000], [years], [all of human history],
+    [one full attention layer], [900,000], [years], [early humans tame fire],
+    [read all 100,000 tokens], [90 million], [years], [the age of the dinosaurs #pause],
+    [write the next word], [90 million], [years], [another dinosaur age #pause],
+    [write a full reply], [90 billion], [years], [6× the age of the universe],
+  )
+]
+
+#speaker-note[
+  All figures assume one hand-done multiplication per second. Derived from the previous slide's example: one attention layer over a 100K-token context is roughly 100,000 × 100,000 × 2,880 ≈ 2.9 × 10^13 operations ≈ 900,000 years at one per second. "Read all 100,000 tokens" multiplies by the model's ~100 layers ≈ 90 million years --- the age of the dinosaurs. Everything up to here is just *reading*: writing the answer is generation, and every output word costs about another full pass --- another dinosaur age. A ~1,000-word reply is ×1,000 ≈ 90 billion years, over six times the 13.8-billion-year age of the universe. The punchline: all of recorded human history (~10,000 years) is a rounding error next to a single attention layer, the whole reading timeline is dwarfed by writing one paragraph, and the model does all of this in seconds. Numbers are order-of-magnitude; the point is the scale, not the decimals.
+]
+
+
 == How Usage Is Billed
 
 #let emph-color = rgb("#EB811B")
@@ -387,7 +423,7 @@ The context window is the model's *working memory*:
 #block(height: 1fr, width: 100%)[
   #table(
     columns: (50mm, 1fr, 1fr, 1fr),
-    rows: (auto, 1fr, 1fr, 1fr, 1fr, 1fr, 1fr, 1fr),
+    rows: (auto, 1fr, 1fr, 1fr, 1fr, 1fr, 1fr),
     align: (left + horizon, left + horizon, left + horizon, left + horizon),
     stroke: none,
     fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) { luma(245) } else { white },
@@ -407,7 +443,7 @@ The context window is the model's *working memory*:
     cell([Sonnet 4.6], 3.00, 15.00),
     cell([Haiku 4.5], 1.00, 5.00),
     lab([Moonshot], [Kimi]),
-    cell([K2.6], 0.74, 3.50),
+    cell([K2.6], 0.68, 3.42),
     cell([K2 Thinking], 0.60, 2.50),
     [—],
     lab([Z.ai], [GLM]),
@@ -417,15 +453,11 @@ The context window is the model's *working memory*:
     lab([Alibaba], [Qwen]),
     cell([3 Max Thinking], 0.78, 3.90),
     cell([3.6 Plus], 0.33, 1.95),
-    cell([3.5 Flash], 0.065, 0.26),
+    cell([3.5 Flash], 0.07, 0.26),
     lab([DeepSeek], [DeepSeek]),
     cell([V4 Pro], 0.44, 0.87),
     cell([V3.2], 0.25, 0.38),
-    cell([V4 Flash], 0.14, 0.28),
-    lab([ByteDance], [Doubao Seed]),
-    cell([2.0 Pro], 0.47, 2.37),
-    cell([2.0 Lite], 0.25, 2.00),
-    cell([2.0 Mini], 0.10, 0.40),
+    cell([V4 Flash], 0.10, 0.20),
   )
 ]
 #place(
@@ -434,7 +466,7 @@ The context window is the model's *working memory*:
   dx: -4em,
   float: false,
   text(size: 0.7em, fill: luma(120))[
-    via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-05-12.
+    via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-05-31.
   ],
 )
 
