@@ -436,24 +436,24 @@ The context window is the model's *working memory*:
     ),
     lab([Google], [Gemini]),
     cell([3.1 Pro Preview], 2.00, 12.00),
-    cell([3 Flash Preview], 0.50, 3.00),
-    cell([2.5 Flash Lite], 0.10, 0.40),
+    cell([3.5 Flash], 1.50, 9.00),
+    cell([3.1 Flash Lite], 0.25, 1.50),
     lab([Anthropic], [Claude]),
-    cell([Opus 4.7], 5.00, 25.00),
+    cell([Opus 4.8], 5.00, 25.00),
     cell([Sonnet 4.6], 3.00, 15.00),
     cell([Haiku 4.5], 1.00, 5.00),
     lab([Moonshot], [Kimi]),
     cell([K2.6], 0.68, 3.42),
-    cell([K2 Thinking], 0.60, 2.50),
+    cell([K2.5], 0.40, 1.90),
     [—],
     lab([Z.ai], [GLM]),
     cell([5.1], 0.98, 3.08),
-    cell([5 Turbo], 1.20, 4.00),
+    cell([5], 0.60, 1.92),
     cell([4.7 Flash], 0.06, 0.40),
     lab([Alibaba], [Qwen]),
-    cell([3 Max Thinking], 0.78, 3.90),
+    cell([3.7 Max], 1.25, 3.75),
     cell([3.6 Plus], 0.33, 1.95),
-    cell([3.5 Flash], 0.07, 0.26),
+    cell([3.6 Flash], 0.19, 1.13),
     lab([DeepSeek], [DeepSeek]),
     cell([V4 Pro], 0.44, 0.87),
     cell([V3.2], 0.25, 0.38),
@@ -471,7 +471,9 @@ The context window is the model's *working memory*:
 )
 
 #speaker-note[
-  Added. GLM-5 is notably the cheapest in the table — worth pointing out to students as a discussion point about the cost/quality tradeoff.
+  Prices via OpenRouter, 2026-05-31. The cheapest cell is GLM 4.7 Flash (\$0.06 in / \$0.40 out) --- worth pointing out as a discussion point on the cost/quality tradeoff, and on how fast the Chinese labs (GLM, Qwen, DeepSeek, Kimi) are driving prices down versus the US frontier (Anthropic, Google).
+
+  Note on Google: the tiers span versions 3.1 / 3.5 / 3.1, which looks inconsistent. That's real --- Google iterates the Flash line faster than Pro, so the newest Flash is 3.5 while the newest Pro is still 3.1 (and only in preview). There is no 3.1 Flash; the 3.1 generation shipped only Pro and Flash Lite. If asked, the table shows the newest model available in each tier, not a single matched generation.
 ]
 
 == Model Structure
