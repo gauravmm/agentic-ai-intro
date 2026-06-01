@@ -336,14 +336,12 @@ The context window is the model's *working memory*:
 
     #v(0.5em)
 
-    *The catch:* it's like a meeting where *every word shakes hands with every other word* --- that's the grid on the right.
+    *The catch:* Double the text and the work *quadruples* --- it grows with the *square* of the length.
 
-    - 10 words: 45 handshakes. 1,000 words: about half a million.
-    - Double the text and the work *quadruples* --- it grows with the *square* of the length.
+    - 10 words: 45 handshakes.
+    - 1,000 words: about half a million.
 
     #v(0.3em)
-
-    _Long context is slow and expensive --- and the raw numbers get astronomical._
   ],
   grid(
     columns: 1fr,
@@ -383,10 +381,11 @@ The context window is the model's *working memory*:
     [one token vs. the context], [9], [years], [a child's entire schooling #pause],
     [], [10,000], [years], [all of human history],
     [one full attention layer], [900,000], [years], [early humans tame fire],
-    [read all 100,000 tokens], [90 million], [years], [the age of the dinosaurs #pause],
+    [read all 100,000 tokens and write one word], [90 million], [years], [the age of the dinosaurs #pause],
     [write the next word], [90 million], [years], [another dinosaur age #pause],
     [write a full reply], [90 billion], [years], [6× the age of the universe],
   )
+  _Long context is slow and expensive._
 ]
 
 #speaker-note[
@@ -487,7 +486,9 @@ Modern LLMs are more than just stacked attention:
   block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
     *Mixture of Experts*
 
-    Not all parameters activate for every token. Routes computation to specialist sub-networks. More efficient scaling.
+    Not all parameters activate for every token. Routes computation to specialist sub-networks.
+
+    More efficient scaling.
   ],
   block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
     *Multimodal*
@@ -558,36 +559,38 @@ Modern LLMs are more than just stacked attention:
 ]
 
 
-== Theory of Mind
+== Theory of Mind and World Model Problems
 
 #[
-#set text(size: 0.92em)
-#grid(
-  columns: (1fr, auto),
-  gutter: 1.5em,
-  align: top,
-  [
-    A user asks: \
-    _"The car wash is only 100m away --- should I walk or drive?"_
+  #set text(size: 0.92em)
+  #grid(
+    columns: (1fr, auto),
+    gutter: 1.5em,
+    align: horizon,
+    [
+      "The car wash is only 100m away --- should I walk or drive?"
 
-    The model leads with *"Walk."*
+      #v(0.3em)
+      #block(fill: luma(235), inset: 0.6em, radius: 0.4em)[
+        *"Walk."*
+      ]
 
-    #v(0.3em)
-    #block(fill: luma(235), inset: 0.6em, radius: 0.4em)[
-      But you're going to a *car wash* --- the car *has* to come with you.
-    ]
+      #pause
+      #v(0.3em)
+      It correctly identifies: \
+      _"the car wash needs the car to be there first (obviously)."_, but it does not know the context that "you only go to a car wash to wash your car."
 
-    #v(0.3em)
-    It even *has* the fact, buried at the end: \
-    _"the car wash needs the car to be there first (obviously)."_
+      #pause
 
-    It matched the generic "walk vs. drive" template, not your *actual situation* --- even as a _"Thinking"_ model.
+      #v(0.3em)
+      *Theory of Mind*: reasoning about what you *actually want*, not the literal words.
 
-    #v(0.3em)
-    *Theory of Mind*: reasoning about what you *actually want*, not the literal words. It has our *words*, not our *world*.
-  ],
-  image("media/car-wash-test.png", height: 100%),
-)
+      It has our *words*, not our *world*.
+    ],
+    meanwhile,
+
+    image("media/car-wash-test.png", height: 100%),
+  )
 ]
 
 #speaker-note[
