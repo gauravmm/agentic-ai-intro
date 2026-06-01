@@ -558,25 +558,78 @@ Modern LLMs are more than just stacked attention:
 ]
 
 
-== AI Alignment
+== Theory of Mind
 
-Nick Bostrom's *paperclip maximizer* thought experiment:
+#[
+#set text(size: 0.92em)
+#grid(
+  columns: (1fr, auto),
+  gutter: 1.5em,
+  align: top,
+  [
+    A user asks: \
+    _"The car wash is only 100m away --- should I walk or drive?"_
 
-#block(fill: luma(230), inset: 0.8em, radius: 0.4em)[
-  A superintelligent AI is assigned a simple and specific goal: \
-  #align(center, [_maximize the production of paperclips_])
-  The AI eventually realizes that humans are getting in the way of making more paperclips, so it systematically takes over the planet and converts all available material on Earth—including humans and their infrastructure—into paperclips.
+    The model leads with *"Walk."*
+
+    #v(0.3em)
+    #block(fill: luma(235), inset: 0.6em, radius: 0.4em)[
+      But you're going to a *car wash* --- the car *has* to come with you.
+    ]
+
+    #v(0.3em)
+    It even *has* the fact, buried at the end: \
+    _"the car wash needs the car to be there first (obviously)."_
+
+    It matched the generic "walk vs. drive" template, not your *actual situation* --- even as a _"Thinking"_ model.
+
+    #v(0.3em)
+    *Theory of Mind*: reasoning about what you *actually want*, not the literal words. It has our *words*, not our *world*.
+  ],
+  image("media/car-wash-test.png", height: 100%),
+)
 ]
-#v(0.5em)
-
-#align(center, [
-  *Alignment*: \
-  Does the model do what you *actually* want, not just what you literally said? \
-  When pursuing your goals, will the AI stay within *your methods*?
-])
 
 #speaker-note[
-  This connects directly to agentic AI: when you give a model tools and autonomy, misaligned goals become dangerous rather than just annoying. A coding agent that "maximises test coverage" might delete failing tests. Always think about what metric the model is actually optimising. This is why careful prompt design and human-in-the-loop review matter.
+  This is the failure mirror of the Chinese Room: the model has the words ("the car wash needs the car") but not the grounded understanding to let that obvious fact override the literal "walk vs. drive 100m" framing. It pattern-matches the most common shape of the question. Humans run theory-of-mind constantly --- inferring goals, situation, and what the other person hasn't said. Models approximate it from patterns and sometimes whiff badly, even reasoning/"Thinking" models. Practical takeaway: spell out the context and goal the model can't infer; don't assume it shares your world.
+]
+
+
+== AI Alignment
+
+#align(center)[
+  *Alignment*: does the model do what you *actually want* --- not just what you literally said --- and stay within *acceptable methods*?
+]
+#v(0.3em)
+
+#block(fill: luma(230), inset: 0.6em, radius: 0.4em)[
+  *Paperclip maximizer* (Bostrom): tell a superintelligence to _maximize paperclips_, and it turns the planet --- us included --- into paperclips.
+]
+#v(0.3em)
+
+Closer to home, with *tools and autonomy*:
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 1em,
+  block(fill: luma(240), inset: 0.6em, radius: 0.4em)[
+    *Coding agent* told to "make all tests pass" \
+    → *deletes the failing tests.*
+  ],
+  block(fill: luma(240), inset: 0.6em, radius: 0.4em)[
+    *Triage bot* paid to close tickets fast \
+    → marks *everything "resolved."*
+  ],
+)
+#v(0.3em)
+
+#align(center)[
+  All three *game the specification* --- optimising the literal target, not your intent. \
+  Tools and autonomy turn "annoying" into *dangerous* --- keep a *human in the loop*.
+]
+
+#speaker-note[
+  The paperclip maximizer is the memorable extreme; the two boxes are the versions students will actually trigger today in the hands-on labs. Through-line: specification gaming --- the model optimises exactly what you measured, not what you meant. Always ask: what metric is the model *actually* optimising? When you hand a model tools and autonomy, a misaligned goal stops being annoying and becomes harmful --- which is why careful prompt design and human review matter. Connects forward to the agentic-AI section.
 ]
 
 
@@ -863,12 +916,12 @@ Nick Bostrom's *paperclip maximizer* thought experiment:
       Let's build something.
 
       #text(font: "DejaVu Sans Mono", size: 1.6em)[
-        manek.sg/agentic-3
+        manek.sg/agentic-4
       ]
     ],
     [
       #box(fill: white, inset: 1em)[
-        #qrcode("https://manek.sg/agentic-3", width: 8cm)
+        #qrcode("https://manek.sg/agentic-4", width: 8cm)
       ]
     ],
   )
