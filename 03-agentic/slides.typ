@@ -68,7 +68,9 @@
 )
 
 #speaker-note[
-  Bridge from module 01: they've already seen how LLMs work at the token level. Now the question is what happens when you give one a loop and some tools. The distinction "chatbot vs agent" is a useful shorthand — don't get bogged down in definitions.
+  - Bridge from 01: they've seen LLM at the token level
+  - Now: what happens with a loop + tools
+  - "chatbot vs agent" is shorthand — don't over-define
 ]
 
 
@@ -103,7 +105,9 @@
   ],
 )
 
-#speaker-note[Emphasize that the LLM is the same, the tooling is a lot more rich.]
+#speaker-note[
+  - Same LLM, richer tooling
+]
 
 
 == Key Vocabulary
@@ -113,7 +117,7 @@
   rows: (auto, auto),
   align: top,
   row-gutter: 1em,
-  column-gutter: 1em,
+  column-gutter: 1.5em,
   text(weight: "bold", size: 1.5em)[Agent],
   text(weight: "bold", size: 1.5em)[Skill],
   text(weight: "bold", size: 1.5em)[Tool Use],
@@ -124,7 +128,7 @@
 
     Harness _orchestrates_ the LLM, running it in a loop and giving it access to tools.
 
-    Acts autonomously toward a goal — reads, decides, acts, observes, repeats.
+    Acts autonomously toward a goal.
   ],
   [
     #gblock(inset: (y: 0.2em), outset: 0.5em)[
@@ -148,17 +152,17 @@
   gblock(inset: (y: 0.2em), outset: 0.5em)[
     *agents as tools*
 
-    Spawn independent agents,\give them goals and tools, and merge results.
+    Spawn independent agents, give them goals and tools, and merge results.
 
     Enables parallelism, specialisation, and delegation.
   ],
 )
 
 #speaker-note[
-  Emphasise that "agent" is not a special product, it's a *pattern*.
-  Skills are portable and lazy-loaded.
-  Tools are the way agents interact with the world.
-  Sub-agents are very powerful, but chew through tokens very quickly. Common to use cheaper LLMs for sub-agents.
+  - "Agent" = pattern, not a product
+  - Skills: portable, lazy-loaded
+  - Tools: how agents interact with the world
+  - Sub-agents: powerful, token-heavy — use cheaper LLMs
 ]
 
 
@@ -270,7 +274,8 @@
 )
 
 #speaker-note[
-  The humanizer skill is a good example to show: it's a short text file that teaches the model a specific writing style. Skills compose well with the complexity ladder: write a skill for each rung, then chain them.
+  - Show humanizer: short file teaching a writing style
+  - Skills compose with the complexity ladder — chain one per rung
 ]
 
 == AI-Driven AI Development
@@ -313,7 +318,10 @@
 )
 
 #speaker-note[
-  This is the slide where things get recursive and students usually laugh nervously. The key point: prompt engineering used to be a human skill. Now it's increasingly an AI task. Claude Code writing its own skills (like the ones we've been using this session) is a live example. Ask: "Who here has asked an AI to write a prompt for another AI?" — most hands go up.
+  - The recursive slide — students laugh nervously
+  - Prompt eng moving from human skill → AI task
+  - Claude Code writes its own skills (we've used some today)
+  - Ask: "Who's had AI write a prompt for AI?" — most hands up
 ]
 
 
@@ -372,7 +380,9 @@
 )
 
 #speaker-note[
-  These aren't rigid categories — they overlap and compose. Vibe coding + actor-critic is a common combo. The point is to name the patterns so students can recognise them in the wild and talk about them precisely. Spend ~30 seconds here before going into each.
+  - Not rigid; overlap and compose (vibe + actor-critic common)
+  - Goal: name patterns so students recognise + discuss
+  - \~30s here before going into each
 ]
 
 == Vibe Coding
@@ -406,7 +416,10 @@
 )
 
 #speaker-note[
-  This is the most natural way people start using AI for code, and it *does* work for short-lived scripts. The danger is when vibe-coded systems make it into production. The AI can generate plausible-looking code that has subtle bugs, and you can't catch them if you never understood the logic. The transition from "vibe" to "rigorous" is where actor-critic and TDD come in.
+  - Natural starting point; works for short-lived scripts
+  - Danger: vibe-coded → production
+  - Plausible code with subtle bugs you can't catch
+  - Vibe → rigorous: actor-critic + TDD
 ]
 
 == Actor-Critic
@@ -443,7 +456,10 @@
 
 
 #speaker-note[
-  This mirrors how senior engineers review junior code. The actor doesn't need to be perfect — it needs to be good enough for the critic to improve. In practice, you can use the same model with two different system prompts: one tasked with "write code" and one tasked with "find every flaw in this code." The critic's job is adversarial by design.
+  - Mirrors senior reviewing junior
+  - Actor: good enough for critic to improve, not perfect
+  - Same model, two prompts: "write code" / "find every flaw"
+  - Critic is adversarial by design
 ]
 
 == The Complexity Ladder
@@ -489,7 +505,10 @@
 )
 
 #speaker-note[
-  The ladder is about matching tool complexity to problem complexity. People tend to jump straight to "full agent pipeline" because it feels powerful — then spend days debugging subtle failures that a single-prompt solution would have avoided. Consistency checking at each rung is the key discipline: it's the difference between a reliable pipeline and an impressive demo that breaks in production.
+  - Match tool complexity to problem complexity
+  - People jump to "full pipeline" → days debugging
+  - Single-prompt would often have worked
+  - Consistency checking at each rung = the discipline
 ]
 
 == Test-Driven Development
@@ -527,7 +546,10 @@
 )
 
 #speaker-note[
-  Most people skip evals entirely because writing them feels like overhead. But without evals, prompt changes are invisible regressions — you fix one thing and break three others with no way to know. Even a small eval set (10-20 examples) transforms prompt engineering from guesswork into iteration. "Prompt from examples" is a related technique: give the model 5 example input-output pairs and ask it to write the system prompt.
+  - Most skip evals — feels like overhead
+  - Without them: prompt changes = invisible regressions
+  - 10–20 examples transform guesswork → iteration
+  - Related: "prompt from examples" — 5 I/O pairs → ask for the system prompt
 ]
 
 == Human-in-the-Loop
@@ -569,9 +591,13 @@
 )
 
 #speaker-note[
-  This is the key architectural decision. "Blast radius" is a useful frame: deleting a file is low blast radius; sending an email to 10,000 customers is high. Reversibility is the other axis: you can undo a file edit, you cannot unsend an email. Most production systems today sit at "interactive" — the AI drafts, the human approves. Full autonomy is still rare outside of well-bounded tasks.
-
-  Most production systems sit in the middle column today. Hands-off is compelling but requires a lot of investment in evals and guardrails — the cost of a mistake is higher when no human saw it coming. The session students are about to do (multi-agent triage bot) is firmly in the "interactive" column, with a hands-off component at the end. Point out that the same task can live at different levels depending on how much you've validated it.
+  - The key architectural decision
+  - Blast radius: file delete (low) vs email 10K customers (high)
+  - Reversibility: undo file edit, cannot unsend email
+  - Most prod today: "interactive" (AI drafts, human approves)
+  - Hands-off needs heavy eval + guardrail investment
+  - Today's session = interactive, hands-off at the end
+  - Same task can live at different levels depending on validation
 ]
 
 
@@ -595,12 +621,12 @@
       Let's build something.
 
       #text(font: "DejaVu Sans Mono", size: 1.6em)[
-        manek.sg/agentic-3
+        manek.sg/agentic-4
       ]
     ],
     [
       #box(fill: white, inset: 1em)[
-        #qrcode("https://manek.sg/agentic-3", width: 8cm)
+        #qrcode("https://manek.sg/agentic-4", width: 8cm)
       ]
     ],
   )
