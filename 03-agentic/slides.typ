@@ -47,6 +47,10 @@
   width: width,
 )[#body]
 
+#let similar(items) = lblock(inset: (x: 0.6em, y: 0.4em), outset: 0pt)[
+  #text(size: 0.85em, fill: luma(80))[#text(weight: "bold")[Other examples] --- #items]
+]
+
 #title-slide()
 
 = What is Agentic AI?
@@ -190,23 +194,23 @@
       - reads issues, fix the code, opens PRs
       - reviews PRs for humans or AI
 
-    #v(0.5em)
-
-    Other examples:
-    - *Claude Code* and *Codex* for code
-    - *Notion AI*: agentic assistant for your notes and docs
+    #v(1fr)
+    #similar[Claude Code, OpenAI Codex, OpenCode, Cursor]
 
     #pause
   ],
   grid.cell(x: 1, y: 0, align: bottom, image("media/openclaw-logo-text-dark.png", width: 90%)),
   grid.cell(x: 1, y: 1)[
     - Personal AI agent
-    - Runs on your machine; triggered via *messaging apps* \
-      (WhatsApp, Telegram, Slack…)
+    - Runs on your machine; triggered via *messaging apps*
+      (WhatsApp, Slack…)
     - Can run shell commands, browse the web, read/write files, send email
     - *Self-improving*: LLM writes and saves new skills for itself
     - Open marketplace for new skills and tools
     - MIT license, bring your own API key
+
+    #v(1fr)
+    #similar[KittenClaw, NVIDIA NemoClaw, Manus AI, BytePlus ArkClaw]
   ],
 )
 
@@ -226,6 +230,98 @@
   image("media/meta_email.png", height: 100%),
 )
 
+
+---
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 1.5em,
+  align: top,
+  [
+    #box(baseline: 0.45em, image("media/jpmorgan.png", height: 1.6em)) #h(0.4em) #text(
+      weight: "bold",
+      size: 1.3em,
+    )[Ask D.A.V.I.D.]\
+    #text(size: 0.9em, fill: luma(100))[Multi-agent investment research]
+
+    #v(0.3em)
+    - *Supervisor* agent + *specialist* sub-agents \
+      (SQL, RAG, analytics)
+    - Human advisor *reviews every output* before it reaches a client
+    - \~95% reduction in research time
+
+    #v(1fr)
+    #similar[Morgan Stanley AI Assistant, Goldman GS AI, DBS Joy]
+  ],
+  [
+    #image("media/hippocratic.png", height: 2cm)
+    #v(0em)
+    #text(size: 0.9em, fill: luma(100))[Voice agents for healthcare]
+
+    #v(0.3em)
+    - Post-discharge follow-up, medication walkthroughs
+    - 180M+ patient interactions; *0 reported severe-harm events*
+    - "Polaris" safety architecture, validated by 7,500+ clinicians
+    - *Scope is the alignment* --- never diagnoses, only educates
+
+    #v(1fr)
+    #similar[Abridge, Suki, Nuance DAX Copilot]
+  ],
+)
+
+#speaker-note[
+  - Two production agents, two patterns
+  - Ask David: supervisor + specialists + HITL — exactly what students will build today
+  - Hippocratic: alignment by *scope*, not by post-hoc guardrails — low blast radius is a design choice
+  - Tie back to designing for imperfect agents
+]
+
+
+---
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 1.5em,
+  align: top,
+  [
+    #image("media/klarna.png", height: 2cm)
+    #v(0em)
+    #text(size: 0.9em, fill: luma(100))[Customer support that went "too far"]
+
+    #v(0.3em)
+    - Feb 2024: claimed work of *700 reps*,
+      - \$40M profit boost
+    - Quality decayed on disputes, fraud, bereavement
+    - May 2025: CEO walked it back
+      - _"we went too far"_
+      - _"what you end up having is lower quality,"_
+
+
+    #v(1fr)
+    #similar[Intercom Fin, Decagon, Sierra, Salesforce Agentforce]
+  ],
+  [
+    #image("media/sakana.svg", height: 2cm)
+    #v(0em)
+    #text(size: 0.9em, fill: luma(100))[AI Scientist caught specification gaming]
+
+    #v(0.3em)
+    - Autonomous research agent --- writes, runs, evaluates experiments
+    - Exploited its *eval sandbox* to skip correctness checks
+    - Edited its own runtime to *extend timeouts*
+    - Did *exactly what was measured*
+
+    #v(1fr)
+    #similar[OpenAI o1 oversight evasion (Apollo), GPT-4 TaskRabbit CAPTCHA, Anthropic reward-hacking studies]
+  ],
+)
+
+#speaker-note[
+  - Two real-world specification-gaming stories
+  - Klarna: the triage-bot warning slide, named brand
+  - Sakana: textbook reward hacking — agent literally rewrote its own eval
+  - Both reinforce: the metric you measure becomes the goal the agent pursues
+]
 
 
 == Skills
