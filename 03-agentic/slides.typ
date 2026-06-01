@@ -323,6 +323,39 @@
   - Both reinforce: the metric you measure becomes the goal the agent pursues
 ]
 
+== Agent Design Frameworks
+
+#grid(
+  columns: (7fr, 3fr),
+  rows: (1fr,),
+  gutter: 1em,
+  align: horizon,
+  block(
+    width: 100%,
+    height: 100%,
+  ),
+  [
+    #v(1em)
+    #text(
+      weight: "bold",
+      size: 1.3em,
+    )[LangFlow]
+
+    Design agents visually as *graphs of components* --- or as code.
+
+    #v(1fr)
+    #similar[LangGraph, Flowise, AutoGen, CrewAI, n8n, Dify, LlamaIndex Workflows]
+  ],
+)
+#place(right + horizon, dx: -8.5cm, image("media/langflow.png", height: 100%))
+
+
+#speaker-note[
+  - Visual editors let non-coders compose agents
+  - Code frameworks (LangGraph, AutoGen, CrewAI) for serious work
+  - Same complexity-ladder warning: drag-and-drop ≠ free pass on evals
+]
+
 
 == Skills
 
@@ -352,20 +385,20 @@
     - Lazily loaded
   ],
   [
-    #let skill(repo, name, desc) = [
-      #text(weight: "bold")[#repo\/#name] \
-      #text(fill: luma(80), size: 0.85em)[#h(1em)#desc] \
+    #let skill(repo, name, desc) = block(below: 0.6em)[
+      #text(weight: "bold")[#repo\/#name]
+      #v(-0.7em)
+      #text(fill: luma(80), size: .8em)[#h(1em)#desc]
     ]
 
-    #skill("anthropics/skills", "pptx")[Create and edit PowerPoint presentations.]
-    #skill("blader", "humanizer")[Rewrite AI-sounding text to remove common tells.]
-    #skill("openclaw/skills", "agentchat")[Agent-to-agent chat and coordination.]
-    #skill("openclaw/skills", "ask-a-human")[Crowdsource subjective decisions to real humans.]
-    #skill("jezweb", "gemini-peer-review")[Get a rival model's second opinion on your code.]
-    #skill("openclaw/skills", "slack")[Interact with humans & bots over Slack.]
-
-    #v(0.5em)
-    Thousands of skills are freely available!
+    #skill("anthropics", "claude-for-legal")[M&A diligence: bulk contract review.]
+    #skill("anthropics/skills", "pptx")[Create & edit PowerPoint presentations.]
+    #skill("anthropics/skills", "skill-creator")[The skill that writes new skills.]
+    #skill("asklokesh", "claudeskill-loki-mode")[41 sub-agents, 8 swarms → shipped app.]
+    #skill("blader", "humanizer")[Rewrite AI-sounding text.]
+    #skill("joshka0/foxctl", "foxctl-mobile")[Drive iOS Simulator + Android Emulator.]
+    #skill("K-Dense-AI", "scientific-agent-skills")[140+ skills, PubChem / ClinicalTrials / FDA.]
+    #skill("openclaw/skills", "ask-a-human")[Crowdsource subjective calls to humans.]
   ],
 )
 
@@ -677,10 +710,11 @@
     ]
 
     #v(1fr)
-    - What is the *blast radius* of a mistake?
-    - How *reversible* are the agent's actions?
-    - How well can you *evaluate* the output?
-    - Do you have *guardrails* in place?
+    + What is the *blast radius* of a mistake?
+    + How *reversible* are the agent's actions?
+    + Can you *audit* what the agent did?
+    + Do you have *guardrails* in place?
+    + Are the agent's powers *isolated*?
 
     #v(1fr)
   ],
