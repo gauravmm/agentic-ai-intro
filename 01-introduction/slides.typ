@@ -1,4 +1,4 @@
-#import "@preview/touying:0.6.1": *
+#import "@preview/touying:0.7.3": *
 #import themes.metropolis: *
 
 #import "@preview/numbly:0.1.0": numbly
@@ -11,7 +11,7 @@
     title: [Agentic AI for Beginners],
     subtitle: [A Zero-Code Introduction],
     author: [Dr. Gaurav Manek, Ocellivision, IMCB],
-    date: "2026-05-13",
+    date: datetime.today(),
     institution: [TechWorks\@ROCK],
     logo: [🤖💥🧠🧑‍💻],
   ),

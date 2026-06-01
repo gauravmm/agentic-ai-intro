@@ -1,4 +1,4 @@
-#import "@preview/touying:0.6.1": *
+#import "@preview/touying:0.7.3": *
 #import themes.metropolis: *
 
 #import "@preview/tiaoma:0.3.0": qrcode
@@ -11,8 +11,8 @@
     title: [Agentic AI for Beginners],
     subtitle: [A Zero-Code Introduction],
     author: [Dr. Gaurav Manek, Ocellivision, IMCB],
-    date: "2026-05-13",
-    institution: [Special Session: MedTech Catapult & DxDHub, A*STAR],
+    date: datetime.today(),
+    institution: [TechWorks\@ROCK],
     logo: [🤖💥🧠🧑‍💻],
   ),
 )
@@ -30,20 +30,22 @@
   [#text(size: 1.2em, weight: "bold")[#title] \ #body],
 )
 
-// Grey box with bold title + centered body; height: 100% (fills grid cell)
-#let aside(title, body) = box(
-  fill: luma(240),
-  width: 100%,
-  height: 100%,
-  radius: 0.5em,
-  inset: 0.5em,
-  grid(
-    rows: (2em, 1fr),
-    align: horizon,
-    text(weight: "bold", size: 1.5em)[#title],
-    body,
-  ),
-)
+#let gblock(body, inset: 0.4em, outset: 0.4em, width: 100%) = block(
+  fill: luma(235),
+  inset: inset,
+  outset: outset,
+  radius: 0.4em,
+  width: width,
+)[#body]
+
+#let lblock(body, inset: 0.4em, outset: 0.4em, width: 100%) = block(
+  fill: white,
+  stroke: 0.5pt + luma(220),
+  inset: inset,
+  outset: outset,
+  radius: 0.4em,
+  width: width,
+)[#body]
 
 #title-slide()
 
@@ -70,7 +72,7 @@
 ]
 
 
-== What is Agentic AI?
+== Anatomy of an Agent
 
 
 #grid(
@@ -90,17 +92,10 @@
 
     #v(0.5em)
 
-    #box(
-      fill: luma(1000),
-      stroke: luma(220),
-      radius: 0.5em,
-      inset: (left: 1.1em, right: 1.1em, top: 1.0em, bottom: 1.0em),
-      width: 100%,
-      [
-        *Same LLM*, new prompt: \
-        _"Given this goal, what do I do next?"_
-      ],
-    )
+    #lblock(inset: (x: 1.1em, y: 1em), outset: 0pt)[
+      *Same LLM*, new prompt: \
+      _"Given this goal, what do I do next?"_
+    ]
   ],
   [
     *Agentic AI*
@@ -124,47 +119,38 @@
   text(weight: "bold", size: 1.5em)[Tool Use],
   text(weight: "bold", size: 1.5em)[Sub-agents],
 
-  box(fill: luma(230), outset: 0.5em, inset: (top: 0.2em, bottom: 0.2em), radius: 0.5em)[
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
     *LLM + harness*
 
     Harness _orchestrates_ the LLM, running it in a loop and giving it access to tools.
 
     Acts autonomously toward a goal — reads, decides, acts, observes, repeats.
-
-    #pause
   ],
   [
-    #box(fill: luma(230), outset: 0.5em, inset: (top: 0.2em, bottom: 0.2em), radius: 0.5em)[
+    #gblock(inset: (y: 0.2em), outset: 0.5em)[
       *portable ability*
 
       Instructions and tools to perform a task, reusable across projects and models.
     ]
 
-    #pause
-
     #align(center, [
       #sym.arrow.t \
       Our next task!
     ])
-
-    #pause
   ],
-  box(fill: luma(230), outset: 0.5em, inset: (top: 0.2em, bottom: 0.2em), radius: 0.5em)[
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
     *external functions*
 
     Search the web, run code, read files, call APIs, use MCPs.
 
     The model decides *when* and *how* to call them.
-
-    #pause
   ],
-  box(fill: luma(230), outset: 0.5em, inset: (top: 0.2em, bottom: 0.2em), radius: 0.5em)[
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
     *agents as tools*
 
     Spawn independent agents,\give them goals and tools, and merge results.
 
     Enables parallelism, specialisation, and delegation.
-
   ],
 )
 
@@ -183,8 +169,13 @@
   rows: (auto, auto),
   align: top,
   gutter: 1em,
-  // Source order controls animation; x/y controls layout position.
-  // Sequence: copilot logo → copilot bullets → openclaw logo + bullets.
+  // Animation trick: grid.cell(x:, y:) lets us decouple layout position
+  // from source order. Touying processes #pause / #meanwhile in source
+  // order, so we list cells in the order we want them to appear:
+  //   1. copilot logo (subslide 1)
+  //   2. copilot bullets — #meanwhile rewinds it back to subslide 1,
+  //      so logo + bullets reveal together
+  //   3. #pause → openclaw logo + bullets (subslide 2)
   grid.cell(x: 0, y: 0, align: bottom, image("media/copilot.png", width: 90%)),
   grid.cell(x: 0, y: 1)[
     #meanwhile
@@ -215,21 +206,21 @@
   ],
 )
 
-#slide(
-  composer: (1fr, auto),
-)[
-  #v(1fr)
-  *Meta's director of AI alignment lost her emails.*
-  #v(1fr)
-  _I had to run to my Mac mini like I was defusing a bomb._
+---
 
-  #align(right)[
-    -- Summer Yue
-  ]
-  #v(1fr)
-][
-  #image("media/meta_email.png", height: 100%)
-]
+#grid(
+  columns: (1fr, auto),
+  align: horizon,
+  gutter: 2em,
+  [
+    *Meta's director of AI alignment lost her emails.*
+    #v(1em)
+    _I had to run to my Mac mini like I was defusing a bomb._
+
+    #align(right)[-- Summer Yue]
+  ],
+  image("media/meta_email.png", height: 100%),
+)
 
 
 
@@ -243,21 +234,14 @@
   gutter: 1em,
   align: top,
   [
-    #box(
-      fill: luma(1000),
-      stroke: luma(220),
-      radius: 0.5em,
-      inset: (top: .5em, bottom: .5em),
-      outset: (left: .5em, right: .5em),
-      [
-        *Skills* are portable descriptions of an ability.
+    #lblock(inset: (y: 0.5em), outset: (x: 0.5em))[
+      *Skills* are portable descriptions of an ability.
 
-        - break a problem into parts,
-        - interact with a tool,
-        - structure some output,
-        - interpret some input, _etc._
-      ],
-    )
+      - break a problem into parts,
+      - interact with a tool,
+      - structure some output,
+      - interpret some input, _etc._
+    ]
 
     Use:
     - Written as *human-readable text* \
@@ -297,19 +281,13 @@
   align: top,
   [
     #v(1fr)
-    #box(
-      fill: luma(1000),
-      stroke: luma(220),
-      radius: 0.5em,
-      inset: (top: 1.0em, bottom: 1.0em),
-      outset: (left: .3em, right: .3em),
-      width: 100%,
-      align(center, [
+    #lblock(inset: (y: 1em), outset: (x: 0.3em))[
+      #align(center)[
         If AI can *follow* a skill…
 
         …AI can *write* a skill.
-      ]),
-    )
+      ]
+    ]
     #v(0.5em)
 
     #align(center)[*Close the loop* on self-improvement.]
@@ -376,18 +354,11 @@
   [
     #pause
     #v(1fr)
-    #box(
-      fill: luma(1000),
-      stroke: luma(220),
-      radius: 0.5em,
-      inset: (left: 1.1em, right: 1.1em, top: 1.0em, bottom: 1.0em),
-      width: 100%,
-      [
-        _"It's no use trying to eat a steak with a teaspoon and a straw."_
+    #lblock(inset: (x: 1.1em, y: 1em), outset: 0pt)[
+      _"It's no use trying to eat a steak with a teaspoon and a straw."_
 
-        #align(right)[— Anthony T. Hincks]
-      ],
-    )
+      #align(right)[— Anthony T. Hincks]
+    ]
     #align(center, [
       Choose the *right* tool for each job.
     ])
@@ -427,15 +398,9 @@
 
     Accumulates *technical debt* very fast because neither you nor the AI understands everything.
     #v(1fr)
-    #box(
-      fill: luma(1000),
-      stroke: luma(220),
-      radius: 0.5em,
-      inset: (top: 1.0em, bottom: 1.0em),
-      outset: (left: .3em, right: .3em),
-      width: 100%,
-      align(center, [*Know when to stop vibing.* ]),
-    )
+    #lblock(inset: (y: 1em), outset: (x: 0.3em))[
+      #align(center)[*Know when to stop vibing.*]
+    ]
     #v(1fr)
   ],
 )
@@ -466,18 +431,12 @@
     - Optimises for *correctness* / *safety* / *style*
 
     #v(1fr)
-    #box(
-      fill: luma(1000),
-      stroke: luma(220),
-      radius: 0.5em,
-      inset: (top: 1.0em, bottom: 1.0em),
-      outset: (left: .3em, right: .3em),
-      width: 100%,
-      align(center, [
+    #lblock(inset: (y: 1em), outset: (x: 0.3em))[
+      #align(center)[
         The critic prompt is often *more important*\
         than the actor prompt.
-      ]),
-    )
+      ]
+    ]
     #v(1fr)
   ],
 )
@@ -500,58 +459,31 @@
     #v(1fr)
     Start simple, *add complexity in stages*.
     #v(0.5em)
+    #let rung(n, shade) = box(
+      fill: luma(shade),
+      stroke: 0.4pt + luma(100),
+      inset: (x: 0.6em, y: 0.4em),
+      radius: 0.3em,
+    )[*#n*]
     #grid(
       columns: (auto, 1fr),
       align: horizon,
       gutter: (0.4em, 0.5em),
-      [#box(
-        fill: luma(210),
-        stroke: (thickness: 0.4pt, paint: luma(100)),
-        inset: (x: 0.6em, y: 0.4em),
-        radius: 0.3em,
-      )[*4*]],
-      [Full multi-agent pipeline with tool use],
-
-      [#box(
-        fill: luma(220),
-        stroke: (thickness: 0.4pt, paint: luma(100)),
-        inset: (x: 0.6em, y: 0.4em),
-        radius: 0.3em,
-      )[*3*]],
-      [Single agent with memory + tools],
-
-      [#box(
-        fill: luma(230),
-        stroke: (thickness: 0.4pt, paint: luma(100)),
-        inset: (x: 0.6em, y: 0.4em),
-        radius: 0.3em,
-      )[*2*]],
-      [Chain of prompts with intermediate checks],
-
-      [#box(
-        fill: luma(240),
-        stroke: (thickness: 0.4pt, paint: luma(100)),
-        inset: (x: 0.6em, y: 0.4em),
-        radius: 0.3em,
-      )[*1*]],
-      [Single well-crafted prompt],
+      rung(4, 210), [Full multi-agent pipeline with tool use],
+      rung(3, 220), [Single agent with memory + tools],
+      rung(2, 230), [Chain of prompts with intermediate checks],
+      rung(1, 240), [Single well-crafted prompt],
     )
 
     #v(1em)
     - Errors at lower rungs are cheaper to fix.
     - Aggressively check consistency in layers.
 
-    #box(
-      fill: luma(1000),
-      stroke: luma(220),
-      radius: 0.5em,
-      inset: (top: 1.0em, bottom: 1.0em),
-      outset: (left: .3em, right: .3em),
-      width: 100%,
-      align(center)[
+    #lblock(inset: (y: 1em), outset: (x: 0.3em))[
+      #align(center)[
         *Match tool and problem complexity.*
-      ],
-    )
+      ]
+    ]
     #v(1fr)
   ],
 )
@@ -584,32 +516,18 @@
 
     #v(0.5em)
 
-    #box(
-      fill: luma(1000),
-      stroke: luma(220),
-      radius: 0.5em,
-      inset: (top: 1.0em, bottom: 1.0em),
-      outset: (left: .3em, right: .3em),
-      width: 100%,
-      align(center)[
+    #lblock(inset: (y: 1em), outset: (x: 0.3em))[
+      #align(center)[
         Evals are to AI what unit tests are to software. \
         *Without them, you're flying blind.*
-      ],
-    )
+      ]
+    ]
     #v(1fr)
   ],
 )
 
 #speaker-note[
   Most people skip evals entirely because writing them feels like overhead. But without evals, prompt changes are invisible regressions — you fix one thing and break three others with no way to know. Even a small eval set (10-20 examples) transforms prompt engineering from guesswork into iteration. "Prompt from examples" is a related technique: give the model 5 example input-output pairs and ask it to write the system prompt.
-]
-
-#focus-slide[
-  How much *control* \
-  do you hand over?
-
-  How much do you \
-  *trust* the machine?
 ]
 
 == Human-in-the-Loop
@@ -632,18 +550,13 @@
     #v(1fr)
 
     The key design question for any agentic system:
-    #box(
-      fill: luma(1000),
-      stroke: luma(220),
-      radius: 0.5em,
-      inset: 0.8em,
-      width: 100%,
-      align(center, [
+    #lblock(inset: 0.8em, outset: 0pt)[
+      #align(center)[
 
         *How much of the loop \
         do you hand over?*
-      ]),
-    )
+      ]
+    ]
 
     #v(1fr)
     - What is the *blast radius* of a mistake?
@@ -661,6 +574,14 @@
   Most production systems sit in the middle column today. Hands-off is compelling but requires a lot of investment in evals and guardrails — the cost of a mistake is higher when no human saw it coming. The session students are about to do (multi-agent triage bot) is firmly in the "interactive" column, with a hands-off component at the end. Point out that the same task can live at different levels depending on how much you've validated it.
 ]
 
+
+#focus-slide[
+  How much *control* \
+  do you hand over?
+
+  How much do you \
+  *trust* the machine?
+]
 = Let's Get Started
 
 #focus-slide[

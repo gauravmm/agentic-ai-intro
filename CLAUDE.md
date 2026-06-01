@@ -131,7 +131,8 @@ Variable fonts (`Ubuntu`, `Ubuntu Mono`) may render incorrectly — avoid.
 - Advanced: 1 000 unique labels with sequential serial numbers; FDA CFR 21 Part 801 / UDI compliance.
 
 ### 03-agentic
-- Slides not yet written. README covers: agent loop, common patterns (vibe coding, actor-critic, complexity ladder), human-in-the-loop models.
+- Slides cover: agent loop, common patterns (vibe coding, actor-critic, complexity ladder, TDD), human-in-the-loop models, real-world agents (Copilot Workspace, OpenClaw).
+- Shares the `gblock` / `lblock` helpers with 01; `label-item` is local for cell-filling labelled rows.
 
 ### 04-multiagent-triage
 - Python task in `task/` with a `.venv`. Students build a multi-agent triage bot.
