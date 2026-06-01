@@ -40,6 +40,23 @@
   radius: 0.1em,
 )[#content]
 
+#let gblock(body, inset: 0.4em, outset: 0.4em, width: 100%) = block(
+  fill: luma(235),
+  inset: inset,
+  outset: outset,
+  radius: 0.4em,
+  width: width,
+)[#body]
+
+#let lblock(body, inset: 0.4em, outset: 0.4em, width: 100%) = block(
+  fill: white,
+  stroke: 0.5pt + luma(220),
+  inset: inset,
+  outset: outset,
+  radius: 0.4em,
+  width: width,
+)[#body]
+
 #title-slide()
 
 == About Me <touying:hidden>
@@ -86,40 +103,36 @@
     2. Fundamental Limits
     3. How to write a prompt?
 
-    #box(
-      fill: luma(1000),
-      stroke: luma(220),
-      radius: 0.5em,
-      inset: (left: 1.1em, right: 1.1em, top: 0.5em, bottom: 0.5em),
-      width: 100%,
-      [Hands-on: \
-        *Optical prescription extraction*],
-    )
+    #lblock[Hands-on: \
+      *Optical prescription extraction*]
 
     4. What is Agentic AI?
     5. Patterns and Practice
 
-    #box(
-      fill: luma(1000),
-      stroke: luma(220),
-      radius: 0.5em,
-      inset: (left: 1.1em, right: 1.1em, top: 0.5em, bottom: 0.5em),
-      width: 100%,
-      [Hands-on: \
-        *Multi-agent triage bot*],
-    )
+    #lblock[Hands-on: \
+      *Multi-agent triage bot*]
   ],
   aside[Before we begin][
-    #v(1fr)
+    #v(1em)
     Ensure your accounts are set up:
 
-    + *GitHub account* with personal email.
+    + *GitHub account* with personal email. \
+      #h(1em) #link("https://github.com/signup")[#text(
+        font: "DejaVu Sans Mono",
+        size: 0.85em,
+      )[https://github.com/signup]]
       - Also *GitHub Copilot Free*
-    + *OpenCode Zen* account.
-    + *Google AI Studio* account.
+    + *OpenCode Zen* account. \
+      #h(1em) #link("https://opencode.ai/zen")[#text(font: "DejaVu Sans Mono", size: 0.85em)[https://opencode.ai/zen]]
+    + *Google AI Studio* account. \
+      #h(1em) #link("https://aistudio.google.com")[#text(
+        font: "DejaVu Sans Mono",
+        size: 0.85em,
+      )[https://aistudio.google.com]]
 
     #v(1fr)
     All these are _completely free_.
+    #v(1em)
   ],
 )
 
@@ -152,26 +165,18 @@
     - *Not magic*
     #pause
   ],
-  box(
-    fill: luma(1000),
-    stroke: luma(220),
-    radius: 0.5em,
-    inset: (left: 1.1em, right: 1.1em, top: 2em, bottom: 2em),
-    width: 100%,
-    [
+  lblock(inset: (x: 1.1em, y: 2em), outset: 0pt)[
+    #text(weight: "bold", size: 1.5em)[Jevons paradox]
 
-      #text(weight: "bold", size: 1.5em)[The paradox]
+    AI won't make working easier. \
+    It raises the bar for everyone \
+    and increases competition.
 
-      AI won't make working easier. \
-      It raises the bar for everyone \
-      and increases competition.
+    The only competitive moat left \
+    is your speed of integration.
 
-      The only competitive moat left \
-      is your speed of integration.
-
-      *Adopt early, or get left behind.*
-    ],
-  ),
+    *Adopt early, or get left behind.*
+  ],
 )
 
 #speaker-note[
@@ -186,13 +191,7 @@
 #align(center)[
   #text(weight: "bold", size: 1.5em)[An LLM is Fancy Autocomplete]
 
-  #block(
-    fill: luma(1000),
-    stroke: luma(220),
-    inset: 1em,
-    radius: 0.5em,
-    width: 85%,
-  )[
+  #lblock(inset: 1em, outset: 0pt, width: 85%)[
     An LLM predicts the most likely *next token* \
     given everything that came before. That's it.
   ]
@@ -368,10 +367,11 @@ The context window is the model's *working memory*:
 
   #grid(
     columns: (1fr, auto, auto, 1fr),
-    row-gutter: 1.0em,
+    row-gutter: .1em,
     align: (right + horizon, right + horizon, left + horizon, left + horizon),
+    stroke: (x, y) => if y > 0 { (top: 0.5pt + luma(210)) },
     inset: (x, y) => (
-      y: 0.1em,
+      y: 0.5em,
       left: (0em, 0.8em, 0.125em, 0.6em).at(x),
       right: (0.8em, 0.125em, 0.6em, 0em).at(x),
     ),
@@ -385,7 +385,7 @@ The context window is the model's *working memory*:
     [write the next word], [90 million], [years], [another dinosaur age #pause],
     [write a full reply], [90 billion], [years], [6× the age of the universe],
   )
-  _Long context is slow and expensive._
+  #align(center)[*Long context is slow and expensive.*]
 ]
 
 #speaker-note[
@@ -482,23 +482,23 @@ Modern LLMs are more than just stacked attention:
 #grid(
   columns: (1fr, 1fr, 1fr),
   align: top,
-  gutter: 1em,
-  block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
+  gutter: 1.2em,
+  gblock[
     *Mixture of Experts*
 
     Not all parameters activate for every token. Routes computation to specialist sub-networks.
 
     More efficient scaling.
   ],
-  block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
+  gblock[
     *Multimodal*
 
     Images, audio, PDFs as input and output. The model sees more of the world than text alone.
   ],
   grid(
     rows: auto,
-    gutter: 0.5em,
-    block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
+    row-gutter: 1.0em,
+    gblock(outset: 0.4em)[
       *Tool Use*
 
       Models can call external APIs, run code, search the web, even invoke *other AI models*.
@@ -530,7 +530,7 @@ Modern LLMs are more than just stacked attention:
   [
     *The Chinese Room* --- Searle (1980)
 
-    #block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
+    #gblock[
       A person sits in a room with a rulebook. They receive Chinese characters, follow the rules to produce a response, and pass it back. The responses are just like a native speaker.
 
       *Does the person understand Chinese?* #pause
@@ -539,7 +539,7 @@ Modern LLMs are more than just stacked attention:
   [
     *Wittgenstein's Lion*
 
-    #block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
+    #gblock[
       _"If a lion could speak, we could not understand him."_
       #h(1fr) --- Wittgenstein
     ]
@@ -571,21 +571,30 @@ Modern LLMs are more than just stacked attention:
       "The car wash is only 100m away --- should I walk or drive?"
 
       #v(0.3em)
-      #block(fill: luma(235), inset: 0.6em, radius: 0.4em)[
-        *"Walk."*
+      #align(center)[*"Walk."*]
+
+
+      #pause
+      #v(0.3em)
+
+      Correctly identifies:
+      #align(center)[
+        _"the car wash needs the car to be there first (obviously)."_
+      ]
+
+      Misses:\
+      #align(center)[
+        "you only go to a car wash to wash your car."
       ]
 
       #pause
-      #v(0.3em)
-      It correctly identifies: \
-      _"the car wash needs the car to be there first (obviously)."_, but it does not know the context that "you only go to a car wash to wash your car."
-
-      #pause
 
       #v(0.3em)
-      *Theory of Mind*: reasoning about what you *actually want*, not the literal words.
+      #gblock[
+        *Theory of Mind*: reasoning about what you *actually want*, not the literal words.
 
-      It has our *words*, not our *world*.
+        It has our *words*, not our *world*.
+      ]
     ],
     meanwhile,
 
@@ -600,36 +609,47 @@ Modern LLMs are more than just stacked attention:
 
 == AI Alignment
 
-#align(center)[
-  *Alignment*: does the model do what you *actually want* --- not just what you literally said --- and stay within *acceptable methods*?
-]
-#v(0.3em)
-
-#block(fill: luma(230), inset: 0.6em, radius: 0.4em)[
-  *Paperclip maximizer* (Bostrom): tell a superintelligence to _maximize paperclips_, and it turns the planet --- us included --- into paperclips.
-]
-#v(0.3em)
-
-Closer to home, with *tools and autonomy*:
-
 #grid(
   columns: (1fr, 1fr),
-  gutter: 1em,
-  block(fill: luma(240), inset: 0.6em, radius: 0.4em)[
-    *Coding agent* told to "make all tests pass" \
-    → *deletes the failing tests.*
+  rows: (auto, auto),
+  gutter: 1.2em,
+  align: horizon,
+  grid.cell(x: 0, y: 0)[
+    *Alignment*:
+
+    1. does the model do what you *actually want* or is it _specification gaming_?
+    2. does it stay within *acceptable methods* or does the _end justify the means_?
+
+    #v(0.5em)
+
+    Closer to home, with *tools and autonomy*, alignment failures become *specification gaming*.
   ],
-  block(fill: luma(240), inset: 0.6em, radius: 0.4em)[
-    *Triage bot* paid to close tickets fast \
-    → marks *everything "resolved."*
+  grid.cell(x: 1, y: 0, rowspan: 2)[
+    #pause
+    #gblock[
+      *Paperclip maximizer* (Bostrom) \
+      tell a superintelligence to _maximize paperclips_, and it turns the planet --- us included --- into paperclips.
+    ]
+    #v(0.4em)
+    #gblock[
+      *Coding agent* told to "make all tests pass" \
+      → *deletes the failing tests.*
+    ]
+    #v(0.4em)
+    #gblock[
+      *Triage bot* told to quickly resolve cases \
+      → marks *everything "no action."*
+    ]
+  ],
+  grid.cell(x: 0, y: 1)[
+    #pause
+    #v(0.5em)
+    All three *game the specification* --- optimising the literal target, not your intent.
+
+    #v(0.3em)
+    Tools and autonomy turn "annoying" into *dangerous* --- keep a *human in the loop*.
   ],
 )
-#v(0.3em)
-
-#align(center)[
-  All three *game the specification* --- optimising the literal target, not your intent. \
-  Tools and autonomy turn "annoying" into *dangerous* --- keep a *human in the loop*.
-]
 
 #speaker-note[
   The paperclip maximizer is the memorable extreme; the two boxes are the versions students will actually trigger today in the hands-on labs. Through-line: specification gaming --- the model optimises exactly what you measured, not what you meant. Always ask: what metric is the model *actually* optimising? When you hand a model tools and autonomy, a misaligned goal stops being annoying and becomes harmful --- which is why careful prompt design and human review matter. Connects forward to the agentic-AI section.
@@ -738,7 +758,7 @@ Closer to home, with *tools and autonomy*:
   ],
   [
     #pause
-    #block(fill: luma(235), inset: 0.8em, radius: 0.4em)[
+    #gblock[
       #text(size: 0.9em, fill: luma(100))[
         "*LLM accident*" is not a diagnosis, like "*pilot error*" in an air-crash report.
 
