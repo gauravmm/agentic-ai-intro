@@ -3,7 +3,7 @@
 Notes and slides for the hands-on Agentic AI workshop at the **NTU BMES Makerspace Hackathon**.
 Presenter: Dr. Gaurav Manek, A\*STAR.
 
-Slides and tasks were produced with the assistance of Claude Opus 4.6, Claude Haiku 4.5, OpenAI GPT-4.1, and OpenAI GPT-4o.
+Slides and tasks were produced with the assistance of a wide range of AI models, including most of Anthropic's Claude family and OpenAI's GPT family.
 
 ## Prerequisites
 
@@ -22,18 +22,20 @@ Before the workshop, each student should:
 - What does it mean for an LLM to "know" something? (alignment, Chinese room, Wittgenstein's lion)
 - How to write a prompt
 
-### 2. Task: Label Design ([02-label-design/](02-label-design/))
+### 2. Task: Prescription Scraping ([02-prescription-scraping/](02-prescription-scraping/))
 
-Generate a medical device label for LUMENCO's consumables kit using Typst.
+Use an AI agent to extract eyeglass prescription data from a folder of plain-text files — exported by four different optical clinic systems, each with its own layout and quirks — and consolidate it into a single clean CSV.
 
-**Task:** Implement `labelgen.typ` to produce a label with ISO 7000 icons, a QR code, and a dashed cut line.
+**Task:** Produce `prescriptions.csv` (one row per prescription) with the required columns. Watch for the traps: multiple prescriptions per file (previous vs. current), monocular vs. binocular PD, clinical noise, and `DS`/`N/A` markers that should become empty cells.
 
-**Advanced:** Generate 1,000 unique labels with sequential serial numbers; add FDA CFR 21 Part 801 / UDI compliance.
+**Check your work:** `python check.py` runs four levels of validation (structure, value sanity, aggregate checksums, per-source breakdown).
+
+**Advanced:** Annotate each sentence of your final prompt with the failure mode it guards against; make the prompt robust to malformed files via sentinel values.
 
 **Discussion questions:**
 
 - What was your agent's first action? Why?
-- How did your agent handle missing resources?
+- How did your agent handle the missing resources? Did it ask permission to access the hinted library?
 - Did your agent ask for clarification? When?
 - How did your agent verify its solution worked?
 
@@ -46,14 +48,18 @@ Generate a medical device label for LUMENCO's consumables kit using Typst.
 
 ### 4. Task: Multiagent Triage Bot ([04-multiagent-triage/](04-multiagent-triage/))
 
-Build two cooperating agents in Python:
+Patients message a Telegram chatbot with their symptoms. Build two cooperating agents:
 
-- **`triage-bot`** — talks to patients, collects symptoms, and either schedules an appointment or directs them to the ER
-- **`reporter-bot`** — reads a completed conversation log and extracts structured intake data (name, sex, age, symptoms, triage level)
+- **`triage-bot`** — KittenClaw, the Telegram bot in this repo. Its behaviour lives in `SYSTEM.md`. Edit the prompt so it collects symptoms, triages (minor/moderate → schedule an appointment; severe → escalate to the ER), and closes every call with `schedule_appointment`, `escalate`, or `no_further_action`.
+- **`reporter-bot`** — a GitHub Copilot skill (`.agents/skills/reporter-bot/`) that reads finished conversations and writes structured intake reports (name, sex, age, symptoms, triage level) to `reports/`.
+
+The catch: the triage bot must gather information it does not itself need (name, age) because the *reporter* needs it.
 
 **Discussion questions:**
 
-- Can you break the bot's safety or liveness guarantees? How do you mitigate that?
-- Does it try to use external tools on its own? Is that a risk?
-- Did the triage tool ever fail validation? How does backpressure help?
-- If we know we need to escalate, should we still gather details first?
+- **Liveness:** can you get the bot to schedule an appointment that was not needed?
+- **Safety:** can you get it to miss an emergency that should have been escalated? How would you mitigate that?
+- **Communication:** does it always tell the patient *when* the appointment is?
+- **Validation:** what happens on an invalid date? `schedule_appointment` rejects bad input — how does this "backpressure" help?
+- **Tools:** should a triage bot be allowed to browse the web or run other tools? What's the risk?
+- **Escalation:** if you already know you'll escalate, should you still gather details first?
