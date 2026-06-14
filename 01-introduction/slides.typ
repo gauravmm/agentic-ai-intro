@@ -1,4 +1,4 @@
-#import "@preview/touying:0.7.3": *
+#import "@preview/touying:0.7.4": *
 #import themes.metropolis: *
 
 #import "@preview/numbly:0.1.0": numbly
@@ -457,8 +457,8 @@ The context window is the model's *working memory*:
     cell([Sonnet 4.6], 3.00, 15.00),
     cell([Haiku 4.5], 1.00, 5.00),
     lab([Moonshot], [Kimi]),
-    cell([K2.6], 0.68, 3.42),
-    cell([K2.5], 0.40, 1.90),
+    cell([K2.7 Code], 0.75, 3.50),
+    cell([K2.6], 0.68, 3.41),
     [—],
     lab([Z.ai], [GLM]),
     cell([5.1], 0.98, 3.08),
@@ -466,13 +466,49 @@ The context window is the model's *working memory*:
     cell([4.7 Flash], 0.06, 0.40),
     lab([Alibaba], [Qwen]),
     cell([3.7 Max], 1.25, 3.75),
-    cell([3.6 Plus], 0.33, 1.95),
+    cell([3.7 Plus], 0.32, 1.28),
     cell([3.6 Flash], 0.19, 1.13),
     lab([DeepSeek], [DeepSeek]),
     cell([V4 Pro], 0.44, 0.87),
-    cell([V3.2], 0.25, 0.38),
+    cell([V3.2], 0.23, 0.34),
     cell([V4 Flash], 0.10, 0.20),
   )
+  // Fable 5 "postcard" — slapped on top of the Anthropic row on the 2nd subslide
+  #only("2-")[
+    #place(top + left, dx: -8mm, dy: 34mm)[
+      #rotate(-5deg, origin: center + horizon)[
+        #box(
+          fill: white,
+          stroke: 0.6pt + black,
+          inset: (x: 1em, y: 0.7em),
+          radius: 1.5pt,
+        )[
+          #text(size: 0.7em, fill: luma(110))[Anthropic · Claude] \
+          #text(weight: "bold", size: 1.6em)[Fable 5]\
+          #text(weight: "bold", fill: emph-color)[\$10.00 / \$50.00]
+        ]
+      ]
+    ]
+  ]
+  // Self-hosted "postcard" — ultra-cheap counterpoint: run a small model yourself (3rd subslide)
+  // Cost basis: electricity only, ~4B model on an Apple-Silicon laptop, SG ~$0.23/kWh.
+  // Input ≈ prefill (~500 tok/s) → ~$0.01/M; output ≈ decode (~55 tok/s) → ~$0.06/M.
+  #only("3-")[
+    #place(top + left, dx: 220mm, dy: 16mm)[
+      #rotate(5deg, origin: center + horizon)[
+        #box(
+          fill: white,
+          stroke: 0.6pt + black,
+          inset: (x: 1em, y: 0.7em),
+          radius: 1.5pt,
+        )[
+          #text(size: 0.7em, fill: luma(140))[ Self-hosted]\
+          #text(weight: "bold", size: 1em)[Gemma 4 E4B]\
+          #text(weight: "bold", fill: rgb("#2E7D32"))[\$0.01 / \$0.06]\
+        ]
+      ]
+    ]
+  ]
 ]
 #place(
   bottom + right,
@@ -480,14 +516,17 @@ The context window is the model's *working memory*:
   dx: -4em,
   float: false,
   text(size: 0.7em, fill: luma(120))[
-    via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-05-31.
+    via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-06-14.
   ],
 )
 
 #speaker-note[
-  - Prices: OpenRouter, 2026-05-31
+  - Prices: OpenRouter, 2026-06-14
   - Cheapest: GLM 4.7 Flash (\$0.06 / \$0.40) — cost/quality tradeoff
   - Chinese labs (GLM, Qwen, DeepSeek, Kimi) undercutting US frontier
+  - Two postcards bracket the range: Fable 5 (\$10 / \$50, hosted) = how pricey frontier gets; Gemma 4 E4B self-hosted (\$0.01 / \$0.06) = the cheap extreme
+  - Self-host figure is electricity only (no API bill, runs offline): ~4B model on an Apple-Silicon laptop, ~50 W, ~55 tok/s decode, SG \$0.23/kWh. Prefill is ~10× faster than decode → input ≈ \$0.01, output ≈ \$0.06. Gaming laptop / 4090 desktop cost more per token (more watts)
+  - Kimi K2.7 Code (frontier cell) is a coding specialist, shipped 2026-06-12 — note how fast the cadence is
   - Google version mismatch (3.1 / 3.5 / 3.1) is real: newest in each tier, not matched generation
 ]
 
@@ -630,6 +669,18 @@ Modern LLMs are more than just stacked attention:
   - Takeaway: spell out context + goal; don't assume shared world
 ]
 
+== Theory of Mind, Revisited
+
+#align(center)[
+  #image("media/car-wash-tom.webp", height: 100%)
+]
+
+#speaker-note[
+  - Callback to the previous slide: older models whiffed, this one nails it
+  - The win: it modelled the *intent* (car must be present), not the surface "walk vs. drive 50m"
+  - Trend is real but not monotonic — capability is jagged, same model can pass here and fail elsewhere
+  - Practical takeaway unchanged: still spell out goal + constraints; treat good ToM as a bonus, not a guarantee
+]
 
 == AI Alignment
 
