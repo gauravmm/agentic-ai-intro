@@ -10,11 +10,11 @@ jobs:
   compile-01-introduction:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: typst-community/setup-typst@v3
+      - uses: actions/checkout@v5
+      - uses: typst-community/setup-typst@v5
       - run: typst compile slides.typ slides.pdf
         working-directory: 01-introduction
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: 01-introduction-slides
           path: 01-introduction/slides.pdf
@@ -23,11 +23,11 @@ jobs:
   compile-03-agentic:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: typst-community/setup-typst@v3
+      - uses: actions/checkout@v5
+      - uses: typst-community/setup-typst@v5
       - run: typst compile slides.typ slides.pdf
         working-directory: 03-agentic
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: 03-agentic-slides
           path: 03-agentic/slides.pdf
@@ -39,10 +39,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           path: artifacts
       - name: Determine release tag
@@ -57,7 +57,7 @@ jobs:
         run: |
           cp artifacts/01-introduction-slides/slides.pdf 01-introduction-slides.pdf
           cp artifacts/03-agentic-slides/slides.pdf 03-agentic-slides.pdf
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.tag.outputs.name }}
           name: Release ${{ steps.tag.outputs.name }}
