@@ -704,68 +704,31 @@
 ]
 
 
-== Designing for Imperfect Agents
 
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 2em,
-  align: top,
-  grid(
-    columns: 1,
-    rows: 1fr,
-    gutter: 0.4em,
-    label-item[Safety vs. Liveness][*Safety:* never miss an emergency. *Liveness:* don't book an appointment nobody needed.],
-    label-item[Backpressure][A classical *validator* rejects bad input --- an invalid date --- and forces the model to correct itself.],
-    label-item[Escalation][Know when to hand back to a human --- and gather the right details *before* you do.],
-  ),
-
-  [
-    #v(1fr)
-
-    Agents *will* get it wrong. Don't design for the happy path:
-    #lblock(inset: 0.8em, outset: 0pt)[
-      #align(center)[
-        *Design for the mistake.*
-      ]
-    ]
-
-    #v(1fr)
-    + What is the *blast radius* of a mistake?
-    + How *reversible* are the agent's actions?
-    + Can you *audit* what the agent did?
-    + Do you have *guardrails* in place?
-    + Are the agent's powers *isolated*?
-
-    #v(1fr)
-  ],
-)
-
-#speaker-note[
-  - Agents are non-deterministic and fallible — assume failure, not success
-  - Safety vs liveness: the two ways the triage bot breaks; ask students to break each
-  - Backpressure: schedule_appointment validates the date; bad input bounces back and the model self-corrects — a classical validator catches whole bug classes early
-  - Escalation: if you already know you'll escalate, do you still gather details first?
-  - Blast radius / reversibility / audit / guardrails / isolation = the design checklist
-  - Sets up the next slide: how much do you hand over, how much do you trust?
-]
-
-#focus-slide[
+#focus-slide(config: config-page(margin: 1em))[
   #grid(
-    columns: (1fr, auto),
+    columns: (1.5fr, 1fr),
     align: horizon,
-    gutter: 2em,
-    [
-      Form your groups. \
-      Open GitHub Codespaces \
-      Let's build something.
+    gutter: 1em,
 
-      #text(font: "DejaVu Sans Mono", size: 1.6em)[
-        manek.sg/agentic-4
-      ]
+    [
+      #v(1fr)
+      #set align(left)
+      #set list(marker: text(fill: rgb("#6b9c71"))[#sym.ballot], spacing: 1em)
+      - *Telegram bot token* from `@BotFather`
+      - Get *AI model key*\
+        #text(size: 0.8em)[*Google AI Studio* or *OpenRouter*]
+      - Install both keys in the repo (`.env`)
+      - Read `SYSTEM.md`
+      - Message the bot over Telegram
+      #v(1fr)
     ],
     [
       #box(fill: white, inset: 1em)[
         #qrcode("https://manek.sg/agentic-4", width: 8cm)
+      ]\
+      #text(font: "DejaVu Sans Mono", size: 1.2em)[
+        manek.sg/agentic-4
       ]
     ],
   )
