@@ -344,7 +344,8 @@
     Design agents visually as *graphs of components* --- or as code.
 
     #v(1fr)
-    #similar[LangGraph, Flowise, AutoGen, CrewAI, n8n, Dify, LlamaIndex Workflows]
+    #similar[LangGraph, Flowise, AutoGen, CrewAI, n8n, Dify, LlamaIndex Workflows\
+      #only("2-")[ *PowerAutomate*]~]
   ],
 )
 #place(right + horizon, dx: -8.5cm, image("media/langflow.png", height: 100%))
@@ -681,7 +682,29 @@
   - Related: "prompt from examples" — 5 I/O pairs → ask for the system prompt
 ]
 
-== Human-in-the-Loop
+== Next Task: Multi-Agent Triage
+
+#v(0.4em)
+
+#include "figures/triage-flow.typ"
+
+#v(0.8em)
+
+#lblock(inset: 0.7em, outset: 0pt, align(center)[
+  The triage bot must gather information for the *reporter*.
+])
+
+
+#speaker-note[
+  - Next hands-on: build the two bots in 04-multiagent-triage
+  - Triage = KittenClaw (Telegram), reporter = a Copilot skill
+  - They coordinate only through conversation files on disk — no direct channel
+  - The catch: triage must collect name/age it never uses, because the reporter needs it — a cross-agent contract
+  - All behaviour lives in the prompt; send /clear after editing SYSTEM.md
+]
+
+
+== Designing for Imperfect Agents
 
 #grid(
   columns: (1fr, 1fr),
@@ -691,21 +714,18 @@
     columns: 1,
     rows: 1fr,
     gutter: 0.4em,
-    label-item[Autocomplete][Model *suggests*, human accepts or rejects on every keystroke.],
-    label-item[Interactive][Back-and-forth; human *steers* each step.],
-    label-item[Hands-off][Model handles long-running tasks; human *approves* the result.],
-    label-item[Autonomous][Model runs *without oversight*; humans intervene only when something breaks.],
+    label-item[Safety vs. Liveness][*Safety:* never miss an emergency. *Liveness:* don't book an appointment nobody needed.],
+    label-item[Backpressure][A classical *validator* rejects bad input --- an invalid date --- and forces the model to correct itself.],
+    label-item[Escalation][Know when to hand back to a human --- and gather the right details *before* you do.],
   ),
 
   [
     #v(1fr)
 
-    The key design question for any agentic system:
+    Agents *will* get it wrong. Don't design for the happy path:
     #lblock(inset: 0.8em, outset: 0pt)[
       #align(center)[
-
-        *How much of the loop \
-        do you hand over?*
+        *Design for the mistake.*
       ]
     ]
 
@@ -721,24 +741,13 @@
 )
 
 #speaker-note[
-  - The key architectural decision
-  - Blast radius: file delete (low) vs email 10K customers (high)
-  - Reversibility: undo file edit, cannot unsend email
-  - Most prod today: "interactive" (AI drafts, human approves)
-  - Hands-off needs heavy eval + guardrail investment
-  - Today's session = interactive, hands-off at the end
-  - Same task can live at different levels depending on validation
+  - Agents are non-deterministic and fallible — assume failure, not success
+  - Safety vs liveness: the two ways the triage bot breaks; ask students to break each
+  - Backpressure: schedule_appointment validates the date; bad input bounces back and the model self-corrects — a classical validator catches whole bug classes early
+  - Escalation: if you already know you'll escalate, do you still gather details first?
+  - Blast radius / reversibility / audit / guardrails / isolation = the design checklist
+  - Sets up the next slide: how much do you hand over, how much do you trust?
 ]
-
-
-#focus-slide[
-  How much *control* \
-  do you hand over?
-
-  How much do you \
-  *trust* the machine?
-]
-= Let's Get Started
 
 #focus-slide[
   #grid(
