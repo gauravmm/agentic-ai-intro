@@ -357,6 +357,52 @@
   - Same complexity-ladder warning: drag-and-drop ≠ free pass on evals
 ]
 
+// Full-bleed image slide: drop the right + bottom margins via slide config
+// (a mid-slide `#set page` would inject a blank page in touying).
+#slide(
+  title: [Dynamic Agentic Workflows],
+  config: config-page(margin: (top: 3em, bottom: 0pt, left: 2em, right: 0pt)),
+)[
+  // `overlap`: width of the text box. Raise it to extend the text rightward
+  // over the image; lower it to pull the text back to the left.
+  #let overlap = 7cm
+  #box(width: 100%, height: 100%)[
+    #place(right + horizon, image("media/whatsapp-1.jpeg", height: 100%))
+    #place(left + top, dy: 1em, box(width: overlap, text(
+      size: 1.8em,
+      weight: "bold",
+    )[This is Anthropic's idea of the future.]))
+  ]
+
+  #speaker-note[
+    - Agent teams (left): a few agents talk peer-to-peer
+    - Dynamic workflows (right): one orchestrator fans out to N tasks — implementer → verifiers → fixer — then returns when done
+    - N can be in the hundreds: this is the autonomous end of the complexity ladder
+  ]
+]
+
+// Full-bleed image slide: drop the right + bottom margins via slide config
+// (a mid-slide `#set page` would inject a blank page in touying).
+#slide(config: config-page(margin: (top: 3em, bottom: 0pt, left: 2em, right: 0pt)))[
+  // `overlap`: width of the text box. Raise it to extend the text rightward
+  // over the image; lower it to pull the text back to the left.
+  #let overlap = 7cm
+  #box(width: 100%, height: 100%)[
+    #place(right + horizon, image("media/whatsapp-2.jpeg", height: 100%))
+    #place(left + top, dy: 1em, box(width: overlap, text(
+      size: 1.8em,
+      weight: "bold",
+    )[This is Anthropic's idea of the future.
+
+      #emph[Maybe].]))
+  ]
+
+  #speaker-note[
+    - Same diagram, now with the price tag attached
+    - Every box is a model call; fan-out multiplies token spend fast
+    - The fat cat got rich on your bill — budget and cap autonomous runs before you let them loose
+  ]
+]
 
 == Skills
 
