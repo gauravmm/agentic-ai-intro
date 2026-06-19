@@ -3,10 +3,12 @@
 
 #import "@preview/tiaoma:0.3.0": qrcode
 #import "@preview/numbly:0.1.0": numbly
+#import "/common.typ": big-section-slide, gblock, lblock
 
 #show: metropolis-theme.with(
   aspect-ratio: "16-9",
   footer: self => self.info.institution,
+  config-common(new-section-slide-fn: big-section-slide),
   config-info(
     title: [Agentic AI for Beginners],
     subtitle: [A Zero-Code Introduction],
@@ -29,23 +31,6 @@
   inset: (top: 0.5em, bottom: 0.5em),
   [#text(size: 1.2em, weight: "bold")[#title] \ #body],
 )
-
-#let gblock(body, inset: 0.4em, outset: 0.4em, width: 100%) = block(
-  fill: luma(235),
-  inset: inset,
-  outset: outset,
-  radius: 0.4em,
-  width: width,
-)[#body]
-
-#let lblock(body, inset: 0.4em, outset: 0.4em, width: 100%) = block(
-  fill: white,
-  stroke: 0.5pt + luma(220),
-  inset: inset,
-  outset: outset,
-  radius: 0.4em,
-  width: width,
-)[#body]
 
 #let similar(items) = lblock(inset: (x: 0.6em, y: 0.4em), outset: 0pt)[
   #text(size: 0.85em, fill: luma(80))[#text(weight: "bold")[Other examples] --- #items]
@@ -805,7 +790,7 @@
       #set list(marker: text(fill: rgb("#6b9c71"))[#sym.ballot], spacing: 1em)
       - *Telegram bot token* from `@BotFather`
       - Get *AI model key*\
-        #text(size: 0.8em)[*Google AI Studio* or *OpenRouter*]
+        #text(size: 0.8em)[*Google AI Studio*, *OpenCode*, or *OpenRouter*]
       - Install both keys in the repo (`.env`)
       - Read `SYSTEM.md`
       - Message the bot over Telegram

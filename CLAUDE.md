@@ -105,7 +105,7 @@ Variable fonts (`Ubuntu`, `Ubuntu Mono`) may render incorrectly — avoid.
 1. Read `README.md` in the target module to understand the content scope.
 2. Edit `slides.typ` — the README is the outline, the .typ file is the deliverable.
 3. Images go in `media/`. Reference them as relative paths: `image("media/foo.jpg")`.
-4. Compile with `typst compile slides.typ` from inside the module directory.
+4. Compile from inside the module directory with `typst compile --root .. slides.typ` (the `--root ..` lets decks import the repo-root `common.typ` shared helpers).
 
 ---
 

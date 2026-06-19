@@ -3,10 +3,12 @@
 
 #import "@preview/numbly:0.1.0": numbly
 #import "@preview/tiaoma:0.3.0": qrcode
+#import "/common.typ": gblock, lblock, big-section-slide
 
 #show: metropolis-theme.with(
   aspect-ratio: "16-9",
   footer: self => self.info.institution,
+  config-common(new-section-slide-fn: big-section-slide),
   config-info(
     title: [Agentic AI for Beginners],
     subtitle: [A Zero-Code Introduction],
@@ -39,23 +41,6 @@
   inset: (x: 0.2em, y: 0.15em),
   radius: 0.1em,
 )[#content]
-
-#let gblock(body, inset: 0.4em, outset: 0.4em, width: 100%) = block(
-  fill: luma(235),
-  inset: inset,
-  outset: outset,
-  radius: 0.4em,
-  width: width,
-)[#body]
-
-#let lblock(body, inset: 0.4em, outset: 0.4em, width: 100%) = block(
-  fill: white,
-  stroke: 0.5pt + luma(220),
-  inset: inset,
-  outset: outset,
-  radius: 0.4em,
-  width: width,
-)[#body]
 
 #title-slide()
 
