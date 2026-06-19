@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: typst-community/setup-typst@v5
-      - run: typst compile slides.typ slides.pdf
+      - run: typst compile --root .. slides.typ slides.pdf
         working-directory: 01-introduction
       - uses: actions/upload-artifact@v6
         with:
@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: typst-community/setup-typst@v5
-      - run: typst compile slides.typ slides.pdf
+      - run: typst compile --root .. slides.typ slides.pdf
         working-directory: 03-agentic
       - uses: actions/upload-artifact@v6
         with:
