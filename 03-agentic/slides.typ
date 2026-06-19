@@ -169,8 +169,9 @@
   - Sub-agents: powerful, token-heavy — use cheaper LLMs
 ]
 
+= Real-World Agents
 
-== Real-World Agents
+== Agents in the Wild
 
 #grid(
   columns: (1fr, 1fr),
@@ -359,8 +360,8 @@
 
 // Full-bleed image slide: drop the right + bottom margins via slide config
 // (a mid-slide `#set page` would inject a blank page in touying).
+== Dynamic Agent Workflows
 #slide(
-  title: [Dynamic Agentic Workflows],
   config: config-page(margin: (top: 3em, bottom: 0pt, left: 2em, right: 0pt)),
 )[
   // `overlap`: width of the text box. Raise it to extend the text rightward
@@ -383,7 +384,9 @@
 
 // Full-bleed image slide: drop the right + bottom margins via slide config
 // (a mid-slide `#set page` would inject a blank page in touying).
-#slide(config: config-page(margin: (top: 3em, bottom: 0pt, left: 2em, right: 0pt)))[
+#slide(
+  config: config-page(margin: (top: 3em, bottom: 0pt, left: 2em, right: 0pt)),
+)[
   // `overlap`: width of the text box. Raise it to extend the text rightward
   // over the image; lower it to pull the text back to the left.
   #let overlap = 7cm
@@ -403,6 +406,45 @@
     - The fat cat got rich on your bill — budget and cap autonomous runs before you let them loose
   ]
 ]
+
+== Self-Evolving Swarms
+
+#grid(
+  columns: (1.4fr, 1fr),
+  gutter: 1.2em,
+  align: horizon,
+  [
+    *Swarming*: a new bet on where frontier capability comes from.
+    - Not one giant model, but a *swarm of smartphone-grade models* working together.
+    - The swarm thinks, verifies, and rewrites itself
+    - The problem is recursively broken down and argued in smaller and smaller blocks instead of one big forward pass.
+    - Typically reach _hundreds_ of agents per query.
+    - They call this _Causal discovery + self-evolution_.
+
+    #v(0.5em)
+    #gblock[
+      *The wager:* many small models that argue and audit each other vs workflows of expensive models.
+    ]
+  ],
+  [
+    #block(stroke: 0.5pt + luma(180), radius: 0.3em, clip: true, outset: 0.4em, fill: rgb("#FAFCFE"), image(
+      "media/apodex.png",
+      width: 100%,
+    ))
+    #place(bottom + right)[
+      #text(size: 0.7em, fill: luma(110))[apodex.com --- _Apodex 1.0_, 2026]
+    ]
+  ],
+)
+
+#speaker-note[
+  - This is speculative — a "coming strategy", not a shipped consensus
+  - Contrast with the Anthropic "fan-out one big model" picture two slides back
+  - Apodex's pitch: structural certainty, not statistical — output is auditable/traceable
+  - Open question for the room: does many-small-models-arguing actually beat one-big-model? Nobody knows yet
+]
+
+= Anatomy of an Agent
 
 == Skills
 
