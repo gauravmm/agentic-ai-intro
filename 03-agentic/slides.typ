@@ -330,8 +330,7 @@
     Design agents visually as *graphs of components* --- or as code.
 
     #v(1fr)
-    #similar[LangGraph, Flowise, AutoGen, CrewAI, n8n, Dify, LlamaIndex Workflows\
-      #only("2-")[ *PowerAutomate*]~]
+    #similar[LangGraph, Flowise, AutoGen, CrewAI, n8n, Dify, *PowerAutomate*]
   ],
 )
 #place(right + horizon, dx: -8.5cm, image("media/langflow.png", height: 100%))
@@ -395,21 +394,17 @@
 == Self-Evolving Swarms
 
 #grid(
-  columns: (1.4fr, 1fr),
+  columns: (1fr, 1fr),
   gutter: 1.2em,
   align: horizon,
   [
     *Swarming*: a new bet on where frontier capability comes from.
-    - Not one giant model, but a *swarm of smartphone-grade models* working together.
-    - The swarm thinks, verifies, and rewrites itself
-    - The problem is recursively broken down and argued in smaller and smaller blocks instead of one big forward pass.
-    - Typically reach _hundreds_ of agents per query.
-    - They call this _Causal discovery + self-evolution_.
 
-    #v(0.5em)
-    #gblock[
-      *The wager:* many small models that argue and audit each other vs workflows of expensive models.
-    ]
+    Not one giant model, but a *swarm of smartphone-grade models* working together.
+
+    The problem is recursively broken down and argued in smaller and smaller blocks instead of one big forward pass.
+
+    Typically reach _hundreds_ of agents per query.
   ],
   [
     #block(stroke: 0.5pt + luma(180), radius: 0.3em, clip: true, outset: 0.4em, fill: rgb("#FAFCFE"), image(
