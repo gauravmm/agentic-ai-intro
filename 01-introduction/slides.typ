@@ -3,7 +3,7 @@
 
 #import "@preview/numbly:0.1.0": numbly
 #import "@preview/tiaoma:0.3.0": qrcode
-#import "/common.typ": gblock, lblock, big-section-slide
+#import "/common.typ": big-section-slide, gblock, lblock
 
 #show: metropolis-theme.with(
   aspect-ratio: "16-9",
@@ -44,6 +44,57 @@
 
 #title-slide()
 
+= Outline <touying:hidden>
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 2em,
+  [
+    1. What is an AI?
+    2. Fundamental Limits
+    3. How to write a prompt?
+
+    #lblock[Hands-on: \
+      *Optical prescription extraction*]
+
+    4. What is Agentic AI?
+    5. Patterns and Practice
+
+    #lblock[Hands-on: \
+      *Multi-agent triage bot* \
+      #place(right, dy: -2.4em, dx: .5em, image("media/kittenclaw.png", height: 3em))
+    ]
+  ],
+  aside[Before we begin][
+    #v(1em)
+    Ensure your accounts are set up:
+
+    + *GitHub account* with personal email. \
+      #h(1em) #link("https://github.com/signup")[#text(
+        font: "DejaVu Sans Mono",
+        size: 0.85em,
+      )[https://github.com/signup]]
+      - Also *GitHub Copilot Free*
+    + *OpenCode Zen* account. \
+      #h(1em) #link("https://opencode.ai/zen")[#text(font: "DejaVu Sans Mono", size: 0.85em)[https://opencode.ai/zen]]
+    + *Google AI Studio* account. \
+      #h(1em) #link("https://aistudio.google.com")[#text(
+        font: "DejaVu Sans Mono",
+        size: 0.85em,
+      )[https://aistudio.google.com]]
+
+    #v(1fr)
+    All these are _completely free_.
+    #v(1em)
+  ],
+)
+
+
+#speaker-note[
+  - 5 min for accounts
+  - GitHub Education → free Codespaces (used throughout)
+  - Verify everyone logged in before continuing
+]
 == About Me <touying:hidden>
 
 #grid(
@@ -78,55 +129,6 @@
 )
 
 
-= Outline <touying:hidden>
-
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 2em,
-  [
-    1. What is an AI?
-    2. Fundamental Limits
-    3. How to write a prompt?
-
-    #lblock[Hands-on: \
-      *Optical prescription extraction*]
-
-    4. What is Agentic AI?
-    5. Patterns and Practice
-
-    #lblock[Hands-on: \
-      *Multi-agent triage bot*]
-  ],
-  aside[Before we begin][
-    #v(1em)
-    Ensure your accounts are set up:
-
-    + *GitHub account* with personal email. \
-      #h(1em) #link("https://github.com/signup")[#text(
-        font: "DejaVu Sans Mono",
-        size: 0.85em,
-      )[https://github.com/signup]]
-      - Also *GitHub Copilot Free*
-    + *OpenCode Zen* account. \
-      #h(1em) #link("https://opencode.ai/zen")[#text(font: "DejaVu Sans Mono", size: 0.85em)[https://opencode.ai/zen]]
-    + *Google AI Studio* account. \
-      #h(1em) #link("https://aistudio.google.com")[#text(
-        font: "DejaVu Sans Mono",
-        size: 0.85em,
-      )[https://aistudio.google.com]]
-
-    #v(1fr)
-    All these are _completely free_.
-    #v(1em)
-  ],
-)
-
-
-#speaker-note[
-  - 5 min for accounts
-  - GitHub Education → free Codespaces (used throughout)
-  - Verify everyone logged in before continuing
-]
 
 = AI Basics
 
@@ -342,6 +344,20 @@ The context window is the model's *working memory*:
   ),
 )
 
+#pause
+#place(
+  center + top,
+  dx: 0pt,
+  dy: 0pt,
+  rotate(-4deg, block(
+    clip: true,
+    stroke: 2pt + luma(120),
+    align(top + left, image("media/attention-paper.jpeg", width: 100%)),
+  )),
+)
+
+
+
 #speaker-note[
   - Keep brief
   - Every token attends to every other ("it" → "cat" across long distance)
@@ -446,7 +462,7 @@ The context window is the model's *working memory*:
     cell([K2.6], 0.68, 3.41),
     [—],
     lab([Z.ai], [GLM]),
-    cell([5.1], 0.98, 3.08),
+    cell([5.2], 1.20, 4.10),
     cell([5], 0.60, 1.92),
     cell([4.7 Flash], 0.06, 0.40),
     lab([Alibaba], [Qwen]),
@@ -501,12 +517,12 @@ The context window is the model's *working memory*:
   dx: -4em,
   float: false,
   text(size: 0.7em, fill: luma(120))[
-    via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-06-14.
+    via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-06-21.
   ],
 )
 
 #speaker-note[
-  - Prices: OpenRouter, 2026-06-14
+  - Prices: OpenRouter, 2026-06-21
   - Cheapest: GLM 4.7 Flash (\$0.06 / \$0.40) — cost/quality tradeoff
   - Chinese labs (GLM, Qwen, DeepSeek, Kimi) undercutting US frontier
   - Two postcards bracket the range: Fable 5 (\$10 / \$50, hosted) = how pricey frontier gets; Gemma 4 E4B self-hosted (\$0.01 / \$0.06) = the cheap extreme
