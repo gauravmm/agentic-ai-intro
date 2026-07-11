@@ -16,7 +16,7 @@ This workshop has been delivered to:
 - **NTU BMES** — Makerspace Hackathon, [16 Mar 2026](https://gauravmanek.com/lectures/2026/ntu-bmes-workshop/)
 - **TechWorks@ROCK, A\*STAR** — the "Agentic AI for Beginners" series: [4 Apr](https://gauravmanek.com/lectures/2026/astar-workshop-1/), [12 May](https://gauravmanek.com/lectures/2026/astar-workshop-2/), [22 Jun](https://gauravmanek.com/lectures/2026/astar-workshop-4/) 2026.
 - **MedTech Catapult / DxDHub** — [special session](https://gauravmanek.com/lectures/2026/astar-workshop-3/) (13 May 2026)
-- **A\*STAR BMRC HQ** and related units
+- **A\*STAR BMRC** — [special session](https://gauravmanek.com/lectures/2026/astar-workshop-5/) (6 Aug 2026)
 
 See the full [talks & workshops list](https://gauravmanek.com/lectures/) for details, including the intermediate [Build Your Own Agent](https://gauravmanek.com/lectures/2026/astar-intermediate-1/) follow-up.
 
