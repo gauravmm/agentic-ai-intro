@@ -131,7 +131,7 @@ Variable fonts (`Ubuntu`, `Ubuntu Mono`) may render incorrectly — avoid.
 ### 01-introduction
 - Full slide deck, essentially complete.
 - Custom `aside` and `tok` macros defined here.
-- Pricing table on the "How Usage Is Billed" slide — sourced from OpenRouter 2026-02-21.
+- Pricing table on the "How Usage Is Billed" slide — sourced from OpenRouter 2026-07-11.
 
 ### 03-agentic
 - Slides cover: agent loop, common patterns (vibe coding, actor-critic, complexity ladder, TDD), human-in-the-loop models, real-world agents (Copilot Workspace, OpenClaw).

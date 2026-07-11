@@ -455,14 +455,14 @@ The context window is the model's *working memory*:
     cell([3.1 Flash Lite], 0.25, 1.50),
     lab([Anthropic], [Claude]),
     cell([Opus 4.8], 5.00, 25.00),
-    cell([Sonnet 4.6], 3.00, 15.00),
+    cell([Sonnet 5], 2.00, 10.00),
     cell([Haiku 4.5], 1.00, 5.00),
     lab([Moonshot], [Kimi]),
-    cell([K2.7 Code], 0.75, 3.50),
-    cell([K2.6], 0.68, 3.41),
-    [—],
+    cell([K2.7 Code], 0.72, 3.50),
+    cell([K2.6], 0.66, 3.41),
+    cell([K2.5], 0.38, 2.03),
     lab([Z.ai], [GLM]),
-    cell([5.2], 1.20, 4.10),
+    cell([5.2], 0.41, 1.28),
     cell([5], 0.60, 1.92),
     cell([4.7 Flash], 0.06, 0.40),
     lab([Alibaba], [Qwen]),
@@ -471,12 +471,12 @@ The context window is the model's *working memory*:
     cell([3.6 Flash], 0.19, 1.13),
     lab([DeepSeek], [DeepSeek]),
     cell([V4 Pro], 0.44, 0.87),
-    cell([V3.2], 0.23, 0.34),
-    cell([V4 Flash], 0.10, 0.20),
+    cell([V3.2], 0.21, 0.32),
+    cell([V4 Flash], 0.08, 0.15),
   )
   // Fable 5 "postcard" — slapped on top of the Anthropic row on the 2nd subslide
   #only("2-")[
-    #place(top + left, dx: -8mm, dy: 34mm)[
+    #place(top + left, dx: -8mm, dy: 24mm)[
       #rotate(-5deg, origin: center + horizon)[
         #box(
           fill: white,
@@ -495,7 +495,7 @@ The context window is the model's *working memory*:
   // Cost basis: electricity only, ~4B model on an Apple-Silicon laptop, SG ~$0.23/kWh.
   // Input ≈ prefill (~500 tok/s) → ~$0.01/M; output ≈ decode (~55 tok/s) → ~$0.06/M.
   #only("3-")[
-    #place(top + left, dx: 220mm, dy: 16mm)[
+    #place(top + left, dx: 190mm, dy: 90mm)[
       #rotate(5deg, origin: center + horizon)[
         #box(
           fill: white,
@@ -504,8 +504,8 @@ The context window is the model's *working memory*:
           radius: 1.5pt,
         )[
           #text(size: 0.7em, fill: luma(140))[ Self-hosted]\
-          #text(weight: "bold", size: 1em)[Gemma 4 E4B]\
-          #text(weight: "bold", fill: rgb("#2E7D32"))[\$0.01 / \$0.06]\
+          #text(weight: "bold", size: 1em)[Qwen 3.6 35B A3B]\
+          #text(weight: "bold", fill: rgb("#2E7D32"))[\$0.00 / \$0.01]\
         ]
       ]
     ]
@@ -517,16 +517,17 @@ The context window is the model's *working memory*:
   dx: -4em,
   float: false,
   text(size: 0.7em, fill: luma(120))[
-    via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-06-21.
+    via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-07-11.
   ],
 )
 
 #speaker-note[
-  - Prices: OpenRouter, 2026-06-21
-  - Cheapest: GLM 4.7 Flash (\$0.06 / \$0.40) — cost/quality tradeoff
-  - Chinese labs (GLM, Qwen, DeepSeek, Kimi) undercutting US frontier
-  - Two postcards bracket the range: Fable 5 (\$10 / \$50, hosted) = how pricey frontier gets; Gemma 4 E4B self-hosted (\$0.01 / \$0.06) = the cheap extreme
-  - Self-host figure is electricity only (no API bill, runs offline): ~4B model on an Apple-Silicon laptop, ~50 W, ~55 tok/s decode, SG \$0.23/kWh. Prefill is ~10× faster than decode → input ≈ \$0.01, output ≈ \$0.06. Gaming laptop / 4090 desktop cost more per token (more watts)
+  - Prices: OpenRouter, 2026-07-11
+  - Cheapest input: GLM 4.7 Flash (\$0.06); cheapest output: DeepSeek V4 Flash (\$0.15) — cost/quality tradeoff
+  - Chinese labs (GLM, Qwen, DeepSeek, Kimi) undercutting US frontier; Kimi K2.5 now fills the cost-efficient slot
+  - Two postcards bracket the range: Fable 5 (\$10 / \$50, hosted) = how pricey frontier gets; Qwen 3.6 35B A3B self-hosted (\$0.01 / \$0.06) = the cheap extreme
+  - Self-host figure is electricity only (no API bill, runs offline): ~3B active / 35B total MoE on an Apple-Silicon laptop, ~50 W, ~55 tok/s decode, SG \$0.23/kWh. Prefill is ~10× faster than decode → input ≈ \$0.01, output ≈ \$0.06. Gaming laptop / 4090 desktop cost more per token (more watts)
+  - Anthropic Sonnet 5 replaced Sonnet 4.6 in the mid-tier (newer and cheaper: \$2 / \$10)
   - Kimi K2.7 Code (frontier cell) is a coding specialist, shipped 2026-06-12 — note how fast the cadence is
   - Google version mismatch (3.1 / 3.5 / 3.1) is real: newest in each tier, not matched generation
 ]
