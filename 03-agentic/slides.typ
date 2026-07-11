@@ -764,7 +764,7 @@
 
 
 #speaker-note[
-  - Next hands-on: build the two bots in 04-multiagent-triage
+  - Next hands-on: build the two bots (ai-tutorial-triage-kittenclaw repo)
   - Triage = KittenClaw (Telegram), reporter = a Copilot skill
   - They coordinate only through conversation files on disk — no direct channel
   - The catch: triage must collect name/age it never uses, because the reporter needs it — a cross-agent contract

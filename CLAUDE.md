@@ -7,16 +7,24 @@ Presenter: Dr. Gaurav Manek, A\*STAR.
 
 ## Repository structure
 
+This repo holds **only the slide decks**. The hands-on tasks live in their own
+GitHub repos and are linked from the top-level `README.md`.
+
 ```
 01-introduction/      Intro slides (slides.typ) + media assets
-02-label-design/      Hands-on task: generate a medical device label (Typst)
-03-agentic/           Agentic AI concepts (slides in progress)
-04-multiagent-triage/ Hands-on task: multi-agent triage bot (Python)
+03-agentic/           Agentic AI concepts (slides.typ) + media/figures
+common.typ            Shared slide helpers imported by both decks (--root ..)
 .agents/skills/       Installed Claude Code skills (touying-author, typst-author)
 ```
 
-Each module follows the same pattern:
-- `README.md` — content outline / exercise brief (source of truth for *what* to cover)
+The numbering has gaps (02, 04) because the workshop *flow* interleaves a
+hands-on task after each slide deck; those tasks are external repos:
+- `github.com/gauravmm/ai-tutorial-scraping-prescriptions` — task 2 (current)
+- `github.com/gauravmm/ai-tutorial-triage-kittenclaw` — task 4
+- `github.com/gauravmm/ai-tutorial-labelgen` — older label-design task (retired)
+
+Each slide module follows the same pattern:
+- `README.md` — content outline (source of truth for *what* to cover)
 - `slides.typ` — Typst source for the compiled slide deck
 - `media/` — images, memes, diagrams used on slides
 
@@ -125,15 +133,10 @@ Variable fonts (`Ubuntu`, `Ubuntu Mono`) may render incorrectly — avoid.
 - Custom `aside` and `tok` macros defined here.
 - Pricing table on the "How Usage Is Billed" slide — sourced from OpenRouter 2026-02-21.
 
-### 02-label-design
-- Task lives in `task/` (git submodule). Students complete `labelgen.typ`.
-- Requirements: medical device label, ISO 7000 icons, QR code, dashed cut line.
-- Advanced: 1 000 unique labels with sequential serial numbers; FDA CFR 21 Part 801 / UDI compliance.
-
 ### 03-agentic
 - Slides cover: agent loop, common patterns (vibe coding, actor-critic, complexity ladder, TDD), human-in-the-loop models, real-world agents (Copilot Workspace, OpenClaw).
 - Shares the `gblock` / `lblock` helpers with 01; `label-item` is local for cell-filling labelled rows.
 
-### 04-multiagent-triage
-- Python task in `task/` with a `.venv`. Students build a multi-agent triage bot.
-- Discussion focus: escalation, backpressure, external tool use, validation.
+### Hands-on tasks (external repos)
+- Linked from the top-level `README.md`; not checked out here.
+- Prescription scraping (`ai-tutorial-scraping-prescriptions`) and multi-agent triage (`ai-tutorial-triage-kittenclaw`) are the current tasks; `ai-tutorial-labelgen` is the retired label-design task.
