@@ -411,6 +411,9 @@ The context window is the model's *working memory*:
 
 == How Usage Is Billed
 
+// Reclaim vertical space for the taller table: drop the theme header AND its 3em
+// top margin (theme default is top: 3em, bottom: 1.5em, x: 2em).
+
 #let emph-color = rgb("#EB811B")
 #let fmt-price(v) = {
   let total-3 = calc.round(v * 1000)
@@ -435,77 +438,84 @@ The context window is the model's *working memory*:
 #let lab(name, family) = [
   #name \ #text(size: 0.85em, fill: luma(100))[#family]
 ]
-#block(height: 1fr, width: 100%)[
+#let no = text(fill: luma(190))[—]
+#block(width: 100%, height: 100%)[
+  // Tight leading keeps each 2-line cell short so 8 rows fit one slide.
+  #set par(leading: 0.42em)
   #table(
-    columns: (50mm, 1fr, 1fr, 1fr),
-    rows: (auto, 1fr, 1fr, 1fr, 1fr, 1fr, 1fr),
-    align: (left + horizon, left + horizon, left + horizon, left + horizon),
+    columns: (42mm, 1fr, 1fr, 1fr, 1fr),
+    rows: auto,
+    align: (left + horizon, left + horizon, left + horizon, left + horizon, left + horizon),
     stroke: none,
     fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) { luma(245) } else { white },
-    inset: (x: 0.6em, y: 0.5em),
+    inset: (x: 0.6em, y: 0.32em),
     table.header(
       [*Lab*],
       [*Frontier*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
+      [*Flagship*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
       [*Mid-tier*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
       [*Cost-efficient*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
     ),
-    lab([Google], [Gemini]),
-    cell([3.1 Pro Preview], 2.00, 12.00),
-    cell([3.5 Flash], 1.50, 9.00),
-    cell([3.1 Flash Lite], 0.25, 1.50),
+    // Columns are CAPABILITY tiers (Artificial Analysis Intelligence Index / consensus),
+    // NOT price. Rows ordered by frontier presence: the 3 labs with a true frontier
+    // model first, then the rest. Prices deliberately do NOT fall left-to-right.
     lab([Anthropic], [Claude]),
+    cell([Fable 5], 10.00, 50.00),
     cell([Opus 4.8], 5.00, 25.00),
     cell([Sonnet 5], 2.00, 10.00),
     cell([Haiku 4.5], 1.00, 5.00),
-    lab([Moonshot], [Kimi]),
-    cell([K2.7 Code], 0.72, 3.50),
-    cell([K2.6], 0.66, 3.41),
-    cell([K2.5], 0.38, 2.03),
+    lab([OpenAI], [GPT]),
+    cell([5.6 Sol], 5.00, 30.00),
+    cell([5.6 Terra], 2.50, 15.00),
+    cell([5.6 Luna], 1.00, 6.00),
+    no,
+
+    lab([Google], [Gemini]),
+    no,
+    cell([3.1 Pro Preview], 2.00, 12.00),
+    cell([3.5 Flash], 1.50, 9.00),
+    cell([3.1 Flash Lite], 0.25, 1.50),
     lab([Z.ai], [GLM]),
+    no,
     cell([5.2], 0.41, 1.28),
     cell([5], 0.60, 1.92),
     cell([4.7 Flash], 0.06, 0.40),
+
+    lab([Moonshot], [Kimi]),
+    cell([K3], 3.00, 15.00),
+    cell([K2.7 Code], 0.72, 3.50),
+    cell([K2.6], 0.66, 3.41),
+    cell([K2.5], 0.38, 2.03),
+
     lab([Alibaba], [Qwen]),
+    // Qwen3.8-Max: previewed 2026-07-19, frontier claim, no per-token price published yet.
+    [#text(size: 0.8em, fill: luma(80))[3.8 Max] \ #text(weight: "bold")[\$? / \$?]],
     cell([3.7 Max], 1.25, 3.75),
     cell([3.7 Plus], 0.32, 1.28),
     cell([3.6 Flash], 0.19, 1.13),
     lab([DeepSeek], [DeepSeek]),
+    no,
     cell([V4 Pro], 0.44, 0.87),
     cell([V3.2], 0.21, 0.32),
     cell([V4 Flash], 0.08, 0.15),
   )
-  // Fable 5 "postcard" — slapped on top of the Anthropic row on the 2nd subslide
-  #only("2-")[
-    #place(top + left, dx: -8mm, dy: 24mm)[
-      #rotate(-5deg, origin: center + horizon)[
-        #box(
-          fill: white,
-          stroke: 0.6pt + black,
-          inset: (x: 1em, y: 0.7em),
-          radius: 1.5pt,
-        )[
-          #text(size: 0.7em, fill: luma(110))[Anthropic · Claude] \
-          #text(weight: "bold", size: 1.6em)[Fable 5]\
-          #text(weight: "bold", fill: emph-color)[\$10.00 / \$50.00]
-        ]
-      ]
-    ]
-  ]
-  // Self-hosted "postcard" — ultra-cheap counterpoint: run a small model yourself (3rd subslide)
+  // Self-hosted "postcard" — ultra-cheap counterpoint: run a small model yourself (2nd subslide)
   // Cost basis: electricity only, ~4B model on an Apple-Silicon laptop, SG ~$0.23/kWh.
   // Input ≈ prefill (~500 tok/s) → ~$0.01/M; output ≈ decode (~55 tok/s) → ~$0.06/M.
-  #only("3-")[
-    #place(top + left, dx: 190mm, dy: 90mm)[
-      #rotate(5deg, origin: center + horizon)[
+  // Sits over the tall blank block in the lower Frontier column (Google/GLM/Qwen/DeepSeek
+  // have no frontier model) so it covers dashes, not prices.
+  #only("2-")[
+    #place(bottom + right, dx: -2mm, dy: -12mm)[
+      #rotate(-4deg, origin: center + horizon)[
         #box(
           fill: white,
           stroke: 0.6pt + black,
-          inset: (x: 1em, y: 0.7em),
+          inset: (x: 0.7em, y: 0.6em),
           radius: 1.5pt,
         )[
-          #text(size: 0.7em, fill: luma(140))[ Self-hosted]\
-          #text(weight: "bold", size: 1em)[Qwen 3.6 35B A3B]\
-          #text(weight: "bold", fill: rgb("#2E7D32"))[\$0.00 / \$0.01]\
+          #text(size: 0.65em, fill: luma(140))[Self-hosted]\
+          #text(weight: "bold", size: 0.8em)[Qwen 3.6 35B A3B]\
+          #text(weight: "bold", size: 0.9em, fill: rgb("#2E7D32"))[\$0.00 / \$0.01]\
         ]
       ]
     ]
@@ -514,22 +524,22 @@ The context window is the model's *working memory*:
 #place(
   bottom + right,
   dy: 1em,
-  dx: -4em,
+  dx: -.6em,
   float: false,
   text(size: 0.7em, fill: luma(120))[
-    via #link("https://openrouter.ai/models")[openrouter.ai/models], 2026-07-11.
+    tiers: #link("https://artificialanalysis.ai")[artificialanalysis.ai] · prices: #link("https://openrouter.ai/models")[openrouter.ai] · 2026-07-22
   ],
 )
 
 #speaker-note[
-  - Prices: OpenRouter, 2026-07-11
-  - Cheapest input: GLM 4.7 Flash (\$0.06); cheapest output: DeepSeek V4 Flash (\$0.15) — cost/quality tradeoff
-  - Chinese labs (GLM, Qwen, DeepSeek, Kimi) undercutting US frontier; Kimi K2.5 now fills the cost-efficient slot
-  - Two postcards bracket the range: Fable 5 (\$10 / \$50, hosted) = how pricey frontier gets; Qwen 3.6 35B A3B self-hosted (\$0.01 / \$0.06) = the cheap extreme
-  - Self-host figure is electricity only (no API bill, runs offline): ~3B active / 35B total MoE on an Apple-Silicon laptop, ~50 W, ~55 tok/s decode, SG \$0.23/kWh. Prefill is ~10× faster than decode → input ≈ \$0.01, output ≈ \$0.06. Gaming laptop / 4090 desktop cost more per token (more watts)
-  - Anthropic Sonnet 5 replaced Sonnet 4.6 in the mid-tier (newer and cheaper: \$2 / \$10)
-  - Kimi K2.7 Code (frontier cell) is a coding specialist, shipped 2026-06-12 — note how fast the cadence is
-  - Google version mismatch (3.1 / 3.5 / 3.1) is real: newest in each tier, not matched generation
+  - Columns are CAPABILITY tiers by Artificial Analysis Intelligence Index (current v4.x scale), NOT price — the whole point of the slide. Prices via OpenRouter, both 2026-07-22
+  - THE punchline: read a row and prices don't fall left-to-right. Same tier, wildly different price. Kimi K3 (frontier) \$3 / \$15 vs Fable 5 (frontier) \$10 / \$50 — ~3× cheaper for the same capability class. GLM 5.2 (flagship, \$0.41) is cheaper than GLM 5 (mid, \$0.60)
+  - Frontier is a 3-lab club: Fable 5 (59.9, #1), GPT-5.6 Sol (58.9, #2), Kimi K3 (57.1, #3). Kimi K3 is the ONLY Chinese model consensus puts at true frontier (2.8T open-weight, shipped 2026-07-16)
+  - Blank frontier cells (Google, GLM, Qwen, DeepSeek) = no top-of-leaderboard model. Google notably has none live right now — 3.1 Pro (46.5) is mid-pack; Gemini 4 teased but delayed
+  - Dropped GPT-5.5 Pro: by benchmark it's NOT frontier — newer 5.6 Sol matches/beats it at ~1/6 the price (\$5/\$30 vs \$30/\$180). It was a compute-tier premium, not a capability tier. Mention verbally if someone asks about the \$180 model
+  - Qwen3.8-Max (2.4T, previewed 2026-07-19) claims "second only to Fable 5" but has no verified index score AND no per-token price yet — left off the grid on purpose. Add if it graduates from preview
+  - Naming inversion to expect: Gemini 3.5 Flash (mid, 50.2) actually OUTSCORES the "flagship" 3.1 Pro (46.5) — newer release. Placed 3.1 Pro as flagship by role/consensus, not raw index
+  - One postcard left (self-hosted, subslide 2): electricity only, ~3B active / 35B MoE on Apple Silicon, ~55 tok/s decode, SG \$0.23/kWh → input ≈ \$0.01, output ≈ \$0.06. The cheap extreme; genuinely off-grid (not an API SKU)
 ]
 
 == Model Structure
