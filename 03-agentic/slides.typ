@@ -14,7 +14,7 @@
     subtitle: [A Zero-Code Introduction],
     author: [Dr. Gaurav Manek, Ocellivision, IMCB],
     date: datetime.today(),
-    institution: [Ocellivision + TechWorks\@ROCK],
+    institution: [Ocellivision + A*STAR BMRC],
     logo: [🤖💥🧠🧑‍💻],
   ),
 )

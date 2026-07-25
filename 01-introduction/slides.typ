@@ -14,7 +14,7 @@
     subtitle: [A Zero-Code Introduction],
     author: [Dr. Gaurav Manek, Ocellivision, IMCB],
     date: datetime.today(),
-    institution: [Ocellivision + TechWorks\@ROCK],
+    institution: [Ocellivision + A*STAR BMRC],
     logo: [🤖💥🧠🧑‍💻],
   ),
 )
@@ -541,6 +541,86 @@ The context window is the model's *working memory*:
   - Naming inversion to expect: Gemini 3.5 Flash (mid, 50.2) actually OUTSCORES the "flagship" 3.1 Pro (46.5) — newer release. Placed 3.1 Pro as flagship by role/consensus, not raw index
   - One postcard left (self-hosted, subslide 2): electricity only, ~3B active / 35B MoE on Apple Silicon, ~55 tok/s decode, SG \$0.23/kWh → input ≈ \$0.01, output ≈ \$0.06. The cheap extreme; genuinely off-grid (not an API SKU)
 ]
+
+== What Does a Subscription Buy?
+
+// Rows: five labs from the previous slide (Google & Z.ai dropped — no distinct
+// consumer-subscription story), in the requested order.
+// "≈ max API value" = what riding the plan to its caps would cost at that lab's
+// OWN metered prices (previous slide). Order-of-magnitude; method in speaker notes.
+
+// Ledger-style money cell: fixed-width box sized to the widest value ("1,000"),
+// so the leftmost digit's left edge sits right next to the $, while every
+// number's right edge still aligns down the column.
+#let apiv(v) = box(width: 3.2em, text(weight: "bold", fill: emph-color)[\$#h(1fr)#v])
+#block(width: 100%, height: 100%)[
+  // Tight leading keeps each 2-line cell short, matching the previous slide.
+  #set par(leading: 0.42em)
+  #table(
+    columns: (40mm, 1.7fr, 1.1fr, 0.7fr),
+    rows: auto,
+    align: (left + horizon, left + horizon, left + horizon, left + horizon),
+    stroke: none,
+    fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) { luma(245) } else { white },
+    inset: (x: 0.6em, y: 0.45em),
+    table.header(
+      [*Lab*],
+      [*Major plans*\ #text(size: 0.8em, weight: "regular")[\$/mo]],
+      [*≈ max API value*\ #text(size: 0.8em, weight: "regular")[\$/mo, ridden to caps]],
+      [*≈ × your\ money*],
+    ),
+    lab([Anthropic], [Claude]),
+    [Pro #text(weight: "bold")[\$20] \ Max 20× #text(weight: "bold")[\$200]],
+    [#apiv[1,000] \ #apiv[6,000]],
+    [30×],
+
+    lab([OpenAI], [ChatGPT]),
+    [Plus #text(weight: "bold")[\$20] \ Pro 20× #text(weight: "bold")[\$200]],
+    [#apiv[1,000] \ #apiv[6,000]],
+    [30×],
+
+    lab([DeepSeek], [DeepSeek]),
+    [none — chat is #text(weight: "bold")[free] \ #text(size: 0.8em, fill: luma(100))[(API is balance top-up)]],
+    [#apiv[5] \ #text(size: 0.8em, fill: luma(100))[heavy chat use]],
+    [∞],
+
+    lab([Alibaba], [Qwen]),
+    [Qwen chat #text(weight: "bold")[free] \ Coding Plan #text(weight: "bold")[\$50]],
+    [#apiv[5] \ #apiv[1,000]],
+    [20×],
+
+    lab([Moonshot], [Kimi]),
+    [Adagio #text(weight: "bold")[free] \ Vivace #text(weight: "bold")[\$199]],
+    [#apiv[50] \ #apiv[3,000]],
+    [15×],
+  )
+  #v(0.6em)
+  #text(size: 0.85em)[
+    Flat plans are priced for the *average* user — ridden to their caps, they are worth #text(weight: "bold", fill: emph-color)[10–30×] the sticker.
+  ]
+]
+#place(
+  bottom + right,
+  dy: 1em,
+  dx: -.6em,
+  float: false,
+  text(size: 0.6em, fill: luma(120))[
+    sources: #link("https://claude.com/pricing")[claude.com] · #link("https://chatgpt.com/pricing")[chatgpt.com] · #link("https://www.kimi.ai/membership/pricing")[kimi.ai] · #link("https://www.alibabacloud.com/help/en/model-studio/coding-plan")[alibabacloud.com] · #link("https://www.deepseek.com/")[deepseek.com] · #link("https://techcrunch.com/2025/07/28/anthropic-unveils-new-rate-limits-to-curb-claude-code-power-users/")[techcrunch] · 2026-07-25
+  ],
+)
+
+#speaker-note[
+  - Same labs as the billing slide, minus Google & Z.ai. "≈ max API value" = the same usage billed at the lab's OWN metered prices (previous slide), plan ridden to its caps. Order-of-magnitude estimates, NOT lab-published.
+  - METHOD: 1 agentic coding hour ≈ 1M blended tokens (\~30 turns × \~35K effective in + \~2K out, no cache discount) → \~\$3/h at Sonnet 5 (\$2/\$10), \~\$8/h at Opus 4.8 (\$5/\$25).
+  - Anthropic (claude.com/pricing, 2026-07-25): Pro \$20 (\$17 annual); Max from \$100 = 5× or 20× Pro usage per session; 5-hour session windows + weekly caps (Max adds a separate Sonnet weekly cap). Frontier Fable 5 only on Max (≤50% of weekly limit); on Pro it's pay-as-you-go credits only. Anthropic-published caps (TechCrunch 2025-07): Pro 40–80 Claude Code h/wk; Max 5× 140–280 h + 15–35 Opus h; Max 20× 240–480 h + 24–40 Opus h → Pro ≈ \$0.5–1K/mo, Max 20× ≈ \$4–8K/mo. Matches reports of heavy Max users burning "thousands"/mo at API rates — exactly why the weekly caps appeared in 2025.
+  - OpenAI (chatgpt.com/pricing + help center): Plus \$20; Pro \$100 = 5× Plus usage, Pro \$200 = 20× — deliberately mirrors Claude Max tiers. Caps unpublished ("unlimited subject to abuse guardrails"); values shown assume comparable agentic budgets at GPT-5.6 Terra (\$2.50/\$15) / Sol (\$5/\$30) prices — same bands as Sonnet/Opus. ChatGPT Go (budget tier, may carry ads) omitted as non-major.
+  - DeepSeek: NO consumer subscription exists — web/app chat is free ("免费对话"), API is prepaid balance top-up. Heavy free chat (\~100 msgs/day × \~5K tok) at V3.2 \$0.21/\$0.32 ≈ \$3–5/mo. The multiplier is infinite: you can't beat free.
+  - Alibaba: Qwen Studio chat is free ("free to use, open to all"). The real subscription is Model Studio's Coding Plan Pro: \$50/mo for 6K calls/5h, 45K/wk, 90K/mo — multi-vendor, covers Qwen 3.7-Plus/3-Max PLUS Kimi K2.5, GLM-5, MiniMax-M2.5. 90K calls × \~16K blended tok at 3.7-Plus \$0.32/\$1.28 ≈ \$0.5–1K → \~10–20×. (Lite tier discontinued 2026-03.)
+  - Moonshot: Kimi Membership — Adagio free, Moderato \$19, Allegretto \$39 (2× agent credits), Allegro \$99 (5×), Vivace \$199 (10×; Kimi Code 30× credits). Credit pool sizes unpublished; Vivace \~\$3K assumes 1× pool ≈ one Pro-class token budget at K2.7 Code prices (\$0.72/\$3.50). Frontier K3 chat is FREE — \~30–100 msgs/day at K3 \$3/\$15 ≈ \$20–70/mo of API value; the only free frontier chatbot.
+  - Punchlines: (1) Subscriptions are bulk discounts — priced for the average user, worth 10–30× sticker when maxed out; labs lose money on power users, which is why weekly caps exist. (2) Chinese labs treat the chatbot as a loss leader (free, even at frontier) and their paid coding plans undercut US ones (Alibaba \$50 multi-vendor plan vs Claude Max \$100–200).
+  - Caveats if asked: caps are dynamic and demand-based; prompt caching cuts real API-equivalent cost 2–5×; "max" assumes sustained heavy use almost no one achieves.
+]
+
 
 == Model Structure
 
