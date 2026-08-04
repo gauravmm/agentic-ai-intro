@@ -61,7 +61,11 @@ Before the workshop, each student should:
 
 **The kind of task:** a *multi-turn, human-in-the-loop* system, often with more than one agent. The agent holds a conversation, calls tools that have real side effects, and coordinates with other agents through a shared medium rather than a direct channel. This exercises liveness vs. safety guarantees, validation and "backpressure," cross-agent contracts (one agent gathering information another needs), and the risk of giving a conversational agent open-ended tool access.
 
-**Current task:** [ai-tutorial-triage-kittenclaw](https://github.com/gauravmm/ai-tutorial-triage-kittenclaw) — a Telegram triage bot (KittenClaw) that collects symptoms and either schedules an appointment or escalates to the ER, plus a reporter agent that writes structured intake reports from the finished conversation. The catch: triage must gather details (name, age) it never uses itself, because the *reporter* needs them. *(Swap in a scenario closer to each group's domain.)*
+Two tasks are available — pick one to run. *(Swap in a scenario closer to each group's domain.)*
+
+**Option A — [ai-tutorial-eventbot-kittenclaw](https://github.com/gauravmm/ai-tutorial-eventbot-kittenclaw):** a Telegram help desk (KittenClaw) for a one-day conference — what's on, where, who's speaking, what you should go to. It ships with three deliberate faults to find and fix (an obvious one, a subtle one, and one that only shows up if you do the arithmetic), a set of PDFs the bot *cannot* read alongside the markdown files it *can*, and a grader skill that plays ten reference attendees and scores the recommender. Every fix is a markdown edit; no code.
+
+**Option B — [ai-tutorial-triage-kittenclaw](https://github.com/gauravmm/ai-tutorial-triage-kittenclaw):** a Telegram triage bot (KittenClaw) that collects symptoms and either schedules an appointment or escalates to the ER, plus a reporter agent that writes structured intake reports from the finished conversation. The catch: triage must gather details (name, age) it never uses itself, because the *reporter* needs them.
 
 **Discussion questions:**
 
@@ -71,6 +75,9 @@ Before the workshop, each student should:
 - **Validation:** what happens on invalid input? How does rejecting bad input ("backpressure") catch bugs early?
 - **Tools:** should a conversational agent be allowed to browse the web or run other tools? What's the risk?
 - **Contracts:** when one agent must collect information for another, how do you keep that contract from silently breaking?
+- **Grounding:** the bot's truth is a set of files. What should it do when the user is confidently working from a stale copy — and does it hold its ground when they insist?
+- **Rules vs. structure:** you can write "never reveal internal-only sessions" five times and still talk it out. When is a rule in the prompt the wrong place for a rule?
+- **Evals:** once a grader scores ten reference conversations, how does that change the way you edit a prompt?
 
 ## Task repos
 
@@ -79,6 +86,7 @@ The hands-on tasks are separate repos so students can clone / fork them directly
 | Task | Repo | Status |
 |------|------|--------|
 | Prescription scraping | [ai-tutorial-scraping-prescriptions](https://github.com/gauravmm/ai-tutorial-scraping-prescriptions) | Current |
+| Event help desk bot (via KittenClaw) | [ai-tutorial-eventbot-kittenclaw](https://github.com/gauravmm/ai-tutorial-eventbot-kittenclaw) | Current |
 | Multiagent triage bot (via KittenClaw) | [ai-tutorial-triage-kittenclaw](https://github.com/gauravmm/ai-tutorial-triage-kittenclaw) | Current |
 | ~~Medical device label generator~~ | [ai-tutorial-labelgen](https://github.com/gauravmm/ai-tutorial-labelgen) | Retired — earlier label-design task |
 | ~~Multiagent triage (via GitHub Copilot Chat)~~ | [ai-tutorial-triage](https://github.com/gauravmm/ai-tutorial-triage) | Retired — superseded by KittenClaw |

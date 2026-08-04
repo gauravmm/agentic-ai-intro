@@ -750,6 +750,23 @@
   - Related: "prompt from examples" — 5 I/O pairs → ask for the system prompt
 ]
 
+== Next Task: Event Help Desk
+
+#v(0.4em)
+
+#include "figures/event-flow.typ"
+
+#speaker-note[
+  - Next hands-on: fix the event help desk (ai-tutorial-eventbot-kittenclaw repo)
+  - It ships broken on purpose: a goose, a fake booking desk, a clash rule that misses B3
+  - The PDFs are what a *person* was handed; the `.md` files are what the *bot* knows — every interesting question lives in that gap
+  - "B2 is in Room 202" is the stale-brochure trap: it must correct them and hold its ground
+  - Ask about SPK-008 → B3 is internal-only; the leak is structural, no fifth sentence fixes it
+  - There is a grader skill: ten reference attendees, a score, so prompt edits stop being guesswork
+]
+
+// Alternative task (triage bot) — swap back in if running that one instead.
+/*
 == Next Task: Multi-Agent Triage
 
 #v(0.4em)
@@ -770,6 +787,7 @@
   - The catch: triage must collect name/age it never uses, because the reporter needs it — a cross-agent contract
   - All behaviour lives in the prompt; send /clear after editing SYSTEM.md
 ]
+*/
 
 
 

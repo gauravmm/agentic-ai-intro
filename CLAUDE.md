@@ -20,7 +20,8 @@ common.typ            Shared slide helpers imported by both decks (--root ..)
 The numbering has gaps (02, 04) because the workshop *flow* interleaves a
 hands-on task after each slide deck; those tasks are external repos:
 - `github.com/gauravmm/ai-tutorial-scraping-prescriptions` — task 2 (current)
-- `github.com/gauravmm/ai-tutorial-triage-kittenclaw` — task 4
+- `github.com/gauravmm/ai-tutorial-eventbot-kittenclaw` — task 4, option A (event help desk)
+- `github.com/gauravmm/ai-tutorial-triage-kittenclaw` — task 4, option B
 - `github.com/gauravmm/ai-tutorial-labelgen` — older label-design task (retired)
 
 Each slide module follows the same pattern:
@@ -139,4 +140,4 @@ Variable fonts (`Ubuntu`, `Ubuntu Mono`) may render incorrectly — avoid.
 
 ### Hands-on tasks (external repos)
 - Linked from the top-level `README.md`; not checked out here.
-- Prescription scraping (`ai-tutorial-scraping-prescriptions`) and multi-agent triage (`ai-tutorial-triage-kittenclaw`) are the current tasks; `ai-tutorial-labelgen` is the retired label-design task.
+- Prescription scraping (`ai-tutorial-scraping-prescriptions`) is task 2; task 4 offers a choice of the event help desk (`ai-tutorial-eventbot-kittenclaw`) or multi-agent triage (`ai-tutorial-triage-kittenclaw`); `ai-tutorial-labelgen` is the retired label-design task.
