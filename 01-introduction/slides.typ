@@ -61,7 +61,7 @@
     5. Patterns and Practice
 
     #lblock[Hands-on: \
-      *Multi-agent triage bot* \
+      *Multi-agent bot* \
       #place(right, dy: -2.4em, dx: .5em, image("media/kittenclaw.png", height: 3em))
     ]
   ],
@@ -457,55 +457,67 @@ The context window is the model's *working memory*:
       [*Cost-efficient*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
     ),
     // Columns are CAPABILITY tiers (Artificial Analysis Intelligence Index / consensus),
-    // NOT price. Rows ordered by frontier presence: the 3 labs with a true frontier
+    // NOT price. Rows ordered by frontier presence: the 4 labs with a true frontier
     // model first, then the rest. Prices deliberately do NOT fall left-to-right.
+    // For open-weight models served by many OpenRouter providers, the price shown is the
+    // CHEAPEST ROUTED price (what a default OpenRouter request costs), not the lab's own
+    // first-party endpoint. Applied uniformly to the GLM / Kimi / Qwen / DeepSeek rows.
     lab([Anthropic], [Claude]),
     cell([Fable 5], 10.00, 50.00),
-    cell([Opus 4.8], 5.00, 25.00),
+    cell([Opus 5], 5.00, 25.00),
+    // Sonnet 5 $2/$10 is introductory pricing; reverts to $3/$15 after 2026-08-31.
     cell([Sonnet 5], 2.00, 10.00),
     cell([Haiku 4.5], 1.00, 5.00),
+
     lab([OpenAI], [GPT]),
     cell([5.6 Sol], 5.00, 30.00),
-    cell([5.6 Terra], 2.50, 15.00),
-    cell([5.6 Luna], 1.00, 6.00),
+    cell([5.6 Terra], 1.00, 6.00),
+    cell([5.6 Luna], 0.10, 0.60),
     no,
+
+    lab([Moonshot], [Kimi]),
+    // OpenRouter default-routes K3 to Moonshot's own INT4 endpoint; the full-precision
+    // direct API is $3.00 / $15.00.
+    cell([K3], 2.90, 14.00),
+    cell([K2.7 Code], 0.70, 3.50),
+    cell([K2.6], 0.58, 3.40),
+    // K2.5 has a retirement notice effective 2026-08-31; no cheaper replacement queued.
+    cell([K2.5], 0.38, 2.03),
+
+    lab([Alibaba], [Qwen]),
+    // Qwen3.8-Max: GA 2026-08-03 with published pricing — was a "$? / $?" preview placeholder.
+    cell([3.8 Max], 2.00, 6.00),
+    cell([3.7 Max], 1.48, 4.43),
+    cell([3.7 Plus], 0.32, 1.28),
+    cell([3.7 Flash], 0.03, 0.13),
 
     lab([Google], [Gemini]),
     no,
     cell([3.1 Pro Preview], 2.00, 12.00),
-    cell([3.5 Flash], 1.50, 9.00),
-    cell([3.1 Flash Lite], 0.25, 1.50),
+    cell([3.6 Flash], 1.50, 7.50),
+    cell([3.5 Flash-Lite], 0.30, 2.50),
+
     lab([Z.ai], [GLM]),
     no,
-    cell([5.2], 0.41, 1.28),
+    cell([5.2], 0.60, 1.50),
     cell([5], 0.60, 1.92),
     cell([4.7 Flash], 0.06, 0.40),
 
-    lab([Moonshot], [Kimi]),
-    cell([K3], 3.00, 15.00),
-    cell([K2.7 Code], 0.72, 3.50),
-    cell([K2.6], 0.66, 3.41),
-    cell([K2.5], 0.38, 2.03),
-
-    lab([Alibaba], [Qwen]),
-    // Qwen3.8-Max: previewed 2026-07-19, frontier claim, no per-token price published yet.
-    [#text(size: 0.8em, fill: luma(80))[3.8 Max] \ #text(weight: "bold")[\$? / \$?]],
-    cell([3.7 Max], 1.25, 3.75),
-    cell([3.7 Plus], 0.32, 1.28),
-    cell([3.6 Flash], 0.19, 1.13),
     lab([DeepSeek], [DeepSeek]),
     no,
     cell([V4 Pro], 0.44, 0.87),
-    cell([V3.2], 0.21, 0.32),
-    cell([V4 Flash], 0.08, 0.15),
+    // V3.2 is flagged deprecated by AA; still served by third-party OpenRouter routes.
+    cell([V3.2], 0.21, 0.31),
+    cell([V4 Flash 0731], 0.09, 0.18),
   )
   // Self-hosted "postcard" — ultra-cheap counterpoint: run a small model yourself (2nd subslide)
   // Cost basis: electricity only, ~4B model on an Apple-Silicon laptop, SG ~$0.23/kWh.
   // Input ≈ prefill (~500 tok/s) → ~$0.01/M; output ≈ decode (~55 tok/s) → ~$0.06/M.
-  // Sits over the tall blank block in the lower Frontier column (Google/GLM/Qwen/DeepSeek
-  // have no frontier model) so it covers dashes, not prices.
+  // Sits in the lower-right corner, over the cheapest end of the grid — it clips the
+  // GLM 4.7 Flash / DeepSeek V4 Flash cells, which is fine: those are the cells the
+  // postcard is undercutting anyway.
   #only("2-")[
-    #place(bottom + right, dx: -2mm, dy: -12mm)[
+    #place(bottom + right, dx: -2mm, dy: 2mm)[
       #rotate(-4deg, origin: center + horizon)[
         #box(
           fill: white,
@@ -527,19 +539,23 @@ The context window is the model's *working memory*:
   dx: -.6em,
   float: false,
   text(size: 0.7em, fill: luma(120))[
-    tiers: #link("https://artificialanalysis.ai")[artificialanalysis.ai] · prices: #link("https://openrouter.ai/models")[openrouter.ai] · 2026-07-22
+    tiers: #link("https://artificialanalysis.ai")[artificialanalysis.ai] · prices: #link("https://openrouter.ai/models")[openrouter.ai] · 2026-08-06
   ],
 )
 
 #speaker-note[
-  - Columns are CAPABILITY tiers by Artificial Analysis Intelligence Index (current v4.x scale), NOT price — the whole point of the slide. Prices via OpenRouter, both 2026-07-22
-  - THE punchline: read a row and prices don't fall left-to-right. Same tier, wildly different price. Kimi K3 (frontier) \$3 / \$15 vs Fable 5 (frontier) \$10 / \$50 — ~3× cheaper for the same capability class. GLM 5.2 (flagship, \$0.41) is cheaper than GLM 5 (mid, \$0.60)
-  - Frontier is a 3-lab club: Fable 5 (59.9, #1), GPT-5.6 Sol (58.9, #2), Kimi K3 (57.1, #3). Kimi K3 is the ONLY Chinese model consensus puts at true frontier (2.8T open-weight, shipped 2026-07-16)
-  - Blank frontier cells (Google, GLM, Qwen, DeepSeek) = no top-of-leaderboard model. Google notably has none live right now — 3.1 Pro (46.5) is mid-pack; Gemini 4 teased but delayed
+  - Columns are CAPABILITY tiers by Artificial Analysis Intelligence Index (current v4.x scale), NOT price — the whole point of the slide. Prices via OpenRouter, both 2026-08-06
+  - THE punchline: read a row and prices don't fall left-to-right. Same tier, wildly different price. In the FRONTIER column alone: Fable 5 \$10 / \$50, Kimi K3 \$2.90 / \$14, Qwen 3.8 Max \$2 / \$6 — same capability class, 5× spread on input and 8× on output. GLM 5.2 (flagship, \$1.50 out) is still cheaper than GLM 5 (mid, \$1.92 out)
+  - Frontier is now a 4-lab club, up from 3: Fable 5 (~60), GPT-5.6 Sol (~59), Kimi K3 (57), Qwen 3.8 Max (~56, GA 2026-08-03). Kimi K3 is the highest-ranked OPEN-WEIGHTS model on the index; Qwen 3.8 Max is closed-weight, and its placement is the softest of the four (AA hasn't run it through the full cross-lab comparison yet) — say "arguably frontier" if pushed
+  - Blank frontier cells (Google, GLM, DeepSeek) = no top-of-leaderboard model. Google notably has none live — 3.1 Pro (46) is mid-pack; Gemini 4 confirmed still in PRE-TRAINING (Pichai, Q2 call), no date. GLM 5.2 tops open-weights-excluding-Kimi at 51; DeepSeek's best is 50
+  - Prices move FAST — the two-week story since 2026-07-22: GPT-5.6 Terra \$2.50/\$15 → \$1/\$6, and 5.6 Luna \$1/\$6 → \$0.10/\$0.60, a 10× cut. Qwen 3.7 Flash landed at \$0.03/\$0.13. Anything on this slide is a snapshot, not a fact
   - Dropped GPT-5.5 Pro: by benchmark it's NOT frontier — newer 5.6 Sol matches/beats it at ~1/6 the price (\$5/\$30 vs \$30/\$180). It was a compute-tier premium, not a capability tier. Mention verbally if someone asks about the \$180 model
-  - Qwen3.8-Max (2.4T, previewed 2026-07-19) claims "second only to Fable 5" but has no verified index score AND no per-token price yet — left off the grid on purpose. Add if it graduates from preview
-  - Naming inversion to expect: Gemini 3.5 Flash (mid, 50.2) actually OUTSCORES the "flagship" 3.1 Pro (46.5) — newer release. Placed 3.1 Pro as flagship by role/consensus, not raw index
-  - One postcard left (self-hosted, subslide 2): electricity only, ~3B active / 35B MoE on Apple Silicon, ~55 tok/s decode, SG \$0.23/kWh → input ≈ \$0.01, output ≈ \$0.06. The cheap extreme; genuinely off-grid (not an API SKU)
+  - OpenAI's cost-efficient cell is empty on purpose: the 5.6 family is only Sol/Terra/Luna. Legacy nanos (4.1 Nano, 4o-mini) are cheap but score ~7–10 vs Luna's ~46 — and Luna at \$0.10/\$0.60 now undercuts them anyway. If asked "what's OpenAI's cheap model": it's Luna
+  - Naming inversion to expect: Gemini 3.6 Flash (mid, 50) OUTSCORES the "flagship" 3.1 Pro Preview (46), and the gap WIDENED this cycle. Placed 3.1 Pro as flagship by role/consensus, not raw index. Same story at DeepSeek: V4 Flash 0731 (50) outscores V4 Pro (44); kept the lab's own positioning
+  - Open-weight rows (GLM/Kimi/Qwen/DeepSeek) quote the CHEAPEST OpenRouter route, not the lab's first-party endpoint — that's what an attendee actually pays. First-party is often 2–3× higher (GLM 5.2 direct is \$1.40/\$4.40). Note some routes are promo-discounted and may expire
+  - Two expiry dates land 2026-08-31: Sonnet 5's \$2/\$10 is INTRO pricing reverting to \$3/\$15, and Kimi K2.5 retires. Re-verify this slide before any run after that
+  - K3's \$2.90/\$14 is OpenRouter routing to Moonshot's INT4-quantized endpoint; the full-precision direct API is \$3/\$15. Immaterial to the point, but don't get caught out if someone quotes \$3
+  - One postcard left (self-hosted, subslide 2): electricity only, ~3B active / 35B MoE on Apple Silicon, ~55 tok/s decode, SG \$0.23/kWh → input ≈ \$0.01, output ≈ \$0.06. The cheap extreme; genuinely off-grid (not an API SKU). Qwen 3.6 35B A3B is still the right pick — the 3.7/3.8 generation went closed-weight, no newer small MoE
 ]
 
 == What Does a Subscription Buy?
@@ -611,12 +627,12 @@ The context window is the model's *working memory*:
 
 #speaker-note[
   - Same labs as the billing slide, minus Google & Z.ai. "≈ max API value" = the same usage billed at the lab's OWN metered prices (previous slide), plan ridden to its caps. Order-of-magnitude estimates, NOT lab-published.
-  - METHOD: 1 agentic coding hour ≈ 1M blended tokens (\~30 turns × \~35K effective in + \~2K out, no cache discount) → \~\$3/h at Sonnet 5 (\$2/\$10), \~\$8/h at Opus 4.8 (\$5/\$25).
+  - METHOD: 1 agentic coding hour ≈ 1M blended tokens (\~30 turns × \~35K effective in + \~2K out, no cache discount) → \~\$3/h at Sonnet 5 (\$2/\$10), \~\$8/h at Opus 5 (\$5/\$25).
   - Anthropic (claude.com/pricing, 2026-07-25): Pro \$20 (\$17 annual); Max from \$100 = 5× or 20× Pro usage per session; 5-hour session windows + weekly caps (Max adds a separate Sonnet weekly cap). Frontier Fable 5 only on Max (≤50% of weekly limit); on Pro it's pay-as-you-go credits only. Anthropic-published caps (TechCrunch 2025-07): Pro 40–80 Claude Code h/wk; Max 5× 140–280 h + 15–35 Opus h; Max 20× 240–480 h + 24–40 Opus h → Pro ≈ \$0.5–1K/mo, Max 20× ≈ \$4–8K/mo. Matches reports of heavy Max users burning "thousands"/mo at API rates — exactly why the weekly caps appeared in 2025.
-  - OpenAI (chatgpt.com/pricing + help center): Plus \$20; Pro \$100 = 5× Plus usage, Pro \$200 = 20× — deliberately mirrors Claude Max tiers. Caps unpublished ("unlimited subject to abuse guardrails"); values shown assume comparable agentic budgets at GPT-5.6 Terra (\$2.50/\$15) / Sol (\$5/\$30) prices — same bands as Sonnet/Opus. ChatGPT Go (budget tier, may carry ads) omitted as non-major.
-  - DeepSeek: NO consumer subscription exists — web/app chat is free ("免费对话"), API is prepaid balance top-up. Heavy free chat (\~100 msgs/day × \~5K tok) at V3.2 \$0.21/\$0.32 ≈ \$3–5/mo. The multiplier is infinite: you can't beat free.
+  - OpenAI (chatgpt.com/pricing + help center): Plus \$20; Pro \$100 = 5× Plus usage, Pro \$200 = 20× — deliberately mirrors Claude Max tiers. Caps unpublished ("unlimited subject to abuse guardrails"); values shown assume comparable agentic budgets at GPT-5.6 Terra / Sol prices. CAVEAT since 2026-08-06: Terra was cut to \$1/\$6 (from \$2.50/\$15), so the same usage is now worth \~2.5× LESS at metered rates — the \$1,000 / \$6,000 figures and the 30× are the pre-cut estimate and now read high for OpenAI. Sol (\$5/\$30) is unchanged; quote the Anthropic row if you want the safest number. ChatGPT Go (budget tier, may carry ads) omitted as non-major.
+  - DeepSeek: NO consumer subscription exists — web/app chat is free ("免费对话"), API is prepaid balance top-up. Heavy free chat (\~100 msgs/day × \~5K tok) at V3.2 \$0.21/\$0.31 ≈ \$3–5/mo. The multiplier is infinite: you can't beat free.
   - Alibaba: Qwen Studio chat is free ("free to use, open to all"). The real subscription is Model Studio's Coding Plan Pro: \$50/mo for 6K calls/5h, 45K/wk, 90K/mo — multi-vendor, covers Qwen 3.7-Plus/3-Max PLUS Kimi K2.5, GLM-5, MiniMax-M2.5. 90K calls × \~16K blended tok at 3.7-Plus \$0.32/\$1.28 ≈ \$0.5–1K → \~10–20×. (Lite tier discontinued 2026-03.)
-  - Moonshot: Kimi Membership — Adagio free, Moderato \$19, Allegretto \$39 (2× agent credits), Allegro \$99 (5×), Vivace \$199 (10×; Kimi Code 30× credits). Credit pool sizes unpublished; Vivace \~\$3K assumes 1× pool ≈ one Pro-class token budget at K2.7 Code prices (\$0.72/\$3.50). Frontier K3 chat is FREE — \~30–100 msgs/day at K3 \$3/\$15 ≈ \$20–70/mo of API value; the only free frontier chatbot.
+  - Moonshot: Kimi Membership — Adagio free, Moderato \$19, Allegretto \$39 (2× agent credits), Allegro \$99 (5×), Vivace \$199 (10×; Kimi Code 30× credits). Credit pool sizes unpublished; Vivace \~\$3K assumes 1× pool ≈ one Pro-class token budget at K2.7 Code prices (\$0.70/\$3.50). Frontier K3 chat is FREE — \~30–100 msgs/day at K3 \$2.90/\$14 ≈ \$20–70/mo of API value; the only free frontier chatbot.
   - Punchlines: (1) Subscriptions are bulk discounts — priced for the average user, worth 10–30× sticker when maxed out; labs lose money on power users, which is why weekly caps exist. (2) Chinese labs treat the chatbot as a loss leader (free, even at frontier) and their paid coding plans undercut US ones (Alibaba \$50 multi-vendor plan vs Claude Max \$100–200).
   - Caveats if asked: caps are dynamic and demand-based; prompt caching cuts real API-equivalent cost 2–5×; "max" assumes sustained heavy use almost no one achieves.
 ]
