@@ -85,7 +85,7 @@ Two tasks are available — pick one to run. *(Swap in a scenario closer to each
 The hands-on tasks are separate repos so students can clone / fork them directly:
 
 | Task | Repo | Status |
-|------|------|--------|
+| ------ | ------ | -------- |
 | Prescription scraping | [ai-tutorial-scraping-prescriptions](https://github.com/gauravmm/ai-tutorial-scraping-prescriptions) | Current |
 | Event help desk bot (via KittenClaw) | [ai-tutorial-eventbot-kittenclaw](https://github.com/gauravmm/ai-tutorial-eventbot-kittenclaw) | Current |
 | Multiagent triage bot (via KittenClaw) | [ai-tutorial-triage-kittenclaw](https://github.com/gauravmm/ai-tutorial-triage-kittenclaw) | Current |

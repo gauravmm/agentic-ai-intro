@@ -35,7 +35,12 @@
   ),
 )
 
-#let tok-colors = (rgb("#FFD966"), rgb("#B6D7A8"), rgb("#9FC5E8"), rgb("#EA9999"))
+#let tok-colors = (
+  rgb("#FFD966"),
+  rgb("#B6D7A8"),
+  rgb("#9FC5E8"),
+  rgb("#EA9999"),
+)
 #let tok(n, content) = box(
   fill: tok-colors.at(calc.rem(n, tok-colors.len())),
   inset: (x: 0.2em, y: 0.15em),
@@ -64,7 +69,10 @@
 
     #lblock[Hands-on: \
       *Multi-agent triage bot* \
-      #place(right, dy: -2.4em, dx: .5em, image("media/kittenclaw.png", height: 3em))
+      #place(right, dy: -2.4em, dx: .5em, image(
+        "media/kittenclaw.png",
+        height: 3em,
+      ))
     ]
   ],
   aside[Before we begin][
@@ -78,7 +86,10 @@
       )[https://github.com/signup]]
       - Also *GitHub Copilot Free*
     + *OpenCode Zen* account. \
-      #h(1em) #link("https://opencode.ai/zen")[#text(font: "DejaVu Sans Mono", size: 0.85em)[https://opencode.ai/zen]]
+      #h(1em) #link("https://opencode.ai/zen")[#text(
+        font: "DejaVu Sans Mono",
+        size: 0.85em,
+      )[https://opencode.ai/zen]]
     + *Google AI Studio* account. \
       #h(1em) #link("https://aistudio.google.com")[#text(
         font: "DejaVu Sans Mono",
@@ -243,23 +254,35 @@
   aside([GPT-5.x Tokenizer], [
     #[
       #set text(font: "DejaVu Sans Mono", size: 0.78em)
-      #tok(0)[Many]#tok(1)[ words]#tok(2)[ map]#tok(3)[ to]#tok(4)[ one]#tok(5)[ token]#tok(6)[,]#tok(7)[ but]#tok(
+      #tok(0)[Many]#tok(1)[ words]#tok(2)[ map]#tok(3)[ to]#tok(4)[ one]#tok(
+        5,
+      )[ token]#tok(6)[,]#tok(7)[ but]#tok(
         8,
-      )[ some]#tok(9)[ don]#tok(10)['t]#tok(11)[:]#tok(12)[ indiv]#tok(13)[isible]#tok(14)[.]
+      )[ some]#tok(9)[ don]#tok(10)['t]#tok(11)[:]#tok(12)[ indiv]#tok(
+        13,
+      )[isible]#tok(14)[.]
 
       #v(0.4em)
-      #tok(0)[Unicode]#tok(1)[ characters]#tok(2)[ like]#tok(3)[ emojis]#tok(4)[ may]#tok(5)[ be]#tok(
+      #tok(0)[Unicode]#tok(1)[ characters]#tok(2)[ like]#tok(3)[ emojis]#tok(
+        4,
+      )[ may]#tok(5)[ be]#tok(
         6,
       )[ split]#tok(
         7,
-      )[ into]#tok(8)[ many]#tok(9)[ tokens]#tok(10)[ containing]#tok(11)[ the]#tok(12)[ underlying]#tok(
+      )[ into]#tok(8)[ many]#tok(9)[ tokens]#tok(10)[ containing]#tok(
+        11,
+      )[ the]#tok(12)[ underlying]#tok(
         13,
       )[ bytes]#tok(14)[:]#tok(15)[ ◆]#tok(16)[◆]#tok(17)[◆]#tok(18)[◆]
 
       #v(0.4em)
-      #tok(0)[Sequences]#tok(1)[ of]#tok(2)[ characters]#tok(3)[ commonly]#tok(4)[ found]#tok(5)[ next]#tok(6)[ to]#tok(
+      #tok(0)[Sequences]#tok(1)[ of]#tok(2)[ characters]#tok(3)[ commonly]#tok(
+        4,
+      )[ found]#tok(5)[ next]#tok(6)[ to]#tok(
         7,
-      )[ each]#tok(8)[ other]#tok(9)[ may]#tok(10)[ be]#tok(11)[ grouped]#tok(12)[ together]#tok(13)[:]#tok(
+      )[ each]#tok(8)[ other]#tok(9)[ may]#tok(10)[ be]#tok(11)[ grouped]#tok(
+        12,
+      )[ together]#tok(13)[:]#tok(
         14,
       )[123]#tok(
         15,
@@ -391,10 +414,21 @@ The context window is the model's *working memory*:
 
     [1 multiplication], [1], [second], [the blink of an eye],
     [compare two tokens], [50], [minutes], [one TV episode],
-    [one token vs. the context], [9], [years], [a child's entire schooling #pause],
+    [one token vs. the context],
+    [9],
+    [years],
+    [a child's entire schooling #pause],
+
     [], [10,000], [years], [all of human history],
-    [read 100,000 tokens and write one], [90 million], [years], [the age of the dinosaurs],
-    [write a 1000 token reply], [90 billion], [years], [6× the age of the universe],
+    [read 100,000 tokens and write one],
+    [90 million],
+    [years],
+    [the age of the dinosaurs],
+
+    [write a 1000 token reply],
+    [90 billion],
+    [years],
+    [6× the age of the universe],
   )
 ]
 
@@ -420,7 +454,9 @@ The context window is the model's *working memory*:
   if calc.rem(total-3, 10) != 0 {
     let whole = calc.floor(total-3 / 1000)
     let frac = calc.rem(total-3, 1000)
-    let frac-str = if frac < 10 { "00" + str(frac) } else if frac < 100 { "0" + str(frac) } else { str(frac) }
+    let frac-str = if frac < 10 { "00" + str(frac) } else if frac < 100 {
+      "0" + str(frac)
+    } else { str(frac) }
     "$" + str(whole) + "." + frac-str
   } else {
     let total-2 = calc.round(v * 100)
@@ -440,7 +476,10 @@ The context window is the model's *working memory*:
 ]
 #let no = text(fill: luma(190))[—]
 
-#slide(config: config-page(margin: (top: 0em, bottom: 1.5em, x: 2em), header: none))[
+#slide(config: config-page(
+  margin: (top: 0em, bottom: 1.5em, x: 2em),
+  header: none,
+))[
   // Keep every later slide's number unchanged even though this one has no `==` heading.
   #counter(heading).step(level: 2)
   #block(width: 100%, height: 100%)[
@@ -449,9 +488,17 @@ The context window is the model's *working memory*:
     #table(
       columns: (42mm, 1fr, 1fr, 1fr, 1fr),
       rows: auto,
-      align: (left + horizon, left + horizon, left + horizon, left + horizon, left + horizon),
+      align: (
+        left + horizon,
+        left + horizon,
+        left + horizon,
+        left + horizon,
+        left + horizon,
+      ),
       stroke: none,
-      fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) { luma(245) } else { white },
+      fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) {
+        luma(245)
+      } else { white },
       inset: (x: 0.6em, y: 0.32em),
       table.header(
         [*Lab*],
@@ -538,7 +585,11 @@ The context window is the model's *working memory*:
           )[
             #text(size: 0.65em, fill: luma(140))[Self-hosted · DGX Spark]\
             #text(weight: "bold", size: 0.8em)[Qwen 3.8 27B]\
-            #text(weight: "bold", size: 0.9em, fill: rgb("#2E7D32"))[\$0.00 / \$0.02]\
+            #text(
+              weight: "bold",
+              size: 0.9em,
+              fill: rgb("#2E7D32"),
+            )[\$0.00 / \$0.02]\
           ]
         ]
       ]
@@ -575,7 +626,9 @@ The context window is the model's *working memory*:
 // Ledger-style money cell: fixed-width box sized to the widest value ("1,000"),
 // so the leftmost digit's left edge sits right next to the $, while every
 // number's right edge still aligns down the column.
-#let apiv(v) = box(width: 3.2em, text(weight: "bold", fill: emph-color)[\$#h(1fr)#v])
+#let apiv(v) = box(width: 3.2em, text(weight: "bold", fill: emph-color)[\$#h(
+    1fr,
+  )#v])
 #block(width: 100%, height: 100%)[
   // Tight leading keeps each 2-line cell short, matching the previous slide.
   #set par(leading: 0.42em)
@@ -584,7 +637,9 @@ The context window is the model's *working memory*:
     rows: auto,
     align: (left + horizon, left + horizon, left + horizon, left + horizon),
     stroke: none,
-    fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) { luma(245) } else { white },
+    fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) {
+      luma(245)
+    } else { white },
     inset: (x: 0.6em, y: 0.45em),
     table.header(
       [*Lab*],
@@ -826,14 +881,32 @@ Modern LLMs are more than just stacked attention:
       #text(fill: luma(80), size: .8em)[#h(1em)#desc]
     ]
 
-    #skill("anthropics", "claude-for-legal")[M&A diligence: bulk contract review.]
+    #skill(
+      "anthropics",
+      "claude-for-legal",
+    )[M&A diligence: bulk contract review.]
     #skill("anthropics/skills", "pptx")[Create & edit PowerPoint presentations.]
-    #skill("anthropics/skills", "skill-creator")[The skill that writes new skills.]
-    #skill("asklokesh", "claudeskill-loki-mode")[41 sub-agents, 8 swarms → shipped app.]
+    #skill(
+      "anthropics/skills",
+      "skill-creator",
+    )[The skill that writes new skills.]
+    #skill(
+      "asklokesh",
+      "claudeskill-loki-mode",
+    )[41 sub-agents, 8 swarms → shipped app.]
     #skill("blader", "humanizer")[Rewrite AI-sounding text.]
-    #skill("joshka0/foxctl", "foxctl-mobile")[Drive iOS Simulator + Android Emulator.]
-    #skill("K-Dense-AI", "scientific-agent-skills")[140+ skills, PubChem / ClinicalTrials / FDA.]
-    #skill("openclaw/skills", "ask-a-human")[Crowdsource subjective calls to humans.]
+    #skill(
+      "joshka0/foxctl",
+      "foxctl-mobile",
+    )[Drive iOS Simulator + Android Emulator.]
+    #skill(
+      "K-Dense-AI",
+      "scientific-agent-skills",
+    )[140+ skills, PubChem / ClinicalTrials / FDA.]
+    #skill(
+      "openclaw/skills",
+      "ask-a-human",
+    )[Crowdsource subjective calls to humans.]
   ],
 )
 
@@ -1270,7 +1343,9 @@ Modern LLMs are more than just stacked attention:
     - #link(
         "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
       )[Claude Prompt Engineering Docs]
-    - #link("https://developers.openai.com/api/docs/guides/prompt-engineering/")[OpenAI Prompt Engineering Guide]
+    - #link(
+        "https://developers.openai.com/api/docs/guides/prompt-engineering/",
+      )[OpenAI Prompt Engineering Guide]
 
     Industry best practices are evolving rapidly.
 

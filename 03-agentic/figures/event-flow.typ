@@ -21,7 +21,10 @@
 
   let glabel(x, y, txt) = content(
     (x, y),
-    box(fill: white, inset: (x: 2pt, y: 0pt))[#text(size: 0.5em, fill: luma(70))[#txt]],
+    box(fill: white, inset: (x: 2pt, y: 0pt))[#text(
+      size: 0.5em,
+      fill: luma(70),
+    )[#txt]],
   )
 
   // ── Attendees: one block per question, stacked ──────────────
@@ -59,7 +62,8 @@
           columns: (auto, 1fr),
           gutter: 0em,
           align: horizon,
-          text(size: 0.9em)[#a.at(0)], text(size: 0.5em, style: "italic")[“#a.at(1)”],
+          text(size: 0.9em)[#a.at(0)],
+          text(size: 0.5em, style: "italic")[“#a.at(1)”],
         )
       ],
       radius: 0.15,
@@ -135,7 +139,10 @@
   )
   content(
     (xDoc, -gh / 2 - 0.36),
-    text(size: 0.44em, fill: luma(100))[what the attendee was handed at the door],
+    text(
+      size: 0.44em,
+      fill: luma(100),
+    )[what the attendee was handed at the door],
   )
 
   // the paperwork is what the bot's files were written from

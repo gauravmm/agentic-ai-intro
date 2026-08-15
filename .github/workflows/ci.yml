@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      # The typstyle hook is `language: system`, so the binary has to be on PATH first.
+      - run: cargo install typstyle-cli --locked
+      - uses: pre-commit/action@v3.0.1
+
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: typst-community/setup-typst@v5
+      # No Typst linter ships as a CLI (tinymist lint is LSP-only), so the
+      # compiler's own warnings are the check.
+      - name: Compile every deck
+        run: |
+          for deck in */slides.typ; do
+            echo "::group::$deck"
+            (cd "$(dirname "$deck")" && typst compile --root .. slides.typ)
+            echo "::endgroup::"
+          done

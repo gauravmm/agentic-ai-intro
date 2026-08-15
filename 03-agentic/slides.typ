@@ -25,7 +25,9 @@
 #let accent = rgb("#EB811B")
 
 #let similar(items) = lblock(inset: (x: 0.6em, y: 0.4em), outset: 0pt)[
-  #text(size: 0.85em, fill: luma(80))[#text(weight: "bold")[Other examples] --- #items]
+  #text(size: 0.85em, fill: luma(80))[#text(
+      weight: "bold",
+    )[Other examples] --- #items]
 ]
 
 #title-slide()
@@ -61,7 +63,10 @@
 
     #pause
   ],
-  grid.cell(x: 1, y: 0, align: bottom, image("media/openclaw-logo-text-dark.png", width: 90%)),
+  grid.cell(x: 1, y: 0, align: bottom, image(
+    "media/openclaw-logo-text-dark.png",
+    width: 90%,
+  )),
   grid.cell(x: 1, y: 1)[
     - Personal AI agent
     - Runs on your machine; triggered via *messaging apps*
@@ -100,7 +105,9 @@
   gutter: 1.5em,
   align: top,
   [
-    #box(baseline: 0.45em, image("media/jpmorgan.png", height: 1.6em)) #h(0.4em) #text(
+    #box(baseline: 0.45em, image("media/jpmorgan.png", height: 1.6em)) #h(
+      0.4em,
+    ) #text(
       weight: "bold",
       size: 1.3em,
     )[Ask D.A.V.I.D.]\
@@ -567,7 +574,12 @@
   ],
   [
     #block(radius: 0.3em, clip: true, width: 100%)[
-      #image("media/docusign-lovable.png", width: 100%, height: 10.4cm, fit: "cover")
+      #image(
+        "media/docusign-lovable.png",
+        width: 100%,
+        height: 10.4cm,
+        fit: "cover",
+      )
     ]
     #v(0.35em)
     #align(center)[_What's their moat?_]
@@ -597,17 +609,23 @@
     lblock(inset: 0.75em, outset: 0pt)[
       #text(weight: "bold")[X API, 2023]
       #v(0.3em)
-      #text(size: 0.82em)[Access restricted. Social-analytics and bot startups vanished overnight.]
+      #text(
+        size: 0.82em,
+      )[Access restricted. Social-analytics and bot startups vanished overnight.]
     ],
     lblock(inset: 0.75em, outset: 0pt)[
       #text(weight: "bold")[ChatGPT vs Jasper]
       #v(0.3em)
-      #text(size: 0.82em)[Free ChatGPT undercut Jasper's automated marketing tools.]
+      #text(
+        size: 0.82em,
+      )[Free ChatGPT undercut Jasper's automated marketing tools.]
     ],
     lblock(inset: 0.75em, outset: 0pt)[
       #text(weight: "bold")[Google Maps, 2018]
       #v(0.3em)
-      #text(size: 0.82em)[API price hike hit fitness apps, travel services, and property.]
+      #text(
+        size: 0.82em,
+      )[API price hike hit fitness apps, travel services, and property.]
     ],
   )
 ]
@@ -641,7 +659,9 @@
     ]
 
     #v(0.55em)
-    #text(size: 0.9em)[Forecast from first principles, not from today's sticker.]
+    #text(
+      size: 0.9em,
+    )[Forecast from first principles, not from today's sticker.]
 
     #v(0.55em)
     #gblock(inset: 0.7em, outset: 0pt)[
