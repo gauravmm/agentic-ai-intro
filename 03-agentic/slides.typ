@@ -750,6 +750,8 @@
   - Related: "prompt from examples" — 5 I/O pairs → ask for the system prompt
 ]
 
+// Alternative task (event help desk) — swap back in if running that one instead.
+/*
 == Next Task: Event Help Desk
 
 #v(0.4em)
@@ -764,9 +766,8 @@
   - Ask about SPK-008 → B3 is internal-only; the leak is structural, no fifth sentence fixes it
   - There is a grader skill: ten reference attendees, a score, so prompt edits stop being guesswork
 ]
+*/
 
-// Alternative task (triage bot) — swap back in if running that one instead.
-/*
 == Next Task: Multi-Agent Triage
 
 #v(0.4em)
@@ -787,7 +788,6 @@
   - The catch: triage must collect name/age it never uses, because the reporter needs it — a cross-agent contract
   - All behaviour lives in the prompt; send /clear after editing SYSTEM.md
 ]
-*/
 
 
 
