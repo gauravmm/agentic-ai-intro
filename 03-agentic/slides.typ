@@ -154,6 +154,69 @@
   - Sub-agents: powerful, token-heavy — use cheaper LLMs
 ]
 
+== Common Patterns
+
+#grid(
+  columns: (1fr, 1fr, 1fr, 1fr),
+  rows: (auto, auto),
+  // Array form of `align` is per-column, not per-row — use the (x, y) function so the
+  // wrapped "Adversarial Review" title sits on the same baseline as the single-line ones.
+  align: (x, y) => if y == 0 { bottom } else { top },
+  row-gutter: 1em,
+  column-gutter: 1.5em,
+  text(weight: "bold", size: 1.5em)[Vibe Coding],
+  text(weight: "bold", size: 1.5em)[Adversarial Review],
+  text(weight: "bold", size: 1.5em)[Test-Driven],
+  text(weight: "bold", size: 1.5em)[Spec-Driven],
+
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
+    *prompt first, plan never*
+
+    Iterate until it feels right.
+
+    Fast for throwaway work, but _technical debt_ piles up. Know when to stop.
+  ],
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
+    *actor and critic*
+
+    One prompt generates, a _different_ prompt attacks it.
+
+    The critic prompt matters more.
+  ],
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
+    *evals first*
+
+    Write test cases and expected outputs, then prompt until they pass.
+
+    Evals are to AI what unit tests are to software.
+  ],
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
+    *one rung at a time*
+
+    Escalate complexity step by step, checking consistency.
+
+    The spec is the source of truth, not the chat log.
+  ],
+)
+
+#pause
+
+#v(0.8em)
+
+#align(center)[
+  _"it's no use trying to eat a steak with a teaspoon and a straw."_ (Anthony T. Hincks)
+]
+
+#speaker-note[
+  - Name the patterns now; we'll see all four in the wild over the next few slides
+  - Not rigid — they overlap and compose (vibe + adversarial review is common)
+  - Vibe coding: natural starting point, fine for short-lived scripts; danger is vibe-coded → production
+  - Actor-critic mirrors senior reviewing junior — same model, two prompts: "write it" / "find every flaw"
+  - Most people skip evals because they feel like overhead; without them prompt changes = invisible regressions
+  - 10-20 examples turn guesswork into iteration; related trick: give 5 I/O pairs, ask for the system prompt
+  - \~2 min total — don't linger, the examples do the teaching
+]
+
 = Real-World Agents
 
 == Agents in the Wild
@@ -391,38 +454,6 @@
   ]
 ]
 
-== Self-Evolving Swarms
-
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 1.2em,
-  align: horizon,
-  [
-    *Swarming*: a new bet on where frontier capability comes from.
-
-    Not one giant model, but a *swarm of smartphone-grade models* working together.
-
-    The problem is recursively broken down and argued in smaller and smaller blocks instead of one big forward pass.
-
-    Typically reach _hundreds_ of agents per query.
-  ],
-  [
-    #block(stroke: 0.5pt + luma(180), radius: 0.3em, clip: true, outset: 0.4em, fill: rgb("#FAFCFE"), image(
-      "media/apodex.png",
-      width: 100%,
-    ))
-    #place(bottom + right)[
-      #text(size: 0.7em, fill: luma(110))[apodex.com --- _Apodex 1.0_, 2026]
-    ]
-  ],
-)
-
-#speaker-note[
-  - This is speculative — a "coming strategy", not a shipped consensus
-  - Contrast with the Anthropic "fan-out one big model" picture two slides back
-  - Apodex's pitch: structural certainty, not statistical — output is auditable/traceable
-  - Open question for the room: does many-small-models-arguing actually beat one-big-model? Nobody knows yet
-]
 
 = Anatomy of an Agent
 
@@ -522,233 +553,6 @@
   - Ask: "Who's had AI write a prompt for AI?" — most hands up
 ]
 
-
-= Agent Patterns and Practice
-
-== Common Patterns
-
-// Numbered pattern list; pass highlight: int (1-5) to emphasise one item, none for all equal.
-#let pattern-list(highlight: none) = {
-  let items = (
-    ([Vibe Coding], [Iterate fast; prompt first; fix later]),
-    ([Actor-Critic], [One model generates; another evaluates]),
-    ([Complexity Ladder], [Escalate task complexity step-by-step; check consistency at each rung]),
-    ([Test-Driven Development], [Write tests first; work to pass them]),
-  )
-  v(.5fr)
-  for (i, item) in items.enumerate() {
-    let n = i + 1
-    let dimmed = highlight != none and highlight != n
-    let body-color = if dimmed { luma(180) } else { luma(80) }
-    let title-color = if dimmed { luma(160) } else { black }
-    [#n. #text(weight: "bold", size: 1.2em, fill: title-color, item.at(0)) \
-      #text(fill: body-color, size: 0.9em, item.at(1))
-
-    ]
-  }
-  v(1fr)
-}
-
-
-#grid(
-  columns: (12cm, 1fr),
-  gutter: 1em,
-  align: top,
-  [
-    #pattern-list()
-  ],
-  [
-    #pause
-    #v(1fr)
-    #lblock(inset: (x: 1.1em, y: 1em), outset: 0pt)[
-      _"It's no use trying to eat a steak with a teaspoon and a straw."_
-
-      #align(right)[— Anthony T. Hincks]
-    ]
-    #align(center, [
-      Choose the *right* tool for each job.
-    ])
-    #v(1em)
-    #align(center, [
-      Industry best-practices evolve quickly. \
-      *Follow them closely!*
-    ])
-    #v(1fr)
-  ],
-)
-
-#speaker-note[
-  - Not rigid; overlap and compose (vibe + actor-critic common)
-  - Goal: name patterns so students recognise + discuss
-  - \~30s here before going into each
-]
-
-== Vibe Coding
-
-#grid(
-  columns: (12cm, 1fr),
-  gutter: 1em,
-  align: top,
-  [
-    #pattern-list(highlight: 1)
-  ],
-  [
-    #v(1fr)
-    #text(weight: "bold")[What it is:]
-    - Prompt first, plan never
-    - Iterate until it feels right
-    - Let the AI fill in the details
-
-    #text(weight: "bold")[Works well when:]
-    - Prototyping or exploring an idea
-    - The task is small and throwaway
-    - Speed $>>$ correctness
-
-    Accumulates *technical debt* very fast because neither you nor the AI understands everything.
-    #v(1fr)
-    #lblock(inset: (y: 1em), outset: (x: 0.3em))[
-      #align(center)[*Know when to stop vibing.*]
-    ]
-    #v(1fr)
-  ],
-)
-
-#speaker-note[
-  - Natural starting point; works for short-lived scripts
-  - Danger: vibe-coded → production
-  - Plausible code with subtle bugs you can't catch
-  - Vibe → rigorous: actor-critic + TDD
-]
-
-== Actor-Critic
-
-#grid(
-  columns: (12cm, 1fr),
-  gutter: 1em,
-  align: top,
-  [
-    #pattern-list(highlight: 2)
-  ],
-  [
-    #v(1fr)
-    #text(weight: "bold")[Actor]
-    - Generates output: code, a plan, a draft
-    - Optimises for *plausibility*
-    - Fast, creative, sometimes wrong
-
-    #text(weight: "bold")[Critic]
-    - Evaluates the actor's output
-    - A *different prompt* with a different objective
-    - Optimises for *correctness* / *safety* / *style*
-
-    #v(1fr)
-    #lblock(inset: (y: 1em), outset: (x: 0.3em))[
-      #align(center)[
-        The critic prompt is often *more important*\
-        than the actor prompt.
-      ]
-    ]
-    #v(1fr)
-  ],
-)
-
-
-#speaker-note[
-  - Mirrors senior reviewing junior
-  - Actor: good enough for critic to improve, not perfect
-  - Same model, two prompts: "write code" / "find every flaw"
-  - Critic is adversarial by design
-]
-
-== The Complexity Ladder
-
-#grid(
-  columns: (12cm, 1fr),
-  gutter: 1em,
-  align: top,
-  [
-    #pattern-list(highlight: 3)
-  ],
-  [
-    #v(1fr)
-    Start simple, *add complexity in stages*.
-    #v(0.5em)
-    #let rung(n, shade) = box(
-      fill: luma(shade),
-      stroke: 0.4pt + luma(100),
-      inset: (x: 0.6em, y: 0.4em),
-      radius: 0.3em,
-    )[*#n*]
-    #grid(
-      columns: (auto, 1fr),
-      align: horizon,
-      gutter: (0.4em, 0.5em),
-      rung(4, 210), [Full multi-agent pipeline with tool use],
-      rung(3, 220), [Single agent with memory + tools],
-      rung(2, 230), [Chain of prompts with intermediate checks],
-      rung(1, 240), [Single well-crafted prompt],
-    )
-
-    #v(1em)
-    - Errors at lower rungs are cheaper to fix.
-    - Aggressively check consistency in layers.
-
-    #lblock(inset: (y: 1em), outset: (x: 0.3em))[
-      #align(center)[
-        *Match tool and problem complexity.*
-      ]
-    ]
-    #v(1fr)
-  ],
-)
-
-#speaker-note[
-  - Match tool complexity to problem complexity
-  - People jump to "full pipeline" → days debugging
-  - Single-prompt would often have worked
-  - Consistency checking at each rung = the discipline
-]
-
-== Test-Driven Development
-
-#grid(
-  columns: (12cm, 1fr),
-  gutter: 1em,
-  align: top,
-  [
-    #pattern-list(highlight: 4)
-  ],
-  [
-    #v(1fr)
-    *Classic TDD:*
-    + Write a failing test
-    + Implement until it passes
-    + Refactor → Repeat
-
-    *AI TDD:*
-    + Prompt-engineer *evals* \
-      (test cases, expected outputs)
-    + Prompt-engineer until they pass
-    + Refactor → Repeat
-
-    #v(0.5em)
-
-    #lblock(inset: (y: 1em), outset: (x: 0.3em))[
-      #align(center)[
-        Evals are to AI what unit tests are to software. \
-        *Without them, you're flying blind.*
-      ]
-    ]
-    #v(1fr)
-  ],
-)
-
-#speaker-note[
-  - Most skip evals — feels like overhead
-  - Without them: prompt changes = invisible regressions
-  - 10–20 examples transform guesswork → iteration
-  - Related: "prompt from examples" — 5 I/O pairs → ask for the system prompt
-]
 
 // Alternative task (event help desk) — swap back in if running that one instead.
 /*

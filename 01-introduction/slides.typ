@@ -931,7 +931,6 @@ Modern LLMs are more than just stacked attention:
     #v(1fr)
   ],
   [
-    #pause
     #gblock[
       #text(size: 0.9em, fill: luma(100))[
         "*LLM accident*" is not a diagnosis, like "*pilot error*" in an air-crash report.
