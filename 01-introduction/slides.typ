@@ -1124,12 +1124,12 @@ Modern LLMs are more than just stacked attention:
       Let's build something.
 
       #text(font: "DejaVu Sans Mono", size: 1.6em)[
-        manek.sg/agentic-5
+        manek.sg/agentic-6
       ]
     ],
     [
       #box(fill: white, inset: 1em)[
-        #qrcode("https://manek.sg/agentic-5", width: 8cm)
+        #qrcode("https://manek.sg/agentic-6", width: 8cm)
       ]
     ],
   )

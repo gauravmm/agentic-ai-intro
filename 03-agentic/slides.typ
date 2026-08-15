@@ -811,10 +811,10 @@
     ],
     [
       #box(fill: white, inset: 1em)[
-        #qrcode("https://manek.sg/agentic-5", width: 8cm)
+        #qrcode("https://manek.sg/agentic-6", width: 8cm)
       ]\
       #text(font: "DejaVu Sans Mono", size: 1.2em)[
-        manek.sg/agentic-5
+        manek.sg/agentic-6
       ]
     ],
   )
