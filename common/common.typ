@@ -1,5 +1,5 @@
 // Shared helpers for all slide decks in this repo.
-// Import what you need, e.g.:  #import "/common.typ": gblock, lblock, big-section-slide
+// Import what you need, e.g.:  #import "/common/common.typ": gblock, lblock, big-section-slide
 #import "@preview/touying:0.7.4": *
 #import themes.metropolis: *
 
