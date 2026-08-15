@@ -1,0 +1,11 @@
+{
+  "config": {
+    // Slide-deck prose and tables run long; no reason to wrap them.
+    "MD013": false,
+    // README embeds HTML for images and layout.
+    "MD033": false,
+    // Table pipe style: pin to compact so --fix does not reflow every table.
+    "MD060": { "style": "compact" }
+  },
+  "ignores": ["**/node_modules/**", ".agents/**"]
+}

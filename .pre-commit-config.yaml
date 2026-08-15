@@ -1,0 +1,19 @@
+# Vendored Claude Code skills — upstream docs, not ours to format.
+exclude: ^\.agents/
+
+repos:
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.23.2
+    hooks:
+      - id: markdownlint-cli2
+        args: [--fix]
+
+  # typstyle publishes no pre-commit mirror; use the binary already on PATH.
+  - repo: local
+    hooks:
+      - id: typstyle
+        name: typstyle
+        entry: typstyle -i
+        language: system
+        types: [file]
+        files: \.typ$
