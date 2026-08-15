@@ -3,15 +3,15 @@
 #let diagram = canvas(length: 1cm, {
   import draw: *
 
-  let g-fill = rgb("#c7d9c4") // sage green — the LLM agents
+  let g-fill = rgb("#c7d9c4") // sage green --- the LLM agents
   let g-strk = rgb("#6b9c71")
-  let gr-fill = luma(226) // grey — human endpoints
+  let gr-fill = luma(226) // grey --- human endpoints
   let arr-c = luma(60)
 
   // one accent colour per patient / their trace
   let acc = (rgb("#3b7dd8"), rgb("#d98a1e"), rgb("#8e5bb5"))
 
-  // ── geometry ────────────────────────────────────────────────
+  // -- geometry ------------------------------------------------
   let ahw = 1.45 // agent / nurse half width
   let ahh = 1.0 // agent / nurse half height
   let phw = 0.92 // patient half width
@@ -47,7 +47,7 @@
     )[#txt]],
   )
 
-  // ── arrows (drawn first, nodes sit on top) ──────────────────
+  // -- arrows (drawn first, nodes sit on top) ------------------
   for i in range(3) {
     // chat: back-and-forth turns, each line angled slightly down
     let xL = xPat + phw
@@ -99,7 +99,7 @@
   glabel(10.53, [reads])
   glabel(15.25, [reports])
 
-  // ── Patients (three, colour-coded) ──────────────────────────
+  // -- Patients (three, colour-coded) --------------------------
   content((xPat, ys.at(0) + phh + 0.5), text(
     weight: "bold",
     size: 0.62em,
@@ -120,7 +120,7 @@
     fill: luma(100),
   )[on Telegram])
 
-  // ── Triage Bot (KittenClaw) — tall; logo+name on top, title at bottom
+  // -- Triage Bot (KittenClaw) --- tall; logo+name on top, title at bottom
   rect(
     (xTri - ahw, -trihh),
     (xTri + ahw, trihh),
@@ -137,7 +137,7 @@
   ])
   content((xTri, -trihh + 0.45), text(weight: "bold", size: 0.82em)[Triage Bot])
 
-  // ── Conversation traces (one per patient, colour-matched) ───
+  // -- Conversation traces (one per patient, colour-matched) ---
   content((xTrc, ys.at(0) + thh + 0.5), text(
     weight: "bold",
     size: 0.6em,
@@ -171,7 +171,7 @@
     fill: luma(100),
   )[`.jsonl` on disk])
 
-  // ── Reporter Bot (Copilot skill) — tall, spans all three rows ─
+  // -- Reporter Bot (Copilot skill) --- tall, spans all three rows -
   bnode(
     xRep,
     0,
@@ -190,7 +190,7 @@
     strk: g-strk,
   )
 
-  // ── Triage nurse — tall, receives one report per patient ────
+  // -- Triage nurse --- tall, receives one report per patient ----
   bnode(xNur, 0, ahw, trihh, box(width: 2.7cm)[
     #align(center)[
       #text(size: 1.2em)[🧑‍⚕️] \

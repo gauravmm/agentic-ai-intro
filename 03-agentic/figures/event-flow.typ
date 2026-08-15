@@ -3,9 +3,9 @@
 #let diagram = canvas(length: 1cm, {
   import draw: *
 
-  let g-fill = rgb("#c7d9c4") // sage green — the LLM agent
+  let g-fill = rgb("#c7d9c4") // sage green --- the LLM agent
   let g-strk = rgb("#6b9c71")
-  let gr-fill = luma(232) // grey — human endpoints
+  let gr-fill = luma(232) // grey --- human endpoints
   let acc = rgb("#3b7dd8") // the paper trail
 
   let bnode(x, y, hw, hh, body, fill: gr-fill, strk: luma(160), radius: 0.2) = {
@@ -27,7 +27,7 @@
     )[#txt]],
   )
 
-  // ── Attendees: one block per question, stacked ──────────────
+  // -- Attendees: one block per question, stacked --------------
   let asks = (
     ("🧑", [What's on after lunch?]),
     ("👩‍🔬", [I work on imaging AI --- what should I go to?]),
@@ -63,7 +63,7 @@
           gutter: 0em,
           align: horizon,
           text(size: 0.9em)[#a.at(0)],
-          text(size: 0.5em, style: "italic")[“#a.at(1)”],
+          text(size: 0.5em, style: "italic")["#a.at(1)"],
         )
       ],
       radius: 0.15,
@@ -83,7 +83,7 @@
   )
   glabel((xUsr + uhw + xBot - 1.7) / 2, ytop + uhh + 0.42, [chat])
 
-  // ── The help desk (KittenClaw), spanning every conversation ─
+  // -- The help desk (KittenClaw), spanning every conversation -
   bnode(
     xBot,
     0,
@@ -101,7 +101,7 @@
     strk: g-strk,
   )
 
-  // ── The event's paperwork: real page-1 thumbnails ───────────
+  // -- The event's paperwork: real page-1 thumbnails -----------
   let th = 2.4 // thumbnail height
   let tw = 0.707 * th
   let tgap = 0.2

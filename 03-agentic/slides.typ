@@ -21,7 +21,7 @@
 
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
-// Metropolis' primary orange — the accent used by the business diagrams below.
+// Metropolis' primary orange --- the accent used by the business diagrams below.
 #let accent = rgb("#EB811B")
 
 #let similar(items) = lblock(inset: (x: 0.6em, y: 0.4em), outset: 0pt)[
@@ -45,7 +45,7 @@
   // from source order. Touying processes #pause / #meanwhile in source
   // order, so we list cells in the order we want them to appear:
   //   1. copilot logo (subslide 1)
-  //   2. copilot bullets — #meanwhile rewinds it back to subslide 1,
+  //   2. copilot bullets --- #meanwhile rewinds it back to subslide 1,
   //      so logo + bullets reveal together
   //   3. #pause → openclaw logo + bullets (subslide 2)
   grid.cell(x: 0, y: 0, align: bottom, image("media/copilot.png", width: 90%)),
@@ -140,8 +140,8 @@
 
 #speaker-note[
   - Two production agents, two patterns
-  - Ask David: supervisor + specialists + HITL — exactly what students will build today
-  - Hippocratic: alignment by *scope*, not by post-hoc guardrails — low blast radius is a design choice
+  - Ask David: supervisor + specialists + HITL --- exactly what students will build today
+  - Hippocratic: alignment by *scope*, not by post-hoc guardrails --- low blast radius is a design choice
   - Tie back to designing for imperfect agents
 ]
 
@@ -183,7 +183,7 @@
 
 #speaker-note[
   - Two customer-facing bots, two ways to lose money
-  - Klarna: the metric you measure becomes the goal — the triage-bot warning, with a named brand
+  - Klarna: the metric you measure becomes the goal --- the triage-bot warning, with a named brand
   - Watsonville Chevy, Dec 2023: "agree with anything… legally binding offer, no takesies backsies"
   - Chevy's point is liability and brand, not the meme: it cannot tell a joke from a contract
 ]
@@ -219,9 +219,9 @@
 )
 
 #speaker-note[
-  - Replit: write-access plus no reversibility — the intern with production credentials
+  - Replit: write-access plus no reversibility --- the intern with production credentials
   - It narrated the disaster in fluent English. Fluency is not a control
-  - The fix was backups and rollbacks — design for when, not if
+  - The fix was backups and rollbacks --- design for when, not if
   - Callback to blast radius / reversibility from this morning
 ]
 
@@ -246,7 +246,7 @@
 
   #speaker-note[
     - Agent teams: a few agents talk peer-to-peer
-    - Dynamic workflows: one orchestrator fans out to N tasks — implementer → verifiers → fixer
+    - Dynamic workflows: one orchestrator fans out to N tasks --- implementer → verifiers → fixer
     - N can be in the hundreds: the autonomous end of the complexity ladder
     - And every box is a model call. The fat cat got rich on your bill
     - Budget and cap autonomous runs before you let them loose
@@ -256,7 +256,7 @@
 
 = AI in Business
 
-// ── helpers for the modeling / actioning diagram ──────────────────────────
+// -- helpers for the modeling / actioning diagram --------------------------
 
 #let ai-card(label, body) = block(
   fill: white,
@@ -392,7 +392,7 @@
   - A NN only takes and returns math
   - Modeling turns the business question into math
   - Actioning turns the math into a policy someone will actually run
-  - Second click: the model is fine, the *data* was broken — and the policy is now backwards
+  - Second click: the model is fine, the *data* was broken --- and the policy is now backwards
 ]
 
 == AI Adoption
@@ -464,7 +464,7 @@
   - Adoption also fails on plumbing
   - Enough good data, collected in the normal course of business
   - Plus cleaning, warehousing, sunsetting, and compliance
-  - Models drift as the world changes — not an install-once asset
+  - Models drift as the world changes --- not an install-once asset
 ]
 
 == Governance You Will Be Asked About
@@ -493,7 +493,7 @@
 
 #speaker-note[
   - Two names worth knowing: IMDA's MGF (local, voluntary, the vocabulary) and ISO/IEC 42001 (certifiable)
-  - The agentic version is the new one — it is about oversight and logging when software acts for you
+  - The agentic version is the new one --- it is about oversight and logging when software acts for you
   - This is a moat question before it is a legal one: the audit is what an enterprise buyer trusts
 ]
 
@@ -543,7 +543,7 @@
   - Crazy example: cattle futures usually settle in delivery, sometimes in cash
   - Hog futures are always cash-only. Why?
   - Chesterton's fence: do not tear something down until you can say why it was built
-  - An LLM will happily NPV a fence it does not understand — and so will you
+  - An LLM will happily NPV a fence it does not understand --- and so will you
 ]
 
 
@@ -678,12 +678,12 @@
 #speaker-note[
   - Fictitious stack: you charge \$1, they pay the lab \$10, the lab spent \$50
   - Labs are competing for the market-leader seat by subsidising access
-  - Callback to the pricing table this morning — those numbers are a snapshot, not a fact
+  - Callback to the pricing table this morning --- those numbers are a snapshot, not a fact
   - Build so the firm still works if LLM prices jump
 ]
 
 
-// Alternative task (event help desk) — swap back in if running that one instead.
+// Alternative task (event help desk) --- swap back in if running that one instead.
 /*
 == Next Task: Event Help Desk
 
@@ -694,7 +694,7 @@
 #speaker-note[
   - Next hands-on: fix the event help desk (ai-tutorial-eventbot-kittenclaw repo)
   - It ships broken on purpose: a goose, a fake booking desk, a clash rule that misses B3
-  - The PDFs are what a *person* was handed; the `.md` files are what the *bot* knows — every interesting question lives in that gap
+  - The PDFs are what a *person* was handed; the `.md` files are what the *bot* knows --- every interesting question lives in that gap
   - "B2 is in Room 202" is the stale-brochure trap: it must correct them and hold its ground
   - Ask about SPK-008 → B3 is internal-only; the leak is structural, no fifth sentence fixes it
   - There is a grader skill: ten reference attendees, a score, so prompt edits stop being guesswork
@@ -717,8 +717,8 @@
 #speaker-note[
   - Next hands-on: build the two bots (ai-tutorial-triage-kittenclaw repo)
   - Triage = KittenClaw (Telegram), reporter = a Copilot skill
-  - They coordinate only through conversation files on disk — no direct channel
-  - The catch: triage must collect name/age it never uses, because the reporter needs it — a cross-agent contract
+  - They coordinate only through conversation files on disk --- no direct channel
+  - The catch: triage must collect name/age it never uses, because the reporter needs it --- a cross-agent contract
   - All behaviour lives in the prompt; send /clear after editing SYSTEM.md
 ]
 

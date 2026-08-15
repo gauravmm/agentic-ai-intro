@@ -76,7 +76,7 @@
   touying-slide(self: self, config: config, slide-body)
 })
 
-// Grey filled block — used for callouts / definition boxes.
+// Grey filled block --- used for callouts / definition boxes.
 #let gblock(body, inset: 0.4em, outset: 0.4em, width: 100%) = block(
   fill: luma(235),
   inset: inset,
@@ -85,7 +85,7 @@
   width: width,
 )[#body]
 
-// White bordered block — lighter-weight callout.
+// White bordered block --- lighter-weight callout.
 #let lblock(body, inset: 0.4em, outset: 0.4em, width: 100%) = block(
   fill: white,
   stroke: 0.5pt + luma(220),

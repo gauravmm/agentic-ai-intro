@@ -1,4 +1,4 @@
-# CLAUDE.md — agentic-ai-tutorial
+# CLAUDE.md - agentic-ai-tutorial
 
 Workshop slide deck and hands-on tasks for the **NTU BMES Makerspace Hackathon** on Agentic AI.
 Presenter: Dr. Gaurav Manek, A\*STAR.
@@ -20,16 +20,16 @@ common.typ            Shared slide helpers imported by both decks (--root ..)
 The numbering has gaps (02, 04) because the workshop *flow* interleaves a
 hands-on task after each slide deck; those tasks are external repos:
 
-- `github.com/gauravmm/ai-tutorial-scraping-prescriptions` — task 2 (current)
-- `github.com/gauravmm/ai-tutorial-eventbot-kittenclaw` — task 4, option A (event help desk)
-- `github.com/gauravmm/ai-tutorial-triage-kittenclaw` — task 4, option B
-- `github.com/gauravmm/ai-tutorial-labelgen` — older label-design task (retired)
+- `github.com/gauravmm/ai-tutorial-scraping-prescriptions` - task 2 (current)
+- `github.com/gauravmm/ai-tutorial-eventbot-kittenclaw` - task 4, option A (event help desk)
+- `github.com/gauravmm/ai-tutorial-triage-kittenclaw` - task 4, option B
+- `github.com/gauravmm/ai-tutorial-labelgen` - older label-design task (retired)
 
 Each slide module follows the same pattern:
 
-- `README.md` — content outline (source of truth for *what* to cover)
-- `slides.typ` — Typst source for the compiled slide deck
-- `media/` — images, memes, diagrams used on slides
+- `README.md` - content outline (source of truth for *what* to cover)
+- `slides.typ` - Typst source for the compiled slide deck
+- `media/` - images, memes, diagrams used on slides
 
 ---
 
@@ -39,8 +39,8 @@ Slides are written in **Typst** using the **Touying** presentation framework (`@
 
 Two Claude Code skills are installed to assist:
 
-- `touying-author` — Touying-specific APIs, slide structure, animations
-- `typst-author` — general Typst language reference
+- `touying-author` - Touying-specific APIs, slide structure, animations
+- `typst-author` - general Typst language reference
 
 ### Heading levels
 
@@ -86,11 +86,11 @@ Add `<touying:hidden>` to suppress a section from the outline/progress bar.
 
 ### Animation in grids
 
-`#pause` and `#meanwhile` are processed in **source order**, not grid-position order. In a 2×2 grid, the default source order is row-major: (0,0) → (0,1) → (1,0) → (1,1). This means you cannot use `#pause` in column 0 row 1 to delay column 1 row 0 — it comes too late in source order.
+`#pause` and `#meanwhile` are processed in **source order**, not grid-position order. In a 2×2 grid, the default source order is row-major: (0,0) → (0,1) → (1,0) → (1,1). This means you cannot use `#pause` in column 0 row 1 to delay column 1 row 0 - it comes too late in source order.
 
 **Trick**: use `grid.cell(x:, y:)` to explicitly position cells, then write them in the source order that matches the desired animation sequence.
 
-Example — reveal left column fully, then right column together:
+Example - reveal left column fully, then right column together:
 
 ```typst
 #grid(
@@ -108,14 +108,14 @@ Example — reveal left column fully, then right column together:
 ### Fonts available on this system
 
 Prefer: `DejaVu Sans Mono` (monospace), `DejaVu Sans` (sans-serif).
-Variable fonts (`Ubuntu`, `Ubuntu Mono`) may render incorrectly — avoid.
+Variable fonts (`Ubuntu`, `Ubuntu Mono`) may render incorrectly - avoid.
 
 ---
 
 ## Workflow
 
 1. Read `README.md` in the target module to understand the content scope.
-2. Edit `slides.typ` — the README is the outline, the .typ file is the deliverable.
+2. Edit `slides.typ` - the README is the outline, the .typ file is the deliverable.
 3. Images go in `media/`. Reference them as relative paths: `image("media/foo.jpg")`.
 4. Compile from inside the module directory with `typst compile --root .. slides.typ` (the `--root ..` lets decks import the repo-root `common.typ` shared helpers).
 
@@ -123,7 +123,7 @@ Variable fonts (`Ubuntu`, `Ubuntu Mono`) may render incorrectly — avoid.
 
 ## Content conventions
 
-- **Presenter notes** should be written for the *speaker*, not the audience — include talking points, punchlines, and things to watch for.
+- **Presenter notes** should be written for the *speaker*, not the audience - include talking points, punchlines, and things to watch for.
 - **Memes** are first-class slide content. Place them with `#align(center)[#image(...)]` or in a grid column alongside bullet points.
 - **Slide density**: prefer one strong idea per slide; use `#pause` for progressive reveal rather than packing everything at once.
 - **Prices and model data**: source from OpenRouter (`openrouter.ai/models`); include attribution and date.
@@ -136,7 +136,7 @@ Variable fonts (`Ubuntu`, `Ubuntu Mono`) may render incorrectly — avoid.
 
 - Full slide deck, essentially complete.
 - Custom `aside` and `tok` macros defined here.
-- Pricing table on the "How Usage Is Billed" slide — sourced from OpenRouter 2026-07-11.
+- Pricing table on the "How Usage Is Billed" slide - sourced from OpenRouter 2026-07-11.
 
 ### 03-agentic
 
