@@ -52,13 +52,15 @@
   [
     1. What is an AI?
     2. Fundamental Limits
-    3. How to write a prompt?
+    3. What is an Agent?
+    4. How to write a prompt?
 
     #lblock[Hands-on: \
       *Optical prescription extraction*]
 
-    4. What is Agentic AI?
-    5. Patterns and Practice
+    5. Agents in the wild
+    6. AI in business
+    7. Dangers
 
     #lblock[Hands-on: \
       *Multi-agent triage bot* \
@@ -377,7 +379,7 @@ The context window is the model's *working memory*:
   #show grid.cell.where(x: 3): set text(fill: luma(110))
 
   #grid(
-    columns: (1fr, auto, auto, 1fr),
+    columns: (1.2fr, auto, auto, 1fr),
     row-gutter: .1em,
     align: (right + horizon, right + horizon, left + horizon, left + horizon),
     stroke: (x, y) => if y > 0 { (top: 0.5pt + luma(210)) },
@@ -391,12 +393,9 @@ The context window is the model's *working memory*:
     [compare two tokens], [50], [minutes], [one TV episode],
     [one token vs. the context], [9], [years], [a child's entire schooling #pause],
     [], [10,000], [years], [all of human history],
-    [one full attention layer], [900,000], [years], [early humans tame fire],
-    [read all 100,000 tokens and write one word], [90 million], [years], [the age of the dinosaurs #pause],
-    [write the next word], [90 million], [years], [another dinosaur age #pause],
-    [write a full reply], [90 billion], [years], [6× the age of the universe],
+    [read 100,000 tokens and write one], [90 million], [years], [the age of the dinosaurs],
+    [write a 1000 token reply], [90 billion], [years], [6× the age of the universe],
   )
-  #align(center)[*Long context is slow and expensive.*]
 ]
 
 #speaker-note[
@@ -442,128 +441,128 @@ The context window is the model's *working memory*:
 #let no = text(fill: luma(190))[—]
 
 #slide(config: config-page(margin: (top: 0em, bottom: 1.5em, x: 2em), header: none))[
-// Keep every later slide's number unchanged even though this one has no `==` heading.
-#counter(heading).step(level: 2)
-#block(width: 100%, height: 100%)[
-  // Tight leading keeps each 2-line cell short so 9 rows fit one slide.
-  #set par(leading: 0.42em)
-  #table(
-    columns: (42mm, 1fr, 1fr, 1fr, 1fr),
-    rows: auto,
-    align: (left + horizon, left + horizon, left + horizon, left + horizon, left + horizon),
-    stroke: none,
-    fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) { luma(245) } else { white },
-    inset: (x: 0.6em, y: 0.32em),
-    table.header(
-      [*Lab*],
-      [*Frontier*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
-      [*Flagship*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
-      [*Mid-tier*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
-      [*Cost-efficient*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
-    ),
-    // Columns are CAPABILITY tiers (Artificial Analysis Intelligence Index / consensus),
-    // NOT price. Prices deliberately do NOT fall left-to-right — that's the punchline.
-    lab([Anthropic], [Claude]),
-    // Ordered by Anthropic's own brand ladder. The index actually has Opus 5 (63) a hair
-    // ABOVE Fable 5 (62) — but that gap is inside run-to-run variance, so the ladder wins.
-    cell([Fable 5], 10.00, 50.00),
-    cell([Opus 5], 5.00, 25.00),
-    cell([Sonnet 5], 2.00, 10.00),
-    cell([Haiku 4.5], 1.00, 5.00),
-    lab([OpenAI], [GPT]),
-    cell([5.6 Sol], 5.00, 30.00),
-    cell([5.6 Terra], 2.00, 12.00),
-    no,
-    cell([5.6 Luna], 0.20, 1.20),
+  // Keep every later slide's number unchanged even though this one has no `==` heading.
+  #counter(heading).step(level: 2)
+  #block(width: 100%, height: 100%)[
+    // Tight leading keeps each 2-line cell short so 9 rows fit one slide.
+    #set par(leading: 0.42em)
+    #table(
+      columns: (42mm, 1fr, 1fr, 1fr, 1fr),
+      rows: auto,
+      align: (left + horizon, left + horizon, left + horizon, left + horizon, left + horizon),
+      stroke: none,
+      fill: (_, row) => if row == 0 { luma(220) } else if calc.odd(row) { luma(245) } else { white },
+      inset: (x: 0.6em, y: 0.32em),
+      table.header(
+        [*Lab*],
+        [*Frontier*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
+        [*Flagship*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
+        [*Mid-tier*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
+        [*Cost-efficient*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
+      ),
+      // Columns are CAPABILITY tiers (Artificial Analysis Intelligence Index / consensus),
+      // NOT price. Prices deliberately do NOT fall left-to-right — that's the punchline.
+      lab([Anthropic], [Claude]),
+      // Ordered by Anthropic's own brand ladder. The index actually has Opus 5 (63) a hair
+      // ABOVE Fable 5 (62) — but that gap is inside run-to-run variance, so the ladder wins.
+      cell([Fable 5], 10.00, 50.00),
+      cell([Opus 5], 5.00, 25.00),
+      cell([Sonnet 5], 2.00, 10.00),
+      cell([Haiku 4.5], 1.00, 5.00),
+      lab([OpenAI], [GPT]),
+      cell([5.6 Sol], 5.00, 30.00),
+      cell([5.6 Terra], 2.00, 12.00),
+      no,
+      cell([5.6 Luna], 0.20, 1.20),
 
-    lab([Google], [Gemini]),
-    no,
-    cell([3.1 Pro Preview], 2.00, 12.00),
-    cell([3.5 Flash], 1.50, 9.00),
-    cell([3.1 Flash Lite], 0.25, 1.50),
+      lab([Google], [Gemini]),
+      no,
+      cell([3.1 Pro Preview], 2.00, 12.00),
+      cell([3.5 Flash], 1.50, 9.00),
+      cell([3.1 Flash Lite], 0.25, 1.50),
 
-    lab([xAI], [Grok]),
-    cell([4.6], 2.00, 6.00),
-    cell([4.5], 2.00, 6.00),
-    cell([4.3], 1.25, 2.50),
-    // No cheap general model: Grok 4.1 Fast / 4 Fast were retired 2026-08-15.
-    // Build 0.1 (coding specialist) is the cheapest current SKU.
-    cell([Build 0.1], 1.00, 2.00),
-    lab([Z.ai], [GLM]),
-    no,
-    cell([5.2], 0.46, 1.45),
-    cell([5.1], 0.90, 2.82),
-    cell([4.7 Flash], 0.06, 0.40),
+      lab([xAI], [Grok]),
+      cell([4.6], 2.00, 6.00),
+      cell([4.5], 2.00, 6.00),
+      cell([4.3], 1.25, 2.50),
+      // No cheap general model: Grok 4.1 Fast / 4 Fast were retired 2026-08-15.
+      // Build 0.1 (coding specialist) is the cheapest current SKU.
+      cell([Build 0.1], 1.00, 2.00),
+      lab([Z.ai], [GLM]),
+      no,
+      cell([5.2], 0.46, 1.45),
+      cell([5.1], 0.90, 2.82),
+      cell([4.7 Flash], 0.06, 0.40),
 
-    lab([Moonshot], [Kimi]),
-    cell([K3], 3.00, 15.00),
-    cell([K2.7 Code], 0.95, 4.00),
-    cell([K2.6], 0.95, 4.00),
-    cell([K2.5], 0.60, 3.00),
+      lab([Moonshot], [Kimi]),
+      cell([K3], 3.00, 15.00),
+      cell([K2.7 Code], 0.95, 4.00),
+      cell([K2.6], 0.95, 4.00),
+      cell([K2.5], 0.60, 3.00),
 
-    lab([Alibaba], [Qwen]),
-    no,
-    cell([3.8 Max], 2.00, 6.00),
-    cell([3.7 Max], 1.25, 3.75),
-    cell([3.7 Plus], 0.32, 1.28),
-    lab([DeepSeek], [DeepSeek]),
-    no,
-    // Post-2026-08-16 peak rates. DeepSeek raised prices 50%–1100% and split billing into
-    // peak (01-04 + 06-10 UTC) / off-peak (half these numbers). Peak is the anchor rate.
-    cell([V4 Pro], 1.32, 3.96),
-    cell([V4 Flash], 0.44, 1.32),
-    // DeepSeek now sells exactly two models on its own API — V3.2 and everything older
-    // survive only on third-party hosts, so they're off the grid.
-    no,
-  )
-  // Self-hosted "postcard" — ultra-cheap counterpoint: run a small model yourself (2nd subslide)
-  // Cost basis: electricity ONLY (hardware not amortised — see speaker notes).
-  // Qwen3.8-27B, NVFP4 + MTP under vLLM on an NVIDIA DGX Spark: 274.7 decode tok/s
-  // aggregate at concurrency 32 (gauravmm.github.io/autobench, 2026-08-15)
-  //   → 274.7 × 3600 = 0.989M output tok/hr
-  // Power: 60–90W measured at the wall under LLM inference (ServeTheHome); 75W midpoint.
-  // Tariff: SP Group Q3 2026 residential S$0.3478/kWh incl 9% GST ≈ US$0.271/kWh.
-  //   → 0.075kW × $0.271 = $0.0203/hr ÷ 0.989M = $0.021/M output
-  //   → prefill ~1.8K tok/s = 6.5M tok/hr → $0.003/M input
-  // At 90W (worst measured) output is $0.025/M; even at 200W (max load STH could
-  // provoke, not inference) it is only $0.055/M — the conclusion is insensitive to this.
-  // Lands over the last two Cost-efficient cells — they're read on subslide 1, then covered.
-  #only("2-")[
-    #place(bottom + right, dx: -2mm, dy: -12mm)[
-      #rotate(-4deg, origin: center + horizon)[
-        #box(
-          fill: white,
-          stroke: 0.6pt + black,
-          inset: (x: 0.7em, y: 0.6em),
-          radius: 1.5pt,
-        )[
-          #text(size: 0.65em, fill: luma(140))[Self-hosted · DGX Spark]\
-          #text(weight: "bold", size: 0.8em)[Qwen 3.8 27B]\
-          #text(weight: "bold", size: 0.9em, fill: rgb("#2E7D32"))[\$0.00 / \$0.02]\
+      lab([Alibaba], [Qwen]),
+      no,
+      cell([3.8 Max], 2.00, 6.00),
+      cell([3.7 Max], 1.25, 3.75),
+      cell([3.7 Plus], 0.32, 1.28),
+      lab([DeepSeek], [DeepSeek]),
+      no,
+      // Post-2026-08-16 peak rates. DeepSeek raised prices 50%–1100% and split billing into
+      // peak (01-04 + 06-10 UTC) / off-peak (half these numbers). Peak is the anchor rate.
+      cell([V4 Pro], 1.32, 3.96),
+      cell([V4 Flash], 0.44, 1.32),
+      // DeepSeek now sells exactly two models on its own API — V3.2 and everything older
+      // survive only on third-party hosts, so they're off the grid.
+      no,
+    )
+    // Self-hosted "postcard" — ultra-cheap counterpoint: run a small model yourself (2nd subslide)
+    // Cost basis: electricity ONLY (hardware not amortised — see speaker notes).
+    // Qwen3.8-27B, NVFP4 + MTP under vLLM on an NVIDIA DGX Spark: 274.7 decode tok/s
+    // aggregate at concurrency 32 (gauravmm.github.io/autobench, 2026-08-15)
+    //   → 274.7 × 3600 = 0.989M output tok/hr
+    // Power: 60–90W measured at the wall under LLM inference (ServeTheHome); 75W midpoint.
+    // Tariff: SP Group Q3 2026 residential S$0.3478/kWh incl 9% GST ≈ US$0.271/kWh.
+    //   → 0.075kW × $0.271 = $0.0203/hr ÷ 0.989M = $0.021/M output
+    //   → prefill ~1.8K tok/s = 6.5M tok/hr → $0.003/M input
+    // At 90W (worst measured) output is $0.025/M; even at 200W (max load STH could
+    // provoke, not inference) it is only $0.055/M — the conclusion is insensitive to this.
+    // Lands over the last two Cost-efficient cells — they're read on subslide 1, then covered.
+    #only("2-")[
+      #place(bottom + right, dx: -2mm, dy: -12mm)[
+        #rotate(-4deg, origin: center + horizon)[
+          #box(
+            fill: white,
+            stroke: 0.6pt + black,
+            inset: (x: 0.7em, y: 0.6em),
+            radius: 1.5pt,
+          )[
+            #text(size: 0.65em, fill: luma(140))[Self-hosted · DGX Spark]\
+            #text(weight: "bold", size: 0.8em)[Qwen 3.8 27B]\
+            #text(weight: "bold", size: 0.9em, fill: rgb("#2E7D32"))[\$0.00 / \$0.02]\
+          ]
         ]
       ]
     ]
   ]
-]
-#place(
-  bottom + right,
-  dy: 1em,
-  dx: -.6em,
-  float: false,
-  text(size: 0.7em, fill: luma(120))[
-    tiers: #link("https://artificialanalysis.ai")[artificialanalysis.ai] · prices: #link("https://openrouter.ai/models")[openrouter.ai] + lab pricing pages · 2026-08-15
-  ],
-)
+  #place(
+    bottom + right,
+    dy: 1em,
+    dx: -.6em,
+    float: false,
+    text(size: 0.7em, fill: luma(120))[
+      tiers: #link("https://artificialanalysis.ai")[artificialanalysis.ai] · prices: #link("https://openrouter.ai/models")[openrouter.ai] + lab pricing pages · 2026-08-15
+    ],
+  )
 
-#speaker-note[
-  - Columns are capability tiers (AA Intelligence Index), NOT price. Cost isn't an input to the index — which is why this slide works
-  - PUNCHLINE: read a row, prices don't fall left-to-right. Grok 4.6 scores 61 at \$2/\$6; Fable 5 scores 62 at \$10/\$50
-  - Anthropic's row is their brand ladder, not the index — which actually puts Opus 5 (63) just over Fable 5 (62). That gap is inside noise; don't over-claim either way
-  - Blank frontier cells = no top-of-leaderboard model. Google still has none
-  - Prices move BOTH ways: OpenAI cut Luna 80% in July; DeepSeek raised 50–1100% on 16 Aug (peak rates shown, off-peak is half)
-  - Postcard: my own DGX Spark benchmark — 274.7 tok/s, 75W, SG tariff → 2¢/M output
-  - But: electricity only. The \$4,699 box amortises to \~\$0.18/M — 9× the power. And 274.7 is aggregate over 32 streams; one user gets \~30× worse cost
-]
+  #speaker-note[
+    - Columns are capability tiers (AA Intelligence Index), NOT price. Cost isn't an input to the index — which is why this slide works
+    - PUNCHLINE: read a row, prices don't fall left-to-right. Grok 4.6 scores 61 at \$2/\$6; Fable 5 scores 62 at \$10/\$50
+    - Anthropic's row is their brand ladder, not the index — which actually puts Opus 5 (63) just over Fable 5 (62). That gap is inside noise; don't over-claim either way
+    - Blank frontier cells = no top-of-leaderboard model. Google still has none
+    - Prices move BOTH ways: OpenAI cut Luna 80% in July; DeepSeek raised 50–1100% on 16 Aug (peak rates shown, off-peak is half)
+    - Postcard: my own DGX Spark benchmark — 274.7 tok/s, 75W, SG tariff → 2¢/M output
+    - But: electricity only. The \$4,699 box amortises to \~\$0.18/M — 9× the power. And 274.7 is aggregate over 32 streams; one user gets \~30× worse cost
+  ]
 ]
 
 == What Does a Subscription Buy?
@@ -684,6 +683,222 @@ Modern LLMs are more than just stacked attention:
   - Tool use: foundation for everything we build today
 ]
 
+= What is an Agent?
+
+== Simple LLM vs Agentic AI
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 1em,
+  [
+    *Simple LLM*
+    #include "figures/simple-llm.typ"
+    #pause
+  ],
+  [
+    *Agentic AI*
+    #include "figures/agentic-loop.typ"
+  ],
+)
+
+#speaker-note[
+  - They've just seen the LLM at the token level
+  - Now: what happens with a loop + tools
+  - "chatbot vs agent" is shorthand — don't over-define
+]
+
+
+== Anatomy of an Agent
+
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 1em,
+  [
+    An *agent* is an LLM with a harness. The harness:
+
+    - Provides access to *tools*: \
+      - read files, run code, call APIs
+      - spin up *sub-agents*
+      - specialized prompts (`SKILLS.md`)
+
+    - runs in a *loop*: \
+      - act → observe → act again
+      - It can decide to keep running or stop
+
+    #v(0.5em)
+
+    #lblock(inset: (x: 1.1em, y: 1em), outset: 0pt)[
+      *Same LLM*, new prompt: \
+      _"Given this goal, what do I do next?"_
+    ]
+  ],
+  [
+    *Agentic AI*
+    #include "figures/agentic-loop.typ"
+  ],
+)
+
+#speaker-note[
+  - Same LLM, richer tooling
+]
+
+
+== Key Vocabulary
+
+#grid(
+  columns: (1fr, 1fr, 1fr, 1fr),
+  rows: (auto, auto),
+  align: top,
+  row-gutter: 1em,
+  column-gutter: 1.5em,
+  text(weight: "bold", size: 1.5em)[Agent],
+  text(weight: "bold", size: 1.5em)[Skill],
+  text(weight: "bold", size: 1.5em)[Tool Use],
+  text(weight: "bold", size: 1.5em)[Sub-agents],
+
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
+    *LLM + harness*
+
+    Harness _orchestrates_ the LLM, running it in a loop and giving it access to tools.
+
+    Acts autonomously toward a goal.
+  ],
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
+    *portable ability*
+
+    Instructions and tools to perform a task, reusable across projects and models.
+  ],
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
+    *external functions*
+
+    Search the web, run code, read files, call APIs, use MCPs.
+
+    The model decides *when* and *how* to call them.
+  ],
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
+    *agents as tools*
+
+    Spawn independent agents, give them goals and tools, and merge results.
+
+    Enables parallelism, specialisation, and delegation.
+  ],
+)
+
+#speaker-note[
+  - "Agent" = pattern, not a product
+  - Skills: portable, lazy-loaded
+  - Tools: how agents interact with the world
+  - Sub-agents: powerful, token-heavy — use cheaper LLMs
+]
+
+== Skills
+
+
+#v(0.5em)
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 1em,
+  align: top,
+  [
+    #lblock(inset: (y: 0.5em), outset: (x: 0.5em))[
+      *Skills* are portable descriptions of an ability.
+
+      - break a problem into parts,
+      - interact with a tool,
+      - structure some output,
+      - interpret some input, _etc._
+    ]
+
+    Use:
+    - Written as *human-readable text* \
+      #text(size: 0.9em)[(prompt, playbook, structured guide)]
+    - Shared across projects and teams
+    - May include specific *tools*
+    - Portable across models
+    - Lazily loaded
+  ],
+  [
+    #let skill(repo, name, desc) = block(below: 0.6em)[
+      #text(weight: "bold")[#repo\/#name]
+      #v(-0.7em)
+      #text(fill: luma(80), size: .8em)[#h(1em)#desc]
+    ]
+
+    #skill("anthropics", "claude-for-legal")[M&A diligence: bulk contract review.]
+    #skill("anthropics/skills", "pptx")[Create & edit PowerPoint presentations.]
+    #skill("anthropics/skills", "skill-creator")[The skill that writes new skills.]
+    #skill("asklokesh", "claudeskill-loki-mode")[41 sub-agents, 8 swarms → shipped app.]
+    #skill("blader", "humanizer")[Rewrite AI-sounding text.]
+    #skill("joshka0/foxctl", "foxctl-mobile")[Drive iOS Simulator + Android Emulator.]
+    #skill("K-Dense-AI", "scientific-agent-skills")[140+ skills, PubChem / ClinicalTrials / FDA.]
+    #skill("openclaw/skills", "ask-a-human")[Crowdsource subjective calls to humans.]
+  ],
+)
+
+#speaker-note[
+  - Show humanizer: short file teaching a writing style
+  - Skills compose with the complexity ladder — chain one per rung
+]
+
+== AI-Driven AI Development
+
+// Labelled row item: bold title + inline description, fills grid cell height.
+#let label-item(title, body) = box(
+  fill: luma(240),
+  width: 100%,
+  height: 100%,
+  radius: 0.5em,
+  outset: (left: 0.5em, right: 0.5em),
+  inset: (top: 0.5em, bottom: 0.5em),
+  [#text(size: 1.2em, weight: "bold")[#title] \ #body],
+)
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 3em,
+  align: top,
+  [
+    #v(1fr)
+    #lblock(inset: (y: 1em), outset: (x: 0.3em))[
+      #align(center)[
+        If AI can *follow* a skill…
+
+        …AI can *write* a skill.
+      ]
+    ]
+    #v(0.5em)
+
+    #align(center)[*Close the loop* on self-improvement.]
+    #v(0.5em)
+    You prompt an AI \
+    #sym.arrow.r.curve to improve the prompts \
+    #sym.arrow.r.curve that make the next AI work better \
+    #sym.arrow.r.curve ...and repeat!
+    #v(1fr)
+    #pause
+  ],
+  [
+    #grid(
+      columns: 1,
+      rows: 1fr,
+      gutter: 0.4em,
+      label-item[Prompts][Write system prompts, few-shot examples, chain-of-thought templates],
+      label-item[Evals][Generate test cases, edge cases, and expected outputs from a spec],
+      label-item[Skills][Author reusable skill files for new tools or workflows],
+      label-item[Agents][Scaffold entire sub-agent pipelines with tools and handoffs],
+    )
+  ],
+)
+
+#speaker-note[
+  - The recursive slide — students laugh nervously
+  - Prompt eng moving from human skill → AI task
+  - Claude Code writes its own skills (we've used some today)
+  - Ask: "Who's had AI write a prompt for AI?" — most hands up
+]
+
 = What Does It Mean for an LLM to "Know"?
 
 #focus-slide[
@@ -783,7 +998,7 @@ Modern LLMs are more than just stacked attention:
   - Takeaway: spell out context + goal; don't assume shared world
 ]
 
-== Theory of Mind, Revisited
+---
 
 #align(center)[
   #image("media/car-wash-tom.webp", height: 100%)
@@ -971,6 +1186,69 @@ Modern LLMs are more than just stacked attention:
 
 = How to Write a Prompt
 
+== Common Patterns
+
+#grid(
+  columns: (1fr, 1fr, 1fr, 1fr),
+  rows: (auto, auto),
+  // Array form of `align` is per-column, not per-row — use the (x, y) function so the
+  // wrapped "Adversarial Review" title sits on the same baseline as the single-line ones.
+  align: (x, y) => if y == 0 { bottom } else { top },
+  row-gutter: 1em,
+  column-gutter: 1.5em,
+  text(weight: "bold", size: 1.5em)[Vibe Coding],
+  text(weight: "bold", size: 1.5em)[Adversarial Review],
+  text(weight: "bold", size: 1.5em)[Test-Driven],
+  text(weight: "bold", size: 1.5em)[Spec-Driven],
+
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
+    *prompt first, plan never*
+
+    Iterate until it feels right.
+
+    Fast for throwaway work, but _technical debt_ piles up. Know when to stop.
+  ],
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
+    *actor and critic*
+
+    One prompt generates, a _different_ prompt attacks it.
+
+    The critic prompt matters more.
+  ],
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
+    *evals first*
+
+    Write test cases and expected outputs, then prompt until they pass.
+
+    Evals are to AI what unit tests are to software.
+  ],
+  gblock(inset: (y: 0.2em), outset: 0.5em)[
+    *one rung at a time*
+
+    Escalate complexity step by step, checking consistency.
+
+    The spec is the source of truth, not the chat log.
+  ],
+)
+
+#pause
+
+#v(0.8em)
+
+#align(center)[
+  _"it's no use trying to eat a steak with a teaspoon and a straw."_ (Anthony T. Hincks)
+]
+
+#speaker-note[
+  - Four ways to drive an agent — you'll use at least two in the hands-on
+  - Not rigid — they overlap and compose (vibe + adversarial review is common)
+  - Vibe coding: natural starting point, fine for short-lived scripts; danger is vibe-coded → production
+  - Actor-critic mirrors senior reviewing junior — same model, two prompts: "write it" / "find every flaw"
+  - Most people skip evals because they feel like overhead; without them prompt changes = invisible regressions
+  - 10-20 examples turn guesswork into iteration; related trick: give 5 I/O pairs, ask for the system prompt
+  - \~2 min total — don't linger
+]
+
 == Prompt Engineering
 
 #grid(
@@ -1056,51 +1334,24 @@ Modern LLMs are more than just stacked attention:
 ---
 
 #prompt-slide(
-  ["Summarize the #add[key findings] of #add[this article]."],
+  ["Summarize the #add[key findings] of #add[this article] #add[in 5 bullet points]."],
   before: {
     pblock-prev["Summarize this."]
   },
-  badge-text: [\+ Subject \+ Scope],
-  desc: [Specifies _what_ to read and _what_ to pull out of it.],
+  badge-text: [\+ Subject \+ Scope \+ Format],
+  desc: [Specifies _what_ to read, _what_ to pull out, and in what shape.],
 )
 
 ---
 
 #prompt-slide(
-  ["Summarize the key findings of this article #add[in 5 bullet points]."],
+  ["Summarize the key findings of this article in 5 bullet points. #add[Provide a one-line takeaway for an executive audience, focusing specifically on next quarter's finances.]"],
   before: {
     pblock-prev["Summarize this."]
-    pblock-prev["Summarize the key findings of this article."]
-  },
-  badge-text: [\+ Format \+ Quantity],
-  desc: [Constrains structure and length; rules out essays, one-liners, and arbitrarily long lists.],
-)
-
----
-
-#prompt-slide(
-  ["Summarize the key findings of this article in 5 bullet points. #add[Provide a one-line takeaway for an executive audience.]"],
-  before: {
-    pblock-prev["Summarize this."]
-    pblock-prev["Summarize the key findings of this article."]
     pblock-prev["Summarize the key findings of this article in 5 bullet points."]
   },
-  badge-text: [\+ Audience \+ Length],
-  desc: [Shapes vocabulary, assumed knowledge, and how much detail to include.],
-)
-
----
-
-#prompt-slide(
-  ["Summarize the key findings of this article in 5 bullet points. Provide a one-line takeaway for an executive audience, #add[focusing specifically on next quarter's finances]."],
-  before: {
-    pblock-prev["Summarize this."]
-    pblock-prev["Summarize the key findings of this article."]
-    pblock-prev["Summarize the key findings of this article in 5 bullet points."]
-    pblock-prev["Summarize the key findings of this article in 5 bullet points. Provide a one-line takeaway for an executive audience."]
-  },
-  badge-text: [\+ Angle],
-  desc: [Eliminates entire dimensions of the topic; the model now knows what to ignore.],
+  badge-text: [\+ Audience \+ Angle],
+  desc: [Shapes vocabulary and detail --- and eliminates entire dimensions of the topic. The model now knows what to *ignore*.],
 )
 
 #speaker-note[

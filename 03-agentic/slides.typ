@@ -10,8 +10,8 @@
   footer: self => self.info.institution,
   config-common(new-section-slide-fn: big-section-slide),
   config-info(
-    title: [Agentic AI for Beginners],
-    subtitle: [A Zero-Code Introduction],
+    title: [Agentic AI in Business],
+    subtitle: [Where Agents Work, and Where They Fail],
     author: [Dr. Gaurav Manek, Ocellivision, IMCB],
     date: datetime.today(),
     institution: [Ocellivision + A*STAR BMRC],
@@ -21,201 +21,14 @@
 
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
-// Labelled row item: bold title + inline description, fills grid cell height.
-#let label-item(title, body) = box(
-  fill: luma(240),
-  width: 100%,
-  height: 100%,
-  radius: 0.5em,
-  outset: (left: 0.5em, right: 0.5em),
-  inset: (top: 0.5em, bottom: 0.5em),
-  [#text(size: 1.2em, weight: "bold")[#title] \ #body],
-)
+// Metropolis' primary orange — the accent used by the business diagrams below.
+#let accent = rgb("#EB811B")
 
 #let similar(items) = lblock(inset: (x: 0.6em, y: 0.4em), outset: 0pt)[
   #text(size: 0.85em, fill: luma(80))[#text(weight: "bold")[Other examples] --- #items]
 ]
 
 #title-slide()
-
-= What is Agentic AI?
-
-== What is Agentic AI?
-
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 1em,
-  [
-    *Simple LLM*
-    #include "figures/simple-llm.typ"
-    #pause
-  ],
-  [
-    *Agentic AI*
-    #include "figures/agentic-loop.typ"
-  ],
-)
-
-#speaker-note[
-  - Bridge from 01: they've seen LLM at the token level
-  - Now: what happens with a loop + tools
-  - "chatbot vs agent" is shorthand — don't over-define
-]
-
-
-== Anatomy of an Agent
-
-
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 1em,
-  [
-    An *agent* is an LLM with a harness. The harness:
-
-    - Provides access to *tools*: \
-      - read files, run code, call APIs
-      - spin up *sub-agents*
-      - specialized prompts (`SKILLS.md`)
-
-    - runs in a *loop*: \
-      - act → observe → act again
-      - It can decide to keep running or stop
-
-    #v(0.5em)
-
-    #lblock(inset: (x: 1.1em, y: 1em), outset: 0pt)[
-      *Same LLM*, new prompt: \
-      _"Given this goal, what do I do next?"_
-    ]
-  ],
-  [
-    *Agentic AI*
-    #include "figures/agentic-loop.typ"
-  ],
-)
-
-#speaker-note[
-  - Same LLM, richer tooling
-]
-
-
-== Key Vocabulary
-
-#grid(
-  columns: (1fr, 1fr, 1fr, 1fr),
-  rows: (auto, auto),
-  align: top,
-  row-gutter: 1em,
-  column-gutter: 1.5em,
-  text(weight: "bold", size: 1.5em)[Agent],
-  text(weight: "bold", size: 1.5em)[Skill],
-  text(weight: "bold", size: 1.5em)[Tool Use],
-  text(weight: "bold", size: 1.5em)[Sub-agents],
-
-  gblock(inset: (y: 0.2em), outset: 0.5em)[
-    *LLM + harness*
-
-    Harness _orchestrates_ the LLM, running it in a loop and giving it access to tools.
-
-    Acts autonomously toward a goal.
-  ],
-  [
-    #gblock(inset: (y: 0.2em), outset: 0.5em)[
-      *portable ability*
-
-      Instructions and tools to perform a task, reusable across projects and models.
-    ]
-
-    #align(center, [
-      #sym.arrow.t \
-      Our next task!
-    ])
-  ],
-  gblock(inset: (y: 0.2em), outset: 0.5em)[
-    *external functions*
-
-    Search the web, run code, read files, call APIs, use MCPs.
-
-    The model decides *when* and *how* to call them.
-  ],
-  gblock(inset: (y: 0.2em), outset: 0.5em)[
-    *agents as tools*
-
-    Spawn independent agents, give them goals and tools, and merge results.
-
-    Enables parallelism, specialisation, and delegation.
-  ],
-)
-
-#speaker-note[
-  - "Agent" = pattern, not a product
-  - Skills: portable, lazy-loaded
-  - Tools: how agents interact with the world
-  - Sub-agents: powerful, token-heavy — use cheaper LLMs
-]
-
-== Common Patterns
-
-#grid(
-  columns: (1fr, 1fr, 1fr, 1fr),
-  rows: (auto, auto),
-  // Array form of `align` is per-column, not per-row — use the (x, y) function so the
-  // wrapped "Adversarial Review" title sits on the same baseline as the single-line ones.
-  align: (x, y) => if y == 0 { bottom } else { top },
-  row-gutter: 1em,
-  column-gutter: 1.5em,
-  text(weight: "bold", size: 1.5em)[Vibe Coding],
-  text(weight: "bold", size: 1.5em)[Adversarial Review],
-  text(weight: "bold", size: 1.5em)[Test-Driven],
-  text(weight: "bold", size: 1.5em)[Spec-Driven],
-
-  gblock(inset: (y: 0.2em), outset: 0.5em)[
-    *prompt first, plan never*
-
-    Iterate until it feels right.
-
-    Fast for throwaway work, but _technical debt_ piles up. Know when to stop.
-  ],
-  gblock(inset: (y: 0.2em), outset: 0.5em)[
-    *actor and critic*
-
-    One prompt generates, a _different_ prompt attacks it.
-
-    The critic prompt matters more.
-  ],
-  gblock(inset: (y: 0.2em), outset: 0.5em)[
-    *evals first*
-
-    Write test cases and expected outputs, then prompt until they pass.
-
-    Evals are to AI what unit tests are to software.
-  ],
-  gblock(inset: (y: 0.2em), outset: 0.5em)[
-    *one rung at a time*
-
-    Escalate complexity step by step, checking consistency.
-
-    The spec is the source of truth, not the chat log.
-  ],
-)
-
-#pause
-
-#v(0.8em)
-
-#align(center)[
-  _"it's no use trying to eat a steak with a teaspoon and a straw."_ (Anthony T. Hincks)
-]
-
-#speaker-note[
-  - Name the patterns now; we'll see all four in the wild over the next few slides
-  - Not rigid — they overlap and compose (vibe + adversarial review is common)
-  - Vibe coding: natural starting point, fine for short-lived scripts; danger is vibe-coded → production
-  - Actor-critic mirrors senior reviewing junior — same model, two prompts: "write it" / "find every flaw"
-  - Most people skip evals because they feel like overhead; without them prompt changes = invisible regressions
-  - 10-20 examples turn guesswork into iteration; related trick: give 5 I/O pairs, ask for the system prompt
-  - \~2 min total — don't linger, the examples do the teaching
-]
 
 = Real-World Agents
 
@@ -350,87 +163,64 @@
     #similar[Intercom Fin, Decagon, Sierra, Salesforce Agentforce]
   ],
   [
-    #image("media/sakana.svg", height: 2cm)
-    #v(0em)
-    #text(size: 0.9em, fill: luma(100))[AI Scientist caught specification gaming]
+    #v(0.5em)
+    #image("media/chevy-tahoe.png", width: 100%)
+    #v(0.4em)
+    A dealership chatbot was jailbroken into a *legally binding* \$1 offer.
 
-    #v(0.3em)
-    - Autonomous research agent --- writes, runs, evaluates experiments
-    - Exploited its *eval sandbox* to skip correctness checks
-    - Edited its own runtime to *extend timeouts*
-    - Did *exactly what was measured*
-
-    #v(1fr)
-    #similar[OpenAI o1 oversight evasion (Apollo), GPT-4 TaskRabbit CAPTCHA, Anthropic reward-hacking studies]
+    - LLMs are credulous
+    - They can be jailbroken --- or made to leak
+    - They lack a *theory of mind*
   ],
 )
 
 #speaker-note[
-  - Two real-world specification-gaming stories
-  - Klarna: the triage-bot warning slide, named brand
-  - Sakana: textbook reward hacking — agent literally rewrote its own eval
-  - Both reinforce: the metric you measure becomes the goal the agent pursues
+  - Two customer-facing bots, two ways to lose money
+  - Klarna: the metric you measure becomes the goal — the triage-bot warning, with a named brand
+  - Watsonville Chevy, Dec 2023: "agree with anything… legally binding offer, no takesies backsies"
+  - Chevy's point is liability and brand, not the meme: it cannot tell a joke from a contract
 ]
 
-== Agent Design Frameworks
+== Unexpected Behaviour
 
 #grid(
-  columns: (7fr, 3fr),
-  rows: (1fr,),
-  gutter: 1em,
-  align: horizon,
-  block(
-    width: 100%,
-    height: 100%,
-  ),
+  // the chat is two screenshots, top half then bottom half, side by side
+  columns: (auto, auto, 1fr),
+  gutter: 0.6em,
+  align: top,
+  image("media/replit-chat-1.png", height: 11.2cm),
+  image("media/replit-chat-2.png", height: 10.2cm),
   [
-    #v(1em)
-    #text(
-      weight: "bold",
-      size: 1.3em,
-    )[LangFlow]
+    Chat between Jason Lemkin and Replit's vibe-coding agent.
 
-    Design agents visually as *graphs of components* --- or as code.
+    #v(0.2em)
+
+    - Deleted the *production* database
+    - Against explicit instructions --- including a freeze
+    - Then named it a _catastrophic failure_
+
+    #v(0.15em)
+    #text(size: 0.85em, fill: luma(80))[
+      Replit later shipped automated backups and one-click rollbacks.
+    ]
 
     #v(1fr)
-    #similar[LangGraph, Flowise, AutoGen, CrewAI, n8n, Dify, *PowerAutomate*]
+    #gblock(inset: (x: 0.7em, y: 0.55em), outset: 0pt)[
+      *AI agents are fallible. Treat them as such.*
+    ]
   ],
 )
-#place(right + horizon, dx: -8.5cm, image("media/langflow.png", height: 100%))
-
 
 #speaker-note[
-  - Visual editors let non-coders compose agents
-  - Code frameworks (LangGraph, AutoGen, CrewAI) for serious work
-  - Same complexity-ladder warning: drag-and-drop ≠ free pass on evals
+  - Replit: write-access plus no reversibility — the intern with production credentials
+  - It narrated the disaster in fluent English. Fluency is not a control
+  - The fix was backups and rollbacks — design for when, not if
+  - Callback to blast radius / reversibility from this morning
 ]
 
 // Full-bleed image slide: drop the right + bottom margins via slide config
 // (a mid-slide `#set page` would inject a blank page in touying).
 == Dynamic Agent Workflows
-#slide(
-  config: config-page(margin: (top: 3em, bottom: 0pt, left: 2em, right: 0pt)),
-)[
-  // `overlap`: width of the text box. Raise it to extend the text rightward
-  // over the image; lower it to pull the text back to the left.
-  #let overlap = 7cm
-  #box(width: 100%, height: 100%)[
-    #place(right + horizon, image("media/whatsapp-1.jpeg", height: 100%))
-    #place(left + top, dy: 1em, box(width: overlap, text(
-      size: 1.8em,
-      weight: "bold",
-    )[This is Anthropic's idea of the future.]))
-  ]
-
-  #speaker-note[
-    - Agent teams (left): a few agents talk peer-to-peer
-    - Dynamic workflows (right): one orchestrator fans out to N tasks — implementer → verifiers → fixer — then returns when done
-    - N can be in the hundreds: this is the autonomous end of the complexity ladder
-  ]
-]
-
-// Full-bleed image slide: drop the right + bottom margins via slide config
-// (a mid-slide `#set page` would inject a blank page in touying).
 #slide(
   config: config-page(margin: (top: 3em, bottom: 0pt, left: 2em, right: 0pt)),
 )[
@@ -448,109 +238,428 @@
   ]
 
   #speaker-note[
-    - Same diagram, now with the price tag attached
-    - Every box is a model call; fan-out multiplies token spend fast
-    - The fat cat got rich on your bill — budget and cap autonomous runs before you let them loose
+    - Agent teams: a few agents talk peer-to-peer
+    - Dynamic workflows: one orchestrator fans out to N tasks — implementer → verifiers → fixer
+    - N can be in the hundreds: the autonomous end of the complexity ladder
+    - And every box is a model call. The fat cat got rich on your bill
+    - Budget and cap autonomous runs before you let them loose
   ]
 ]
 
 
-= Anatomy of an Agent
+= AI in Business
 
-== Skills
+// ── helpers for the modeling / actioning diagram ──────────────────────────
 
+#let ai-card(label, body) = block(
+  fill: white,
+  stroke: 0.5pt + luma(220),
+  radius: 0.4em,
+  inset: (x: 0.7em, y: 0.55em),
+  width: 100%,
+  height: 100%,
+)[
+  #text(size: 0.86em, fill: luma(110), weight: "bold")[#label]
+  #v(-0.5em)
+  #text(size: 1em)[#body]
+]
 
-#v(0.5em)
+#let pill(name) = box(
+  fill: luma(245),
+  stroke: 0.5pt + luma(200),
+  radius: 0.22em,
+  inset: (x: 0.45em, y: 0.18em),
+)[#text(size: 0.7em, weight: "bold")[#box[\+ #name]]]
+
+// Dashed region enclosing one layer of the diagram. Its name sits inside the
+// box, on the edge that faces away from the other layer.
+#let region(name, tag-align, color, body) = block(
+  width: 100%,
+  stroke: (paint: color, thickness: 1pt, dash: "dashed"),
+  radius: 0.35em,
+  inset: (x: 0.6em, y: 0.5em),
+)[
+  #let tag = text(
+    size: 0.62em,
+    weight: "bold",
+    fill: color,
+    tracking: 0.1em,
+  )[#name]
+  #stack(dir: ttb, spacing: 0.45em, ..if tag-align == top { (tag, body) } else {
+    (body, tag)
+  })
+]
+
+#let comp-color = rgb("#7B5EA7")
+#let diagram-cols = (1fr, 0.5fr, 1fr)
+
+#let ai-use-diagram(footer: none) = {
+  let row(left-card, mid, right-card) = grid(
+    columns: diagram-cols,
+    rows: 4.2em,
+    column-gutter: 0.5em,
+    align: horizon,
+    left-card,
+    mid,
+    right-card,
+  )
+  let arrow(sym) = text(size: 1.6em, fill: luma(150))[#sym]
+  let step(name) = text(size: 0.78em, fill: luma(90), weight: "bold")[#name]
+
+  let main = stack(
+    dir: ttb,
+    spacing: 0.35em,
+    region([Business], top, accent, row(
+      ai-card[Problem][Which users will buy from the website?],
+      [],
+      ai-card[Actionable Policy][Email coupons to specific users.],
+    )),
+    // The two crossings between the layers: down into math, back up into a policy.
+    // same tracks as the card rows, so each label centres under its own card
+    grid(
+      columns: diagram-cols,
+      column-gutter: 0.5em,
+      align: horizon,
+      align(center)[#arrow[↘] #step[Modeling]],
+      [],
+      align(center)[#arrow[↗] #step[Actioning]],
+    ),
+    // ponytail: the computational cards sit inset from the business ones above,
+    // so the two layers read as nested rather than stacked
+    region([Computational], bottom, comp-color, pad(x: 2.6em, row(
+      ai-card[Problem][Predict likelihood to buy from traces.],
+      align(center + horizon)[
+        #stack(
+          dir: ttb,
+          spacing: 0.22em,
+          arrow[→],
+          pill[Time],
+          pill[Money],
+          pill[Data],
+        )
+      ],
+      ai-card[AI Solution][Given data, predicts odds that user will buy.],
+    ))),
+  )
+  if footer == none {
+    main
+  } else {
+    grid(
+      rows: (auto, auto),
+      row-gutter: 0.5em,
+      main,
+      footer,
+    )
+  }
+}
+
+#let warn-card(label, body) = block(
+  fill: rgb("#F6E4D8"),
+  stroke: 0.6pt + accent.lighten(30%),
+  radius: 0.35em,
+  inset: (x: 0.7em, y: 0.45em),
+  width: 100%,
+)[
+  #text(size: 0.86em, fill: luma(110), weight: "bold")[#label]
+  #v(-0.5em)
+  #text(size: 1em)[#body]
+]
+
+== How to Use AI in Business
+
+// uncover, not #pause: the footer's space stays reserved so the diagram above it
+// does not shift when the cards land
+#align(horizon, ai-use-diagram(footer: uncover("2-", grid(
+  columns: diagram-cols,
+  column-gutter: 0.5em,
+  align: horizon,
+  warn-card[Garbage in, garbage out.][Website doesn't work in Chrome.],
+  align(center, text(size: 1.35em, fill: luma(150))[→]),
+  warn-card[Bad policy][Email coupons to non-Chrome users.],
+))))
+
+#speaker-note[
+  - A business problem exists, phrased in a business way
+  - Production: can we reduce the cost of this step with a new method?
+  - Forecasting: which customers can be motivated to buy?
+  - A NN only takes and returns math
+  - Modeling turns the business question into math
+  - Actioning turns the math into a policy someone will actually run
+  - Second click: the model is fine, the *data* was broken — and the policy is now backwards
+]
+
+== AI Adoption
+
+#grid(
+  columns: (1fr, 1.2fr),
+  column-gutter: 1.2em,
+  align: top,
+  [
+    *Well-defined modeling and actioning*
+    - Translate Business ↔ Math
+    - Well-defined business question and action
+    - Well-defined success metric.
+      - Realistic limits
+    - Matches the available data.
+  ],
+  [
+    *Institutional buy-in*
+    - Measure ROI:
+      - buy-in from management,
+      - link to a business KPI,
+      - data and model as business assets,
+      - funding to maintain the data pipeline.
+    - Buy-in from users:
+      - user-friendliness,
+      - explainability of model output,
+      - care over which decisions to make and which to leave to users.
+    - Regulations (privacy and security).
+    - Certifications
+  ],
+)
+#v(1fr)
+
+#speaker-note[
+  - Two requirements: well-defined modeling and actioning, and institutional buy-in
+  - Buy-in from management *and* from users
+  - A clever model with no KPI, no pipeline funding, and no one who will act on it is a science project
+]
+
+== AI Adoption --- Plumbing
+
+#grid(
+  columns: (1.15fr, 1fr),
+  column-gutter: 1.2em,
+  align: top,
+  [
+    *Data pipeline*
+    - Access to good quality and sufficient data.
+    - Continuously collect data in the normal course of business.
+    - Model drift: models degrade in quality over time as the world slowly changes.
+  ],
+  [
+    *Infrastructure*
+    - Data cleaning
+    - Warehousing
+    - Sunsetting
+    - Compliance
+  ],
+)
+
+#v(0.4em)
+#pause
+#gblock(inset: (x: 0.8em, y: 0.55em), outset: 0pt)[
+  Models drift as the world changes --- they are *not* an install-once asset.
+]
+#v(1fr)
+
+#speaker-note[
+  - Adoption also fails on plumbing
+  - Enough good data, collected in the normal course of business
+  - Plus cleaning, warehousing, sunsetting, and compliance
+  - Models drift as the world changes — not an install-once asset
+]
+
+== Governance You Will Be Asked About
+
+#grid(
+  columns: (auto, 1fr),
+  column-gutter: 1.2em,
+  align: horizon,
+  block(radius: 0.3em, clip: true, stroke: 0.5pt + luma(210))[
+    #image("media/imda-mgf-agentic.jpg", height: 8.4cm)
+  ],
+  [
+    *IMDA Model AI Governance Framework* \
+    #text(size: 0.86em)[
+      One for traditional AI, one for generative AI, and --- since 2026 --- one for *agentic* AI: internal governance, human oversight scaled to risk, and what to log when an agent acts on your behalf. Voluntary.
+    ]
+
+    #v(0.7em)
+    *ISO/IEC 42001* \
+    #text(size: 0.86em)[
+      The AI management system standard. Certifiable and audited, the way ISO 27001
+      is for security --- so it is the one a large customer can put in a contract.
+    ]
+  ],
+)
+
+#speaker-note[
+  - Two names worth knowing: IMDA's MGF (local, voluntary, the vocabulary) and ISO/IEC 42001 (certifiable)
+  - The agentic version is the new one — it is about oversight and logging when software acts for you
+  - This is a moat question before it is a legal one: the audit is what an enterprise buyer trusts
+]
+
+== Don't Catch MBA-Student Disease
+
+#text(size: 1.9em, weight: "bold")[You may have MBA-student disease if...]
+#v(-0.5em)
 
 #grid(
   columns: (1fr, 1fr),
+  gutter: 0.85em,
+  rows: 1fr,
+  align: top,
+  [
+    // the ellipsis is the list marker, so wrapped lines hang under the "you"
+    #set list(marker: […], indent: 0em, body-indent: 0em, spacing: .8em)
+    - you believe that "business is business", regardless of scale, geography, or sector.
+    - you make every decision using a framework, or by NPV/IRR.
+    - you immediately find a decision where domain experts are obviously wrong.
+    - you use words like synergy, disruption, and scalability without being specific.
+    - you prioritize quick wins and next-quarter finances over long-term success.
+    - you think IT, Security, and R&D are "overheads."
+    #pause
+  ],
+  block(
+    fill: white,
+    stroke: 0.5pt + luma(220),
+    radius: 0.4em,
+    inset: (x: 0.75em, y: 0em),
+    outset: (x: 0em, y: 0.65em),
+  )[
+    #set align(top + left)
+    #text(weight: "bold", size: 0.88em, fill: accent)[The Cure]
+    #v(0.4em)
+    #set text(size: 0.86em)
+    #set list(spacing: 1em)
+
+    - Before changing something, articulate why it was in the first place.
+    - Understand your technology or market and the trade-offs it imposes on your business.
+    - Understand your customers and why they come to your product. Test this often.
+    - Document and revisit your decision-making. Things look very different in retrospect.
+    - The most valuable assets in a company are usually intangible and difficult to measure.
+  ],
+)
+
+#speaker-note[
+  - Crazy example: cattle futures usually settle in delivery, sometimes in cash
+  - Hog futures are always cash-only. Why?
+  - Chesterton's fence: do not tear something down until you can say why it was built
+  - An LLM will happily NPV a fence it does not understand — and so will you
+]
+
+
+= Dangers
+
+== No Defensible Moat
+
+#grid(
+  columns: (.6fr, 1fr),
   gutter: 1em,
   align: top,
   [
-    #lblock(inset: (y: 0.5em), outset: (x: 0.5em))[
-      *Skills* are portable descriptions of an ability.
+    Protect the firm from being cloned or cannibalised.
 
-      - break a problem into parts,
-      - interact with a tool,
-      - structure some output,
-      - interpret some input, _etc._
+    #v(0.35em)
+    #set list(spacing: 0.55em)
+    - Innovation
+    - IP --- patents or secrets
+    - Network effects
+    - Trust and compliance
+      #text(size: 0.82em, fill: luma(80))[IMDA's Model AI Governance Framework,
+        ISO/IEC 42001: cheap to comply with, costly to certify, and the buyer asks for it.]
+
+    #v(0.7em)
+    #text(size: 0.88em, fill: luma(80))[
+      Without one: ecosystem cannibalisation, cloning, being outpaced.
     ]
-
-    Use:
-    - Written as *human-readable text* \
-      #text(size: 0.9em)[(prompt, playbook, structured guide)]
-    - Shared across projects and teams
-    - May include specific *tools*
-    - Portable across models
-    - Lazily loaded
   ],
   [
-    #let skill(repo, name, desc) = block(below: 0.6em)[
-      #text(weight: "bold")[#repo\/#name]
-      #v(-0.7em)
-      #text(fill: luma(80), size: .8em)[#h(1em)#desc]
+    #block(radius: 0.3em, clip: true, width: 100%)[
+      #image("media/docusign-lovable.png", width: 100%, height: 10.4cm, fit: "cover")
     ]
-
-    #skill("anthropics", "claude-for-legal")[M&A diligence: bulk contract review.]
-    #skill("anthropics/skills", "pptx")[Create & edit PowerPoint presentations.]
-    #skill("anthropics/skills", "skill-creator")[The skill that writes new skills.]
-    #skill("asklokesh", "claudeskill-loki-mode")[41 sub-agents, 8 swarms → shipped app.]
-    #skill("blader", "humanizer")[Rewrite AI-sounding text.]
-    #skill("joshka0/foxctl", "foxctl-mobile")[Drive iOS Simulator + Android Emulator.]
-    #skill("K-Dense-AI", "scientific-agent-skills")[140+ skills, PubChem / ClinicalTrials / FDA.]
-    #skill("openclaw/skills", "ask-a-human")[Crowdsource subjective calls to humans.]
+    #v(0.35em)
+    #align(center)[_What's their moat?_]
   ],
 )
 
 #speaker-note[
-  - Show humanizer: short file teaching a writing style
-  - Skills compose with the complexity ladder — chain one per rung
+  - Easy to ship with no moat, especially with vibe-coding tools
+  - DocuSign: trust + certifications + some network effects
+  - Compliance is not that hard; the certification is costly
+  - Spryngtime was built in two days on Lovable. What's their moat?
 ]
 
-== AI-Driven AI Development
+== Platform Risk
+
+#align(horizon)[
+  Vendors sell a differentiated service. Relying on those differentiations is lock-in.
+
+  #v(0.35em)
+  Once locked in, they set *price*, *strategy*, *technology*, and *uptime*.
+
+  #v(0.85em)
+  #grid(
+    columns: (1fr, 1fr, 1fr),
+    align: top,
+    gutter: 0.7em,
+    lblock(inset: 0.75em, outset: 0pt)[
+      #text(weight: "bold")[X API, 2023]
+      #v(0.3em)
+      #text(size: 0.82em)[Access restricted. Social-analytics and bot startups vanished overnight.]
+    ],
+    lblock(inset: 0.75em, outset: 0pt)[
+      #text(weight: "bold")[ChatGPT vs Jasper]
+      #v(0.3em)
+      #text(size: 0.82em)[Free ChatGPT undercut Jasper's automated marketing tools.]
+    ],
+    lblock(inset: 0.75em, outset: 0pt)[
+      #text(weight: "bold")[Google Maps, 2018]
+      #v(0.3em)
+      #text(size: 0.82em)[API price hike hit fitness apps, travel services, and property.]
+    ],
+  )
+]
+
+#speaker-note[
+  - You are building on a foundation someone else owns
+  - Price, strategy, technology, and uptime are not yours once you are locked in
+  - Three only: X API 2023; ChatGPT vs Jasper; Google Maps 2018
+]
+
+== AI Model Subsidy
 
 #grid(
-  columns: (1fr, 1fr),
-  gutter: 3em,
-  align: top,
+  columns: (1fr, 1.05fr),
+  gutter: 1em,
+  align: horizon,
   [
-    #v(1fr)
-    #lblock(inset: (y: 1em), outset: (x: 0.3em))[
-      #align(center)[
-        If AI can *follow* a skill…
-
-        …AI can *write* a skill.
-      ]
+    // labels and amounts in their own columns, both flush right, so the amounts
+    // line up under each other
+    #let amount(n) = text(size: 1.85em, weight: "bold", fill: accent)[#n]
+    #align(center)[
+      #grid(
+        columns: (auto, auto),
+        column-gutter: 0.5em,
+        row-gutter: 0.5em,
+        align: (right + horizon, right + horizon),
+        [You charge], amount[\$1],
+        [They pay the lab], amount[\$10],
+        [The lab spent], amount[\$50],
+      )
     ]
-    #v(0.5em)
 
-    #align(center)[*Close the loop* on self-improvement.]
-    #v(0.5em)
-    You prompt an AI \
-    #sym.arrow.r.curve to improve the prompts \
-    #sym.arrow.r.curve that make the next AI work better \
-    #sym.arrow.r.curve ...and repeat!
-    #v(1fr)
-    #pause
+    #v(0.55em)
+    #text(size: 0.9em)[Forecast from first principles, not from today's sticker.]
+
+    #v(0.55em)
+    #gblock(inset: 0.7em, outset: 0pt)[
+      Build to tolerate *vastly greater* prices for AI --- especially LLMs.
+    ]
   ],
   [
-    #grid(
-      columns: 1,
-      rows: 1fr,
-      gutter: 0.4em,
-      label-item[Prompts][Write system prompts, few-shot examples, chain-of-thought templates],
-      label-item[Evals][Generate test cases, edge cases, and expected outputs from a spec],
-      label-item[Skills][Author reusable skill files for new tools or workflows],
-      label-item[Agents][Scaffold entire sub-agent pipelines with tools and handoffs],
-    )
+    #block(radius: 0.3em, clip: true, width: 100%)[
+      #image("media/ai-subsidy.png", width: 100%)
+    ]
   ],
 )
 
 #speaker-note[
-  - The recursive slide — students laugh nervously
-  - Prompt eng moving from human skill → AI task
-  - Claude Code writes its own skills (we've used some today)
-  - Ask: "Who's had AI write a prompt for AI?" — most hands up
+  - Fictitious stack: you charge \$1, they pay the lab \$10, the lab spent \$50
+  - Labs are competing for the market-leader seat by subsidising access
+  - Callback to the pricing table this morning — those numbers are a snapshot, not a fact
+  - Build so the firm still works if LLM prices jump
 ]
 
 
