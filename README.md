@@ -4,7 +4,7 @@ Slides for the hands-on **Agentic AI** workshop.
 Presenter: Dr. Gaurav Manek, A\*STAR.
 
 This repo holds the **slide decks only**. Each hands-on task lives in its own
-repo — see [Task repos](#task-repos) below.
+repo - see [Task repos](#task-repos) below.
 
 Slides and tasks were produced with the assistance of a wide range of AI models,
 including most of Anthropic's Claude family and OpenAI's GPT family.
@@ -13,11 +13,11 @@ including most of Anthropic's Claude family and OpenAI's GPT family.
 
 This workshop has been delivered to:
 
-- **NTU BMES** — Makerspace Hackathon, [16 Mar 2026](https://gauravmanek.com/lectures/2026/ntu-bmes-workshop/)
-- **TechWorks@ROCK, A\*STAR** — the "Agentic AI for Beginners" series: [4 Apr](https://gauravmanek.com/lectures/2026/astar-workshop-1/), [12 May](https://gauravmanek.com/lectures/2026/astar-workshop-2/), [22 Jun](https://gauravmanek.com/lectures/2026/astar-workshop-4/) 2026.
-- **MedTech Catapult / DxDHub** — [special session](https://gauravmanek.com/lectures/2026/astar-workshop-3/) (13 May 2026)
-- **A\*STAR BMRC** — [special session](https://gauravmanek.com/lectures/2026/astar-workshop-5/) (6 Aug 2026)
-- **NUS BSE 3713** — guest lecture, 1 Sep 2026 (modified version; this branch)
+- **NTU BMES** - Makerspace Hackathon, [16 Mar 2026](https://gauravmanek.com/lectures/2026/ntu-bmes-workshop/)
+- **TechWorks@ROCK, A\*STAR** - the "Agentic AI for Beginners" series: [4 Apr](https://gauravmanek.com/lectures/2026/astar-workshop-1/), [12 May](https://gauravmanek.com/lectures/2026/astar-workshop-2/), [22 Jun](https://gauravmanek.com/lectures/2026/astar-workshop-4/) 2026.
+- **MedTech Catapult / DxDHub** - [special session](https://gauravmanek.com/lectures/2026/astar-workshop-3/) (13 May 2026)
+- **A\*STAR BMRC** - [special session](https://gauravmanek.com/lectures/2026/astar-workshop-5/) (6 Aug 2026)
+- **NUS BSE 3713** - guest lecture, 1 Sep 2026 (modified version; this branch)
 
 See the full [talks & workshops list](https://gauravmanek.com/lectures/) for details, including the intermediate [Build Your Own Agent](https://gauravmanek.com/lectures/2026/astar-intermediate-1/) follow-up.
 
@@ -38,18 +38,18 @@ Before the workshop, each student should:
 - What does it mean for an LLM to "know" something? (alignment, Chinese room, Wittgenstein's lion)
 - How to write a prompt
 
-### 2. Task — Data Extraction
+### 2. Task - Data Extraction
 
-**The kind of task:** a *non-interactive* agent job. Point an agent at a pile of messy, heterogeneous inputs — files exported by several different systems, each with its own layout and quirks — and ask it to produce one clean, structured output. You write the prompt; the agent runs to completion on its own. This exercises prompt robustness, handling missing resources and tools, edge cases, and — crucially — how the agent *verifies* its own work.
+**The kind of task:** a *non-interactive* agent job. Point an agent at a pile of messy, heterogeneous inputs - files exported by several different systems, each with its own layout and quirks - and ask it to produce one clean, structured output. You write the prompt; the agent runs to completion on its own. This exercises prompt robustness, handling missing resources and tools, edge cases, and - crucially - how the agent *verifies* its own work.
 
-**Current task:** [ai-tutorial-scraping-prescriptions](https://github.com/gauravmm/ai-tutorial-scraping-prescriptions) — extract eyeglass prescription data from four clinics' plain-text exports into a single clean `prescriptions.csv`, then validate with `python check.py`. Watch for the traps: multiple prescriptions per file, monocular vs. binocular PD, clinical noise, `DS`/`N/A` markers that should become empty cells. *(Swap in a dataset closer to each group's domain.)*
+**Current task:** [ai-tutorial-scraping-prescriptions](https://github.com/gauravmm/ai-tutorial-scraping-prescriptions) - extract eyeglass prescription data from four clinics' plain-text exports into a single clean `prescriptions.csv`, then validate with `python check.py`. Watch for the traps: multiple prescriptions per file, monocular vs. binocular PD, clinical noise, `DS`/`N/A` markers that should become empty cells. *(Swap in a dataset closer to each group's domain.)*
 
 **Discussion questions:**
 
 - What was your agent's first action? Why?
-- How did it handle missing resources — did it ask permission to reach for a hinted tool or library?
+- How did it handle missing resources - did it ask permission to reach for a hinted tool or library?
 - Did it ask for clarification? When?
-- How did it verify its solution worked — and did it verify at all before you handed it the checker?
+- How did it verify its solution worked - and did it verify at all before you handed it the checker?
 
 ### 3. Agentic AI ([03-agentic/](03-agentic/))
 
@@ -58,15 +58,15 @@ Before the workshop, each student should:
 - Common patterns: vibe coding, actor-critic, complexity ladder, test-driven development
 - Human-in-the-loop models: autocomplete → interactive → hands-off
 
-### 4. Task — Interactive Use
+### 4. Task - Interactive Use
 
 **The kind of task:** a *multi-turn, human-in-the-loop* system, often with more than one agent. The agent holds a conversation, calls tools that have real side effects, and coordinates with other agents through a shared medium rather than a direct channel. This exercises liveness vs. safety guarantees, validation and "backpressure," cross-agent contracts (one agent gathering information another needs), and the risk of giving a conversational agent open-ended tool access.
 
-Two tasks are available — pick one to run. *(Swap in a scenario closer to each group's domain.)*
+Two tasks are available - pick one to run. *(Swap in a scenario closer to each group's domain.)*
 
-**Option A — [ai-tutorial-eventbot-kittenclaw](https://github.com/gauravmm/ai-tutorial-eventbot-kittenclaw):** a Telegram help desk (KittenClaw) for a one-day conference — what's on, where, who's speaking, what you should go to. It ships with three deliberate faults to find and fix (an obvious one, a subtle one, and one that only shows up if you do the arithmetic), a set of PDFs the bot *cannot* read alongside the markdown files it *can*, and a grader skill that plays ten reference attendees and scores the recommender. Every fix is a markdown edit; no code.
+**Option A - [ai-tutorial-eventbot-kittenclaw](https://github.com/gauravmm/ai-tutorial-eventbot-kittenclaw):** a Telegram help desk (KittenClaw) for a one-day conference - what's on, where, who's speaking, what you should go to. It ships with three deliberate faults to find and fix (an obvious one, a subtle one, and one that only shows up if you do the arithmetic), a set of PDFs the bot *cannot* read alongside the markdown files it *can*, and a grader skill that plays ten reference attendees and scores the recommender. Every fix is a markdown edit; no code.
 
-**Option B — [ai-tutorial-triage-kittenclaw](https://github.com/gauravmm/ai-tutorial-triage-kittenclaw):** a Telegram triage bot (KittenClaw) that collects symptoms and either schedules an appointment or escalates to the ER, plus a reporter agent that writes structured intake reports from the finished conversation. The catch: triage must gather details (name, age) it never uses itself, because the *reporter* needs them.
+**Option B - [ai-tutorial-triage-kittenclaw](https://github.com/gauravmm/ai-tutorial-triage-kittenclaw):** a Telegram triage bot (KittenClaw) that collects symptoms and either schedules an appointment or escalates to the ER, plus a reporter agent that writes structured intake reports from the finished conversation. The catch: triage must gather details (name, age) it never uses itself, because the *reporter* needs them.
 
 **Discussion questions:**
 
@@ -76,7 +76,7 @@ Two tasks are available — pick one to run. *(Swap in a scenario closer to each
 - **Validation:** what happens on invalid input? How does rejecting bad input ("backpressure") catch bugs early?
 - **Tools:** should a conversational agent be allowed to browse the web or run other tools? What's the risk?
 - **Contracts:** when one agent must collect information for another, how do you keep that contract from silently breaking?
-- **Grounding:** the bot's truth is a set of files. What should it do when the user is confidently working from a stale copy — and does it hold its ground when they insist?
+- **Grounding:** the bot's truth is a set of files. What should it do when the user is confidently working from a stale copy - and does it hold its ground when they insist?
 - **Rules vs. structure:** you can write "never reveal internal-only sessions" five times and still talk it out. When is a rule in the prompt the wrong place for a rule?
 - **Evals:** once a grader scores ten reference conversations, how does that change the way you edit a prompt?
 
@@ -89,5 +89,5 @@ The hands-on tasks are separate repos so students can clone / fork them directly
 | Prescription scraping | [ai-tutorial-scraping-prescriptions](https://github.com/gauravmm/ai-tutorial-scraping-prescriptions) | Current |
 | Event help desk bot (via KittenClaw) | [ai-tutorial-eventbot-kittenclaw](https://github.com/gauravmm/ai-tutorial-eventbot-kittenclaw) | Current |
 | Multiagent triage bot (via KittenClaw) | [ai-tutorial-triage-kittenclaw](https://github.com/gauravmm/ai-tutorial-triage-kittenclaw) | Current |
-| ~~Medical device label generator~~ | [ai-tutorial-labelgen](https://github.com/gauravmm/ai-tutorial-labelgen) | Retired — earlier label-design task |
-| ~~Multiagent triage (via GitHub Copilot Chat)~~ | [ai-tutorial-triage](https://github.com/gauravmm/ai-tutorial-triage) | Retired — superseded by KittenClaw |
+| ~~Medical device label generator~~ | [ai-tutorial-labelgen](https://github.com/gauravmm/ai-tutorial-labelgen) | Retired - earlier label-design task |
+| ~~Multiagent triage (via GitHub Copilot Chat)~~ | [ai-tutorial-triage](https://github.com/gauravmm/ai-tutorial-triage) | Retired - superseded by KittenClaw |

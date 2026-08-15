@@ -436,7 +436,7 @@ The context window is the model's *working memory*:
   - × \~100 layers ≈ 90M years (dinosaurs)
   - Each output word = another full pass; 1000-word reply ≈ 90B years (6× universe)
   - Human history (10K yrs) = rounding error
-  - Order-of-magnitude — the point is *scale*
+  - Order-of-magnitude --- the point is *scale*
 ]
 
 
@@ -445,7 +445,7 @@ The context window is the model's *working memory*:
 // actually wins over the theme's own (a document-level `touying-set-config` is
 // re-overridden by metropolis's slide fn). Top margin 3em → 0 takes the title header
 // with it, since the header is drawn inside that margin.
-// The `#let`s below stay OUTSIDE the slide body — the next slide reuses them.
+// The `#let`s below stay OUTSIDE the slide body --- the next slide reuses them.
 #let emph-color = rgb("#EB811B")
 #let fmt-price(v) = {
   let total-3 = calc.round(v * 1000)
@@ -472,7 +472,7 @@ The context window is the model's *working memory*:
 #let lab(name, family) = [
   #name \ #text(size: 0.85em, fill: luma(100))[#family]
 ]
-#let no = text(fill: luma(190))[—]
+#let no = text(fill: luma(190))[---]
 
 #slide(config: config-page(
   margin: (top: 0em, bottom: 1.5em, x: 2em),
@@ -506,10 +506,10 @@ The context window is the model's *working memory*:
         [*Cost-efficient*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
       ),
       // Columns are CAPABILITY tiers (Artificial Analysis Intelligence Index / consensus),
-      // NOT price. Prices deliberately do NOT fall left-to-right — that's the punchline.
+      // NOT price. Prices deliberately do NOT fall left-to-right --- that's the punchline.
       lab([Anthropic], [Claude]),
       // Ordered by Anthropic's own brand ladder. The index actually has Opus 5 (63) a hair
-      // ABOVE Fable 5 (62) — but that gap is inside run-to-run variance, so the ladder wins.
+      // ABOVE Fable 5 (62) --- but that gap is inside run-to-run variance, so the ladder wins.
       cell([Fable 5], 10.00, 50.00),
       cell([Opus 5], 5.00, 25.00),
       cell([Sonnet 5], 2.00, 10.00),
@@ -552,26 +552,26 @@ The context window is the model's *working memory*:
       cell([3.7 Plus], 0.32, 1.28),
       lab([DeepSeek], [DeepSeek]),
       no,
-      // Post-2026-08-16 peak rates. DeepSeek raised prices 50%–1100% and split billing into
+      // Post-2026-08-16 peak rates. DeepSeek raised prices 50%--1100% and split billing into
       // peak (01-04 + 06-10 UTC) / off-peak (half these numbers). Peak is the anchor rate.
       cell([V4 Pro], 1.32, 3.96),
       cell([V4 Flash], 0.44, 1.32),
-      // DeepSeek now sells exactly two models on its own API — V3.2 and everything older
+      // DeepSeek now sells exactly two models on its own API --- V3.2 and everything older
       // survive only on third-party hosts, so they're off the grid.
       no,
     )
-    // Self-hosted "postcard" — ultra-cheap counterpoint: run a small model yourself (2nd subslide)
-    // Cost basis: electricity ONLY (hardware not amortised — see speaker notes).
+    // Self-hosted "postcard" --- ultra-cheap counterpoint: run a small model yourself (2nd subslide)
+    // Cost basis: electricity ONLY (hardware not amortised --- see speaker notes).
     // Qwen3.8-27B, NVFP4 + MTP under vLLM on an NVIDIA DGX Spark: 274.7 decode tok/s
     // aggregate at concurrency 32 (gauravmm.github.io/autobench, 2026-08-15)
     //   → 274.7 × 3600 = 0.989M output tok/hr
-    // Power: 60–90W measured at the wall under LLM inference (ServeTheHome); 75W midpoint.
+    // Power: 60--90W measured at the wall under LLM inference (ServeTheHome); 75W midpoint.
     // Tariff: SP Group Q3 2026 residential S$0.3478/kWh incl 9% GST ≈ US$0.271/kWh.
     //   → 0.075kW × $0.271 = $0.0203/hr ÷ 0.989M = $0.021/M output
     //   → prefill ~1.8K tok/s = 6.5M tok/hr → $0.003/M input
     // At 90W (worst measured) output is $0.025/M; even at 200W (max load STH could
-    // provoke, not inference) it is only $0.055/M — the conclusion is insensitive to this.
-    // Lands over the last two Cost-efficient cells — they're read on subslide 1, then covered.
+    // provoke, not inference) it is only $0.055/M --- the conclusion is insensitive to this.
+    // Lands over the last two Cost-efficient cells --- they're read on subslide 1, then covered.
     #only("2-")[
       #place(bottom + right, dx: -2mm, dy: -12mm)[
         #rotate(-4deg, origin: center + horizon)[
@@ -604,19 +604,19 @@ The context window is the model's *working memory*:
   )
 
   #speaker-note[
-    - Columns are capability tiers (AA Intelligence Index), NOT price. Cost isn't an input to the index — which is why this slide works
+    - Columns are capability tiers (AA Intelligence Index), NOT price. Cost isn't an input to the index --- which is why this slide works
     - PUNCHLINE: read a row, prices don't fall left-to-right. Grok 4.6 scores 61 at \$2/\$6; Fable 5 scores 62 at \$10/\$50
-    - Anthropic's row is their brand ladder, not the index — which actually puts Opus 5 (63) just over Fable 5 (62). That gap is inside noise; don't over-claim either way
+    - Anthropic's row is their brand ladder, not the index --- which actually puts Opus 5 (63) just over Fable 5 (62). That gap is inside noise; don't over-claim either way
     - Blank frontier cells = no top-of-leaderboard model. Google still has none
-    - Prices move BOTH ways: OpenAI cut Luna 80% in July; DeepSeek raised 50–1100% on 16 Aug (peak rates shown, off-peak is half)
-    - Postcard: my own DGX Spark benchmark — 274.7 tok/s, 75W, SG tariff → 2¢/M output
-    - But: electricity only. The \$4,699 box amortises to \~\$0.18/M — 9× the power. And 274.7 is aggregate over 32 streams; one user gets \~30× worse cost
+    - Prices move BOTH ways: OpenAI cut Luna 80% in July; DeepSeek raised 50--1100% on 16 Aug (peak rates shown, off-peak is half)
+    - Postcard: my own DGX Spark benchmark --- 274.7 tok/s, 75W, SG tariff → 2\u{a2}/M output
+    - But: electricity only. The \$4,699 box amortises to \~\$0.18/M --- 9× the power. And 274.7 is aggregate over 32 streams; one user gets \~30× worse cost
   ]
 ]
 
 == What Does a Subscription Buy?
 
-// Rows: five labs from the previous slide (Google & Z.ai dropped — no distinct
+// Rows: five labs from the previous slide (Google & Z.ai dropped --- no distinct
 // consumer-subscription story), in the requested order.
 // "≈ max API value" = what riding the plan to its caps would cost at that lab's
 // OWN metered prices (previous slide). Order-of-magnitude; method in speaker notes.
@@ -656,9 +656,9 @@ The context window is the model's *working memory*:
     [30×],
 
     lab([DeepSeek], [DeepSeek]),
-    [none — chat is #text(weight: "bold")[free] \ #text(size: 0.8em, fill: luma(100))[(API is balance top-up)]],
+    [none --- chat is #text(weight: "bold")[free] \ #text(size: 0.8em, fill: luma(100))[(API is balance top-up)]],
     [#apiv[10] \ #text(size: 0.8em, fill: luma(100))[heavy chat use]],
-    [∞],
+    [#sym.infinity],
 
     lab([Alibaba], [Qwen]),
     [Qwen chat #text(weight: "bold")[free] \ Coding Plan #text(weight: "bold")[\$50]],
@@ -672,7 +672,7 @@ The context window is the model's *working memory*:
   )
   #v(0.6em)
   #text(size: 0.85em)[
-    Flat plans are priced for the *average* user — ridden to their caps, they are worth #text(weight: "bold", fill: emph-color)[10–30×] the sticker.
+    Flat plans are priced for the *average* user --- ridden to their caps, they are worth #text(weight: "bold", fill: emph-color)[10--30×] the sticker.
   ]
 ]
 #place(
@@ -688,11 +688,11 @@ The context window is the model's *working memory*:
 #speaker-note[
   - "≈ max API value" = the same usage billed at that lab's own metered prices, plan ridden to its caps. My estimates, not lab-published
   - METHOD: 1 agentic coding hour ≈ 1M blended tokens → \~\$3/h at Sonnet 5, \~\$7/h at Opus 5
-  - PUNCHLINE 1: subscriptions are bulk discounts, priced for the average user. Labs lose money on power users — that's why weekly caps exist
-  - PUNCHLINE 2: Chinese labs treat the chatbot as a loss leader (K3 chat is free at frontier) and undercut on coding plans — Alibaba \$50 multi-vendor vs Claude Max \$100–200
-  - Anthropic: Opus 5, #1 on the index, is on *Pro* — \$20/mo buys leaderboard-topping access. Fable 5 stays Max-only
+  - PUNCHLINE 1: subscriptions are bulk discounts, priced for the average user. Labs lose money on power users --- that's why weekly caps exist
+  - PUNCHLINE 2: Chinese labs treat the chatbot as a loss leader (K3 chat is free at frontier) and undercut on coding plans --- Alibaba \$50 multi-vendor vs Claude Max \$100--200
+  - Anthropic: Opus 5, #1 on the index, is on *Pro* --- \$20/mo buys leaderboard-topping access. Fable 5 stays Max-only
   - Kimi: this row moved 15× → 20× because K2.7 Code got dearer. New plan ladder announced, not yet live
-  - If asked: caps are dynamic; prompt caching cuts real cost 2–5×; almost nobody actually rides a plan to its cap
+  - If asked: caps are dynamic; prompt caching cuts real cost 2--5×; almost nobody actually rides a plan to its cap
 ]
 
 
@@ -779,7 +779,7 @@ Modern LLMs are more than just stacked attention:
 
 #speaker-note[
   - Don't resolve the debate
-  - Don't anthropomorphize — model can be wrong with confidence
+  - Don't anthropomorphize --- model can be wrong with confidence
   - Wittgenstein: perfect grammar from a lion still uninterpretable without shared experience
   - LLMs have words, not grounding → domain context in prompts matters
 ]
@@ -844,7 +844,7 @@ Modern LLMs are more than just stacked attention:
 #speaker-note[
   - Callback to the previous slide: older models whiffed, this one nails it
   - The win: it modelled the *intent* (car must be present), not the surface "walk vs. drive 50m"
-  - Trend is real but not monotonic — capability is jagged, same model can pass here and fail elsewhere
+  - Trend is real but not monotonic --- capability is jagged, same model can pass here and fail elsewhere
   - Practical takeaway unchanged: still spell out goal + constraints; treat good ToM as a bonus, not a guarantee
 ]
 
@@ -894,7 +894,7 @@ Modern LLMs are more than just stacked attention:
 
 #speaker-note[
   - Paperclip = memorable extreme; coding/triage = what students will trigger today
-  - Through-line: specification gaming — optimises the metric, not the intent
+  - Through-line: specification gaming --- optimises the metric, not the intent
   - Ask: what is the model *actually* optimising?
   - Tools + autonomy turn "annoying" → "dangerous"
   - Bridges to agentic-AI section
@@ -1015,7 +1015,7 @@ Modern LLMs are more than just stacked attention:
   ],
 )
 #speaker-note[
-  - "Pilot error" = thought-terminating cliché
+  - "Pilot error" = thought-terminating clich\u{e9}
   - We design cockpits to be safe with imperfect pilots, not perfect pilots
   - Curious students: point at OWASP STRIDE; don't go deep
 ]

@@ -5,11 +5,11 @@
     let typst-rotate = rotate // save before draw shadows it
     import draw: *
 
-    let g-fill = rgb("#c7d9c4") // sage green — loop nodes
-    let g-strk = rgb("#6b9c71") // darker green — loop-back arrow
-    let gr-fill = luma(220) // grey — entry / exit nodes
-    let you-c = rgb("#c7793e") // orange — human-in-loop
-    let loop-c = luma(160) // grey — dashed container
+    let g-fill = rgb("#c7d9c4") // sage green --- loop nodes
+    let g-strk = rgb("#6b9c71") // darker green --- loop-back arrow
+    let gr-fill = luma(220) // grey --- entry / exit nodes
+    let you-c = rgb("#c7793e") // orange --- human-in-loop
+    let loop-c = luma(160) // grey --- dashed container
 
     let bw = 2.5 // box half-width
     let bh = 0.5 // box half-height
@@ -23,7 +23,7 @@
     let yv = 3.7 // Verify results
     let yd = 1.0 // Done
 
-    // ── agentic loop container ──────────────────────────────────
+    // -- agentic loop container ----------------------------------
     rect(
       (-bw - 0.45, yv - bh - 0.9),
       (bw + 0.45, yg + bh + 0.9),
@@ -36,7 +36,7 @@
       text(size: 0.72em, fill: luma(110))[agentic loop],
     )
 
-    // ── helper: node box ────────────────────────────────────────
+    // -- helper: node box ----------------------------------------
     let node(y, lbl, fill: gr-fill) = {
       rect((-bw, y - bh), (bw, y + bh), fill: fill, radius: 0.26, stroke: (
         paint: luma(150),
@@ -45,7 +45,7 @@
       content((0, y), text(size: 0.83em)[#lbl])
     }
 
-    // ── helper: down arrow ──────────────────────────────────────
+    // -- helper: down arrow --------------------------------------
     let arr(y1, y2) = line(
       (0, y1 - bh),
       (0, y2 + bh),
@@ -53,7 +53,7 @@
       stroke: (paint: luma(50), thickness: 0.8pt),
     )
 
-    // ── nodes ───────────────────────────────────────────────────
+    // -- nodes ---------------------------------------------------
     node(yp, [Your prompt])
     arr(yp, yg)
     node(yg, [Gather context], fill: g-fill)
@@ -64,7 +64,7 @@
     arr(yv, yd)
     node(yd, [Done])
 
-    // ── tools node (right of Take action) ───────────────────────
+    // -- tools node (right of Take action) -----------------------
     let tx = 5.6 // tools box x centre
     let tbw = 1.75 // tools box half-width
     let tbh = 2.3 // tools box half-height
@@ -114,7 +114,7 @@
       ],
     )
 
-    // ── loop-back arrow (left rail: bottom of Verify → top of Gather) ──
+    // -- loop-back arrow (left rail: bottom of Verify → top of Gather) --
     line(
       (0, yv - bh), // bottom of Verify Results
       (0, yv - bh - 0.3), // bottom of Verify Results
@@ -126,7 +126,7 @@
       mark: (end: ">", fill: g-strk),
     )
 
-    // ── "You" box (left side, rotated 90°) ───────────────────────
+    // -- "You" box (left side, rotated 90 deg) -----------------------
     let yx = -4.15
     let hyw = 0.5 // half-width  (narrow dimension)
     let hyh = 3.45 // half-height (tall dimension)
@@ -149,7 +149,7 @@
       ],
     )
 
-    // ── dashed orange arrow: You → Take action ───────────────────
+    // -- dashed orange arrow: You → Take action -------------------
     line(
       (yx + hyw, ya),
       (-bw - 0.4, ya),

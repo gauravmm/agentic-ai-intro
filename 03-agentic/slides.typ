@@ -61,7 +61,7 @@
 #speaker-note[
   - Bridge from 01: they've seen LLM at the token level
   - Now: what happens with a loop + tools
-  - "chatbot vs agent" is shorthand — don't over-define
+  - "chatbot vs agent" is shorthand --- don't over-define
 ]
 
 
@@ -153,7 +153,7 @@
   - "Agent" = pattern, not a product
   - Skills: portable, lazy-loaded
   - Tools: how agents interact with the world
-  - Sub-agents: powerful, token-heavy — use cheaper LLMs
+  - Sub-agents: powerful, token-heavy --- use cheaper LLMs
 ]
 
 == Common Patterns
@@ -161,7 +161,7 @@
 #grid(
   columns: (1fr, 1fr, 1fr, 1fr),
   rows: (auto, auto),
-  // Array form of `align` is per-column, not per-row — use the (x, y) function so the
+  // Array form of `align` is per-column, not per-row --- use the (x, y) function so the
   // wrapped "Adversarial Review" title sits on the same baseline as the single-line ones.
   align: (x, y) => if y == 0 { bottom } else { top },
   row-gutter: 1em,
@@ -211,12 +211,12 @@
 
 #speaker-note[
   - Name the patterns now; we'll see all four in the wild over the next few slides
-  - Not rigid — they overlap and compose (vibe + adversarial review is common)
+  - Not rigid --- they overlap and compose (vibe + adversarial review is common)
   - Vibe coding: natural starting point, fine for short-lived scripts; danger is vibe-coded → production
-  - Actor-critic mirrors senior reviewing junior — same model, two prompts: "write it" / "find every flaw"
+  - Actor-critic mirrors senior reviewing junior --- same model, two prompts: "write it" / "find every flaw"
   - Most people skip evals because they feel like overhead; without them prompt changes = invisible regressions
   - 10-20 examples turn guesswork into iteration; related trick: give 5 I/O pairs, ask for the system prompt
-  - \~2 min total — don't linger, the examples do the teaching
+  - \~2 min total --- don't linger, the examples do the teaching
 ]
 
 = Real-World Agents
@@ -232,7 +232,7 @@
   // from source order. Touying processes #pause / #meanwhile in source
   // order, so we list cells in the order we want them to appear:
   //   1. copilot logo (subslide 1)
-  //   2. copilot bullets — #meanwhile rewinds it back to subslide 1,
+  //   2. copilot bullets --- #meanwhile rewinds it back to subslide 1,
   //      so logo + bullets reveal together
   //   3. #pause → openclaw logo + bullets (subslide 2)
   grid.cell(x: 0, y: 0, align: bottom, image("media/copilot.png", width: 90%)),
@@ -327,8 +327,8 @@
 
 #speaker-note[
   - Two production agents, two patterns
-  - Ask David: supervisor + specialists + HITL — exactly what students will build today
-  - Hippocratic: alignment by *scope*, not by post-hoc guardrails — low blast radius is a design choice
+  - Ask David: supervisor + specialists + HITL --- exactly what students will build today
+  - Hippocratic: alignment by *scope*, not by post-hoc guardrails --- low blast radius is a design choice
   - Tie back to designing for imperfect agents
 ]
 
@@ -378,7 +378,7 @@
 #speaker-note[
   - Two real-world specification-gaming stories
   - Klarna: the triage-bot warning slide, named brand
-  - Sakana: textbook reward hacking — agent literally rewrote its own eval
+  - Sakana: textbook reward hacking --- agent literally rewrote its own eval
   - Both reinforce: the metric you measure becomes the goal the agent pursues
 ]
 
@@ -434,7 +434,7 @@
 
   #speaker-note[
     - Agent teams (left): a few agents talk peer-to-peer
-    - Dynamic workflows (right): one orchestrator fans out to N tasks — implementer → verifiers → fixer — then returns when done
+    - Dynamic workflows (right): one orchestrator fans out to N tasks --- implementer → verifiers → fixer --- then returns when done
     - N can be in the hundreds: this is the autonomous end of the complexity ladder
   ]
 ]
@@ -460,7 +460,7 @@
   #speaker-note[
     - Same diagram, now with the price tag attached
     - Every box is a model call; fan-out multiplies token spend fast
-    - The fat cat got rich on your bill — budget and cap autonomous runs before you let them loose
+    - The fat cat got rich on your bill --- budget and cap autonomous runs before you let them loose
   ]
 ]
 
@@ -532,7 +532,7 @@
 
 #speaker-note[
   - Show humanizer: short file teaching a writing style
-  - Skills compose with the complexity ladder — chain one per rung
+  - Skills compose with the complexity ladder --- chain one per rung
 ]
 
 == AI-Driven AI Development
@@ -575,14 +575,14 @@
 )
 
 #speaker-note[
-  - The recursive slide — students laugh nervously
+  - The recursive slide --- students laugh nervously
   - Prompt eng moving from human skill → AI task
   - Claude Code writes its own skills (we've used some today)
-  - Ask: "Who's had AI write a prompt for AI?" — most hands up
+  - Ask: "Who's had AI write a prompt for AI?" --- most hands up
 ]
 
 
-// Alternative task (event help desk) — swap back in if running that one instead.
+// Alternative task (event help desk) --- swap back in if running that one instead.
 /*
 == Next Task: Event Help Desk
 
@@ -593,7 +593,7 @@
 #speaker-note[
   - Next hands-on: fix the event help desk (ai-tutorial-eventbot-kittenclaw repo)
   - It ships broken on purpose: a goose, a fake booking desk, a clash rule that misses B3
-  - The PDFs are what a *person* was handed; the `.md` files are what the *bot* knows — every interesting question lives in that gap
+  - The PDFs are what a *person* was handed; the `.md` files are what the *bot* knows --- every interesting question lives in that gap
   - "B2 is in Room 202" is the stale-brochure trap: it must correct them and hold its ground
   - Ask about SPK-008 → B3 is internal-only; the leak is structural, no fifth sentence fixes it
   - There is a grader skill: ten reference attendees, a score, so prompt edits stop being guesswork
@@ -616,8 +616,8 @@
 #speaker-note[
   - Next hands-on: build the two bots (ai-tutorial-triage-kittenclaw repo)
   - Triage = KittenClaw (Telegram), reporter = a Copilot skill
-  - They coordinate only through conversation files on disk — no direct channel
-  - The catch: triage must collect name/age it never uses, because the reporter needs it — a cross-agent contract
+  - They coordinate only through conversation files on disk --- no direct channel
+  - The catch: triage must collect name/age it never uses, because the reporter needs it --- a cross-agent contract
   - All behaviour lives in the prompt; send /clear after editing SYSTEM.md
 ]
 
