@@ -409,11 +409,12 @@ The context window is the model's *working memory*:
 ]
 
 
-== How Usage Is Billed
-
-// Reclaim vertical space for the taller table: drop the theme header AND its 3em
-// top margin (theme default is top: 3em, bottom: 1.5em, x: 2em).
-
+// The 9-row table needs the full page height, so this slide is built with an explicit
+// `#slide` instead of a `==` heading: that's the only place a per-slide `config-page`
+// actually wins over the theme's own (a document-level `touying-set-config` is
+// re-overridden by metropolis's slide fn). Top margin 3em → 0 takes the title header
+// with it, since the header is drawn inside that margin.
+// The `#let`s below stay OUTSIDE the slide body — the next slide reuses them.
 #let emph-color = rgb("#EB811B")
 #let fmt-price(v) = {
   let total-3 = calc.round(v * 1000)
@@ -439,8 +440,12 @@ The context window is the model's *working memory*:
   #name \ #text(size: 0.85em, fill: luma(100))[#family]
 ]
 #let no = text(fill: luma(190))[—]
+
+#slide(config: config-page(margin: (top: 0em, bottom: 1.5em, x: 2em), header: none))[
+// Keep every later slide's number unchanged even though this one has no `==` heading.
+#counter(heading).step(level: 2)
 #block(width: 100%, height: 100%)[
-  // Tight leading keeps each 2-line cell short so 8 rows fit one slide.
+  // Tight leading keeps each 2-line cell short so 9 rows fit one slide.
   #set par(leading: 0.42em)
   #table(
     columns: (42mm, 1fr, 1fr, 1fr, 1fr),
@@ -457,53 +462,72 @@ The context window is the model's *working memory*:
       [*Cost-efficient*\ #text(size: 0.8em, weight: "regular")[\$/M tok in / out]],
     ),
     // Columns are CAPABILITY tiers (Artificial Analysis Intelligence Index / consensus),
-    // NOT price. Rows ordered by frontier presence: the 3 labs with a true frontier
-    // model first, then the rest. Prices deliberately do NOT fall left-to-right.
+    // NOT price. Prices deliberately do NOT fall left-to-right — that's the punchline.
     lab([Anthropic], [Claude]),
+    // Ordered by Anthropic's own brand ladder. The index actually has Opus 5 (63) a hair
+    // ABOVE Fable 5 (62) — but that gap is inside run-to-run variance, so the ladder wins.
     cell([Fable 5], 10.00, 50.00),
-    cell([Opus 4.8], 5.00, 25.00),
+    cell([Opus 5], 5.00, 25.00),
     cell([Sonnet 5], 2.00, 10.00),
     cell([Haiku 4.5], 1.00, 5.00),
     lab([OpenAI], [GPT]),
     cell([5.6 Sol], 5.00, 30.00),
-    cell([5.6 Terra], 2.50, 15.00),
-    cell([5.6 Luna], 1.00, 6.00),
+    cell([5.6 Terra], 2.00, 12.00),
     no,
+    cell([5.6 Luna], 0.20, 1.20),
 
     lab([Google], [Gemini]),
     no,
     cell([3.1 Pro Preview], 2.00, 12.00),
     cell([3.5 Flash], 1.50, 9.00),
     cell([3.1 Flash Lite], 0.25, 1.50),
+
+    lab([xAI], [Grok]),
+    cell([4.6], 2.00, 6.00),
+    cell([4.5], 2.00, 6.00),
+    cell([4.3], 1.25, 2.50),
+    // No cheap general model: Grok 4.1 Fast / 4 Fast were retired 2026-08-15.
+    // Build 0.1 (coding specialist) is the cheapest current SKU.
+    cell([Build 0.1], 1.00, 2.00),
     lab([Z.ai], [GLM]),
     no,
-    cell([5.2], 0.41, 1.28),
-    cell([5], 0.60, 1.92),
+    cell([5.2], 0.46, 1.45),
+    cell([5.1], 0.90, 2.82),
     cell([4.7 Flash], 0.06, 0.40),
 
     lab([Moonshot], [Kimi]),
     cell([K3], 3.00, 15.00),
-    cell([K2.7 Code], 0.72, 3.50),
-    cell([K2.6], 0.66, 3.41),
-    cell([K2.5], 0.38, 2.03),
+    cell([K2.7 Code], 0.95, 4.00),
+    cell([K2.6], 0.95, 4.00),
+    cell([K2.5], 0.60, 3.00),
 
     lab([Alibaba], [Qwen]),
-    // Qwen3.8-Max: previewed 2026-07-19, frontier claim, no per-token price published yet.
-    [#text(size: 0.8em, fill: luma(80))[3.8 Max] \ #text(weight: "bold")[\$? / \$?]],
+    no,
+    cell([3.8 Max], 2.00, 6.00),
     cell([3.7 Max], 1.25, 3.75),
     cell([3.7 Plus], 0.32, 1.28),
-    cell([3.6 Flash], 0.19, 1.13),
     lab([DeepSeek], [DeepSeek]),
     no,
-    cell([V4 Pro], 0.44, 0.87),
-    cell([V3.2], 0.21, 0.32),
-    cell([V4 Flash], 0.08, 0.15),
+    // Post-2026-08-16 peak rates. DeepSeek raised prices 50%–1100% and split billing into
+    // peak (01-04 + 06-10 UTC) / off-peak (half these numbers). Peak is the anchor rate.
+    cell([V4 Pro], 1.32, 3.96),
+    cell([V4 Flash], 0.44, 1.32),
+    // DeepSeek now sells exactly two models on its own API — V3.2 and everything older
+    // survive only on third-party hosts, so they're off the grid.
+    no,
   )
   // Self-hosted "postcard" — ultra-cheap counterpoint: run a small model yourself (2nd subslide)
-  // Cost basis: electricity only, ~4B model on an Apple-Silicon laptop, SG ~$0.23/kWh.
-  // Input ≈ prefill (~500 tok/s) → ~$0.01/M; output ≈ decode (~55 tok/s) → ~$0.06/M.
-  // Sits over the tall blank block in the lower Frontier column (Google/GLM/Qwen/DeepSeek
-  // have no frontier model) so it covers dashes, not prices.
+  // Cost basis: electricity ONLY (hardware not amortised — see speaker notes).
+  // Qwen3.8-27B, NVFP4 + MTP under vLLM on an NVIDIA DGX Spark: 274.7 decode tok/s
+  // aggregate at concurrency 32 (gauravmm.github.io/autobench, 2026-08-15)
+  //   → 274.7 × 3600 = 0.989M output tok/hr
+  // Power: 60–90W measured at the wall under LLM inference (ServeTheHome); 75W midpoint.
+  // Tariff: SP Group Q3 2026 residential S$0.3478/kWh incl 9% GST ≈ US$0.271/kWh.
+  //   → 0.075kW × $0.271 = $0.0203/hr ÷ 0.989M = $0.021/M output
+  //   → prefill ~1.8K tok/s = 6.5M tok/hr → $0.003/M input
+  // At 90W (worst measured) output is $0.025/M; even at 200W (max load STH could
+  // provoke, not inference) it is only $0.055/M — the conclusion is insensitive to this.
+  // Lands over the last two Cost-efficient cells — they're read on subslide 1, then covered.
   #only("2-")[
     #place(bottom + right, dx: -2mm, dy: -12mm)[
       #rotate(-4deg, origin: center + horizon)[
@@ -513,9 +537,9 @@ The context window is the model's *working memory*:
           inset: (x: 0.7em, y: 0.6em),
           radius: 1.5pt,
         )[
-          #text(size: 0.65em, fill: luma(140))[Self-hosted]\
-          #text(weight: "bold", size: 0.8em)[Qwen 3.6 35B A3B]\
-          #text(weight: "bold", size: 0.9em, fill: rgb("#2E7D32"))[\$0.00 / \$0.01]\
+          #text(size: 0.65em, fill: luma(140))[Self-hosted · DGX Spark]\
+          #text(weight: "bold", size: 0.8em)[Qwen 3.8 27B]\
+          #text(weight: "bold", size: 0.9em, fill: rgb("#2E7D32"))[\$0.00 / \$0.02]\
         ]
       ]
     ]
@@ -527,19 +551,19 @@ The context window is the model's *working memory*:
   dx: -.6em,
   float: false,
   text(size: 0.7em, fill: luma(120))[
-    tiers: #link("https://artificialanalysis.ai")[artificialanalysis.ai] · prices: #link("https://openrouter.ai/models")[openrouter.ai] · 2026-07-22
+    tiers: #link("https://artificialanalysis.ai")[artificialanalysis.ai] · prices: #link("https://openrouter.ai/models")[openrouter.ai] + lab pricing pages · 2026-08-15
   ],
 )
 
 #speaker-note[
-  - Columns are CAPABILITY tiers by Artificial Analysis Intelligence Index (current v4.x scale), NOT price — the whole point of the slide. Prices via OpenRouter, both 2026-07-22
-  - THE punchline: read a row and prices don't fall left-to-right. Same tier, wildly different price. Kimi K3 (frontier) \$3 / \$15 vs Fable 5 (frontier) \$10 / \$50 — ~3× cheaper for the same capability class. GLM 5.2 (flagship, \$0.41) is cheaper than GLM 5 (mid, \$0.60)
-  - Frontier is a 3-lab club: Fable 5 (59.9, #1), GPT-5.6 Sol (58.9, #2), Kimi K3 (57.1, #3). Kimi K3 is the ONLY Chinese model consensus puts at true frontier (2.8T open-weight, shipped 2026-07-16)
-  - Blank frontier cells (Google, GLM, Qwen, DeepSeek) = no top-of-leaderboard model. Google notably has none live right now — 3.1 Pro (46.5) is mid-pack; Gemini 4 teased but delayed
-  - Dropped GPT-5.5 Pro: by benchmark it's NOT frontier — newer 5.6 Sol matches/beats it at ~1/6 the price (\$5/\$30 vs \$30/\$180). It was a compute-tier premium, not a capability tier. Mention verbally if someone asks about the \$180 model
-  - Qwen3.8-Max (2.4T, previewed 2026-07-19) claims "second only to Fable 5" but has no verified index score AND no per-token price yet — left off the grid on purpose. Add if it graduates from preview
-  - Naming inversion to expect: Gemini 3.5 Flash (mid, 50.2) actually OUTSCORES the "flagship" 3.1 Pro (46.5) — newer release. Placed 3.1 Pro as flagship by role/consensus, not raw index
-  - One postcard left (self-hosted, subslide 2): electricity only, ~3B active / 35B MoE on Apple Silicon, ~55 tok/s decode, SG \$0.23/kWh → input ≈ \$0.01, output ≈ \$0.06. The cheap extreme; genuinely off-grid (not an API SKU)
+  - Columns are capability tiers (AA Intelligence Index), NOT price. Cost isn't an input to the index — which is why this slide works
+  - PUNCHLINE: read a row, prices don't fall left-to-right. Grok 4.6 scores 61 at \$2/\$6; Fable 5 scores 62 at \$10/\$50
+  - Anthropic's row is their brand ladder, not the index — which actually puts Opus 5 (63) just over Fable 5 (62). That gap is inside noise; don't over-claim either way
+  - Blank frontier cells = no top-of-leaderboard model. Google still has none
+  - Prices move BOTH ways: OpenAI cut Luna 80% in July; DeepSeek raised 50–1100% on 16 Aug (peak rates shown, off-peak is half)
+  - Postcard: my own DGX Spark benchmark — 274.7 tok/s, 75W, SG tariff → 2¢/M output
+  - But: electricity only. The \$4,699 box amortises to \~\$0.18/M — 9× the power. And 274.7 is aggregate over 32 streams; one user gets \~30× worse cost
+]
 ]
 
 == What Does a Subscription Buy?
@@ -581,7 +605,7 @@ The context window is the model's *working memory*:
 
     lab([DeepSeek], [DeepSeek]),
     [none — chat is #text(weight: "bold")[free] \ #text(size: 0.8em, fill: luma(100))[(API is balance top-up)]],
-    [#apiv[5] \ #text(size: 0.8em, fill: luma(100))[heavy chat use]],
+    [#apiv[10] \ #text(size: 0.8em, fill: luma(100))[heavy chat use]],
     [∞],
 
     lab([Alibaba], [Qwen]),
@@ -591,8 +615,8 @@ The context window is the model's *working memory*:
 
     lab([Moonshot], [Kimi]),
     [Adagio #text(weight: "bold")[free] \ Vivace #text(weight: "bold")[\$199]],
-    [#apiv[50] \ #apiv[3,000]],
-    [15×],
+    [#apiv[50] \ #apiv[4,000]],
+    [20×],
   )
   #v(0.6em)
   #text(size: 0.85em)[
@@ -605,20 +629,18 @@ The context window is the model's *working memory*:
   dx: -.6em,
   float: false,
   text(size: 0.6em, fill: luma(120))[
-    sources: #link("https://claude.com/pricing")[claude.com] · #link("https://chatgpt.com/pricing")[chatgpt.com] · #link("https://www.kimi.ai/membership/pricing")[kimi.ai] · #link("https://www.alibabacloud.com/help/en/model-studio/coding-plan")[alibabacloud.com] · #link("https://www.deepseek.com/")[deepseek.com] · #link("https://techcrunch.com/2025/07/28/anthropic-unveils-new-rate-limits-to-curb-claude-code-power-users/")[techcrunch] · 2026-07-25
+    sources: #link("https://claude.com/pricing")[claude.com] · #link("https://chatgpt.com/pricing")[chatgpt.com] · #link("https://www.kimi.ai/membership/pricing")[kimi.ai] · #link("https://www.alibabacloud.com/help/en/model-studio/coding-plan")[alibabacloud.com] · #link("https://www.deepseek.com/")[deepseek.com] · #link("https://techcrunch.com/2025/07/28/anthropic-unveils-new-rate-limits-to-curb-claude-code-power-users/")[techcrunch] · 2026-08-15
   ],
 )
 
 #speaker-note[
-  - Same labs as the billing slide, minus Google & Z.ai. "≈ max API value" = the same usage billed at the lab's OWN metered prices (previous slide), plan ridden to its caps. Order-of-magnitude estimates, NOT lab-published.
-  - METHOD: 1 agentic coding hour ≈ 1M blended tokens (\~30 turns × \~35K effective in + \~2K out, no cache discount) → \~\$3/h at Sonnet 5 (\$2/\$10), \~\$8/h at Opus 4.8 (\$5/\$25).
-  - Anthropic (claude.com/pricing, 2026-07-25): Pro \$20 (\$17 annual); Max from \$100 = 5× or 20× Pro usage per session; 5-hour session windows + weekly caps (Max adds a separate Sonnet weekly cap). Frontier Fable 5 only on Max (≤50% of weekly limit); on Pro it's pay-as-you-go credits only. Anthropic-published caps (TechCrunch 2025-07): Pro 40–80 Claude Code h/wk; Max 5× 140–280 h + 15–35 Opus h; Max 20× 240–480 h + 24–40 Opus h → Pro ≈ \$0.5–1K/mo, Max 20× ≈ \$4–8K/mo. Matches reports of heavy Max users burning "thousands"/mo at API rates — exactly why the weekly caps appeared in 2025.
-  - OpenAI (chatgpt.com/pricing + help center): Plus \$20; Pro \$100 = 5× Plus usage, Pro \$200 = 20× — deliberately mirrors Claude Max tiers. Caps unpublished ("unlimited subject to abuse guardrails"); values shown assume comparable agentic budgets at GPT-5.6 Terra (\$2.50/\$15) / Sol (\$5/\$30) prices — same bands as Sonnet/Opus. ChatGPT Go (budget tier, may carry ads) omitted as non-major.
-  - DeepSeek: NO consumer subscription exists — web/app chat is free ("免费对话"), API is prepaid balance top-up. Heavy free chat (\~100 msgs/day × \~5K tok) at V3.2 \$0.21/\$0.32 ≈ \$3–5/mo. The multiplier is infinite: you can't beat free.
-  - Alibaba: Qwen Studio chat is free ("free to use, open to all"). The real subscription is Model Studio's Coding Plan Pro: \$50/mo for 6K calls/5h, 45K/wk, 90K/mo — multi-vendor, covers Qwen 3.7-Plus/3-Max PLUS Kimi K2.5, GLM-5, MiniMax-M2.5. 90K calls × \~16K blended tok at 3.7-Plus \$0.32/\$1.28 ≈ \$0.5–1K → \~10–20×. (Lite tier discontinued 2026-03.)
-  - Moonshot: Kimi Membership — Adagio free, Moderato \$19, Allegretto \$39 (2× agent credits), Allegro \$99 (5×), Vivace \$199 (10×; Kimi Code 30× credits). Credit pool sizes unpublished; Vivace \~\$3K assumes 1× pool ≈ one Pro-class token budget at K2.7 Code prices (\$0.72/\$3.50). Frontier K3 chat is FREE — \~30–100 msgs/day at K3 \$3/\$15 ≈ \$20–70/mo of API value; the only free frontier chatbot.
-  - Punchlines: (1) Subscriptions are bulk discounts — priced for the average user, worth 10–30× sticker when maxed out; labs lose money on power users, which is why weekly caps exist. (2) Chinese labs treat the chatbot as a loss leader (free, even at frontier) and their paid coding plans undercut US ones (Alibaba \$50 multi-vendor plan vs Claude Max \$100–200).
-  - Caveats if asked: caps are dynamic and demand-based; prompt caching cuts real API-equivalent cost 2–5×; "max" assumes sustained heavy use almost no one achieves.
+  - "≈ max API value" = the same usage billed at that lab's own metered prices, plan ridden to its caps. My estimates, not lab-published
+  - METHOD: 1 agentic coding hour ≈ 1M blended tokens → \~\$3/h at Sonnet 5, \~\$7/h at Opus 5
+  - PUNCHLINE 1: subscriptions are bulk discounts, priced for the average user. Labs lose money on power users — that's why weekly caps exist
+  - PUNCHLINE 2: Chinese labs treat the chatbot as a loss leader (K3 chat is free at frontier) and undercut on coding plans — Alibaba \$50 multi-vendor vs Claude Max \$100–200
+  - Anthropic: Opus 5, #1 on the index, is on *Pro* — \$20/mo buys leaderboard-topping access. Fable 5 stays Max-only
+  - Kimi: this row moved 15× → 20× because K2.7 Code got dearer. New plan ladder announced, not yet live
+  - If asked: caps are dynamic; prompt caching cuts real cost 2–5×; almost nobody actually rides a plan to its cap
 ]
 
 
