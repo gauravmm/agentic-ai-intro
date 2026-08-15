@@ -17,3 +17,9 @@ repos:
         language: system
         types: [file]
         files: \.typ$
+
+      - id: ascii-only
+        name: ascii only
+        entry: python3 scripts/ascii-only.py
+        language: system
+        files: \.(typ|md)$
