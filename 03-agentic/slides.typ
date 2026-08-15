@@ -3,14 +3,14 @@
 
 #import "@preview/tiaoma:0.3.0": qrcode
 #import "@preview/numbly:0.1.0": numbly
-#import "/common.typ": big-section-slide, gblock, lblock
+#import "/common/common.typ": big-section-slide, gblock, lblock
 
 #show: metropolis-theme.with(
   aspect-ratio: "16-9",
   footer: self => self.info.institution,
   // The header bar is dark, the title slide is not, so the mark comes in two
   // colours. Typst ignores `currentColor` in an SVG, hence two files.
-  header-right: image("/gm-logo-white.svg", height: 1.4cm),
+  header-right: image("/common/gm-logo-white.svg", height: 1.4cm),
   config-common(new-section-slide-fn: big-section-slide),
   config-info(
     title: [Agentic AI in Business],
@@ -18,7 +18,7 @@
     author: [Dr. Gaurav Manek, Ocellivision, IMCB],
     date: datetime.today(),
     institution: [Ocellivision + A*STAR BMRC],
-    logo: image("/gm-logo.svg", height: 1.6cm),
+    logo: image("/common/gm-logo.svg", height: 1.6cm),
   ),
 )
 
