@@ -10,7 +10,7 @@ Presenter: Dr. Gaurav Manek, A\*STAR.
 This repo holds **only the slide decks**. The hands-on tasks live in their own
 GitHub repos and are linked from the top-level `README.md`.
 
-```
+```text
 01-introduction/      Intro slides (slides.typ) + media assets
 03-agentic/           Agentic AI concepts (slides.typ) + media/figures
 common.typ            Shared slide helpers imported by both decks (--root ..)
@@ -19,12 +19,14 @@ common.typ            Shared slide helpers imported by both decks (--root ..)
 
 The numbering has gaps (02, 04) because the workshop *flow* interleaves a
 hands-on task after each slide deck; those tasks are external repos:
+
 - `github.com/gauravmm/ai-tutorial-scraping-prescriptions` — task 2 (current)
 - `github.com/gauravmm/ai-tutorial-eventbot-kittenclaw` — task 4, option A (event help desk)
 - `github.com/gauravmm/ai-tutorial-triage-kittenclaw` — task 4, option B
 - `github.com/gauravmm/ai-tutorial-labelgen` — older label-design task (retired)
 
 Each slide module follows the same pattern:
+
 - `README.md` — content outline (source of truth for *what* to cover)
 - `slides.typ` — Typst source for the compiled slide deck
 - `media/` — images, memes, diagrams used on slides
@@ -36,15 +38,16 @@ Each slide module follows the same pattern:
 Slides are written in **Typst** using the **Touying** presentation framework (`@preview/touying:0.6.1`) with the **metropolis** theme.
 
 Two Claude Code skills are installed to assist:
+
 - `touying-author` — Touying-specific APIs, slide structure, animations
 - `typst-author` — general Typst language reference
 
 ### Heading levels
 
 | Level | Touying meaning |
-|-------|----------------|
-| `=`   | New section (shows in progress bar / outline) |
-| `==`  | New slide with title |
+| ------- | ---------------- |
+| `=` | New section (shows in progress bar / outline) |
+| `==` | New slide with title |
 | `---` | New slide without title |
 
 Add `<touying:hidden>` to suppress a section from the outline/progress bar.
@@ -130,14 +133,17 @@ Variable fonts (`Ubuntu`, `Ubuntu Mono`) may render incorrectly — avoid.
 ## Module notes
 
 ### 01-introduction
+
 - Full slide deck, essentially complete.
 - Custom `aside` and `tok` macros defined here.
 - Pricing table on the "How Usage Is Billed" slide — sourced from OpenRouter 2026-07-11.
 
 ### 03-agentic
+
 - Slides cover: agent loop, common patterns (vibe coding, actor-critic, complexity ladder, TDD), human-in-the-loop models, real-world agents (Copilot Workspace, OpenClaw).
 - Shares the `gblock` / `lblock` helpers with 01; `label-item` is local for cell-filling labelled rows.
 
 ### Hands-on tasks (external repos)
+
 - Linked from the top-level `README.md`; not checked out here.
 - Prescription scraping (`ai-tutorial-scraping-prescriptions`) is task 2; task 4 offers a choice of the event help desk (`ai-tutorial-eventbot-kittenclaw`) or multi-agent triage (`ai-tutorial-triage-kittenclaw`); `ai-tutorial-labelgen` is the retired label-design task.

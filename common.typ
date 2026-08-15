@@ -7,7 +7,12 @@
 // larger title and the section number styled like the principle index
 // (big, bold, grey). Wire in via the theme:
 //   #show: metropolis-theme.with(config-common(new-section-slide-fn: big-section-slide), ...)
-#let big-section-slide(config: (:), level: 1, numbered: true, body) = touying-slide-wrapper(self => {
+#let big-section-slide(
+  config: (:),
+  level: 1,
+  numbered: true,
+  body,
+) = touying-slide-wrapper(self => {
   let slide-body = {
     set std.align(horizon)
     show: pad.with(x: 12%, y: 20%)
@@ -17,7 +22,11 @@
       #utils.display-current-heading(
         level: level,
         numbered: numbered,
-        style: (setting: body => body, numbered: true, current-heading) => setting({
+        style: (
+          setting: body => body,
+          numbered: true,
+          current-heading,
+        ) => setting({
           if numbered and current-heading.numbering != none {
             numbering(
               current-heading.numbering,
@@ -30,7 +39,11 @@
     let section-title = utils.display-current-heading(
       level: level,
       numbered: numbered,
-      style: (setting: body => body, numbered: true, current-heading) => setting(
+      style: (
+        setting: body => body,
+        numbered: true,
+        current-heading,
+      ) => setting(
         current-heading.body,
       ),
     )
@@ -47,13 +60,19 @@
           height: 2pt,
           width: 100%,
           spacing: 0pt,
-          components.progress-bar(height: 2pt, self.colors.primary, self.colors.primary-light),
+          components.progress-bar(
+            height: 2pt,
+            self.colors.primary,
+            self.colors.primary-light,
+          ),
         ),
       ),
     )
     text(self.colors.neutral-dark, body)
   }
-  self = utils.merge-dicts(self, config-page(fill: self.colors.neutral-lightest))
+  self = utils.merge-dicts(self, config-page(
+    fill: self.colors.neutral-lightest,
+  ))
   touying-slide(self: self, config: config, slide-body)
 })
 

@@ -41,7 +41,10 @@
 
   let glabel(x, txt) = content(
     (x, 0),
-    box(fill: white, inset: (x: 2pt, y: 0pt))[#text(size: 0.58em, fill: luma(70))[#txt]],
+    box(fill: white, inset: (x: 2pt, y: 0pt))[#text(
+      size: 0.58em,
+      fill: luma(70),
+    )[#txt]],
   )
 
   // ── arrows (drawn first, nodes sit on top) ──────────────────
@@ -87,14 +90,20 @@
 
   content(
     (1.9, 0.66),
-    box(fill: white, inset: (x: 2pt, y: 0pt))[#text(size: 0.58em, fill: luma(70))[chat]],
+    box(fill: white, inset: (x: 2pt, y: 0pt))[#text(
+      size: 0.58em,
+      fill: luma(70),
+    )[chat]],
   )
   glabel(6.68, [writes])
   glabel(10.53, [reads])
   glabel(15.25, [reports])
 
   // ── Patients (three, colour-coded) ──────────────────────────
-  content((xPat, ys.at(0) + phh + 0.5), text(weight: "bold", size: 0.62em)[Patients])
+  content((xPat, ys.at(0) + phh + 0.5), text(
+    weight: "bold",
+    size: 0.62em,
+  )[Patients])
   for i in range(3) {
     bnode(
       xPat,
@@ -106,7 +115,10 @@
       strk: acc.at(i),
     )
   }
-  content((xPat, ys.at(2) - phh - 0.42), text(size: 0.5em, fill: luma(100))[on Telegram])
+  content((xPat, ys.at(2) - phh - 0.42), text(
+    size: 0.5em,
+    fill: luma(100),
+  )[on Telegram])
 
   // ── Triage Bot (KittenClaw) — tall; logo+name on top, title at bottom
   rect(
@@ -126,7 +138,10 @@
   content((xTri, -trihh + 0.45), text(weight: "bold", size: 0.82em)[Triage Bot])
 
   // ── Conversation traces (one per patient, colour-matched) ───
-  content((xTrc, ys.at(0) + thh + 0.5), text(weight: "bold", size: 0.6em)[Conversation traces])
+  content((xTrc, ys.at(0) + thh + 0.5), text(
+    weight: "bold",
+    size: 0.6em,
+  )[Conversation traces])
   for i in range(3) {
     for o in (0.14, 0.07) {
       rect(
@@ -151,7 +166,10 @@
       radius: 0.1,
     )
   }
-  content((xTrc, ys.at(2) - thh - 0.42), text(size: 0.5em, fill: luma(100))[`.jsonl` on disk])
+  content((xTrc, ys.at(2) - thh - 0.42), text(
+    size: 0.5em,
+    fill: luma(100),
+  )[`.jsonl` on disk])
 
   // ── Reporter Bot (Copilot skill) — tall, spans all three rows ─
   bnode(

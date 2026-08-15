@@ -17,7 +17,10 @@
 
     // ── helper: node box ────────────────────────────────────────
     let node(y, lbl, fill: gr-fill) = {
-      rect((-bw, y - bh), (bw, y + bh), fill: fill, radius: 0.26, stroke: (paint: luma(150), thickness: 0.7pt))
+      rect((-bw, y - bh), (bw, y + bh), fill: fill, radius: 0.26, stroke: (
+        paint: luma(150),
+        thickness: 0.7pt,
+      ))
       content((0, y), text(size: 0.83em)[#lbl])
     }
 

@@ -33,7 +33,9 @@
 )
 
 #let similar(items) = lblock(inset: (x: 0.6em, y: 0.4em), outset: 0pt)[
-  #text(size: 0.85em, fill: luma(80))[#text(weight: "bold")[Other examples] --- #items]
+  #text(size: 0.85em, fill: luma(80))[#text(
+      weight: "bold",
+    )[Other examples] --- #items]
 ]
 
 #title-slide()
@@ -248,7 +250,10 @@
 
     #pause
   ],
-  grid.cell(x: 1, y: 0, align: bottom, image("media/openclaw-logo-text-dark.png", width: 90%)),
+  grid.cell(x: 1, y: 0, align: bottom, image(
+    "media/openclaw-logo-text-dark.png",
+    width: 90%,
+  )),
   grid.cell(x: 1, y: 1)[
     - Personal AI agent
     - Runs on your machine; triggered via *messaging apps*
@@ -287,7 +292,9 @@
   gutter: 1.5em,
   align: top,
   [
-    #box(baseline: 0.45em, image("media/jpmorgan.png", height: 1.6em)) #h(0.4em) #text(
+    #box(baseline: 0.45em, image("media/jpmorgan.png", height: 1.6em)) #h(
+      0.4em,
+    ) #text(
       weight: "bold",
       size: 1.3em,
     )[Ask D.A.V.I.D.]\
@@ -352,7 +359,10 @@
   [
     #image("media/sakana.svg", height: 2cm)
     #v(0em)
-    #text(size: 0.9em, fill: luma(100))[AI Scientist caught specification gaming]
+    #text(
+      size: 0.9em,
+      fill: luma(100),
+    )[AI Scientist caught specification gaming]
 
     #v(0.3em)
     - Autonomous research agent --- writes, runs, evaluates experiments
@@ -491,14 +501,32 @@
       #text(fill: luma(80), size: .8em)[#h(1em)#desc]
     ]
 
-    #skill("anthropics", "claude-for-legal")[M&A diligence: bulk contract review.]
+    #skill(
+      "anthropics",
+      "claude-for-legal",
+    )[M&A diligence: bulk contract review.]
     #skill("anthropics/skills", "pptx")[Create & edit PowerPoint presentations.]
-    #skill("anthropics/skills", "skill-creator")[The skill that writes new skills.]
-    #skill("asklokesh", "claudeskill-loki-mode")[41 sub-agents, 8 swarms → shipped app.]
+    #skill(
+      "anthropics/skills",
+      "skill-creator",
+    )[The skill that writes new skills.]
+    #skill(
+      "asklokesh",
+      "claudeskill-loki-mode",
+    )[41 sub-agents, 8 swarms → shipped app.]
     #skill("blader", "humanizer")[Rewrite AI-sounding text.]
-    #skill("joshka0/foxctl", "foxctl-mobile")[Drive iOS Simulator + Android Emulator.]
-    #skill("K-Dense-AI", "scientific-agent-skills")[140+ skills, PubChem / ClinicalTrials / FDA.]
-    #skill("openclaw/skills", "ask-a-human")[Crowdsource subjective calls to humans.]
+    #skill(
+      "joshka0/foxctl",
+      "foxctl-mobile",
+    )[Drive iOS Simulator + Android Emulator.]
+    #skill(
+      "K-Dense-AI",
+      "scientific-agent-skills",
+    )[140+ skills, PubChem / ClinicalTrials / FDA.]
+    #skill(
+      "openclaw/skills",
+      "ask-a-human",
+    )[Crowdsource subjective calls to humans.]
   ],
 )
 
